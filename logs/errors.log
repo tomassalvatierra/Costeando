@@ -1,0 +1,802 @@
+2025-05-20 09:34:16 - modulo_proyectados - ERROR - Error en el procesamiento de costos proyectados: 'VARIABLE'
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 176, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'VARIABLE'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_proyectados.py", line 95, in procesar_proyectados
+    df_listado_proyectado[camp] = df_listado_proyectado.apply(lambda row: obtener_coeficiente(camp, row['VARIABLE']), axis=1)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 9423, in apply
+    return op.apply().__finalize__(self, method="apply")
+           ^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py", line 678, in apply
+    return self.apply_standard()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py", line 798, in apply_standard
+    results, res_index = self.apply_series_generator()
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py", line 814, in apply_series_generator
+    results[i] = self.f(v)
+                 ^^^^^^^^^
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_proyectados.py", line 95, in <lambda>
+    df_listado_proyectado[camp] = df_listado_proyectado.apply(lambda row: obtener_coeficiente(camp, row['VARIABLE']), axis=1)
+                                                                                                    ~~~^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\series.py", line 1007, in __getitem__
+    return self._get_value(key)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\series.py", line 1116, in _get_value
+    loc = self.index.get_loc(label)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'VARIABLE'
+2025-05-20 16:08:58 - main_interfaz_grafica - CRITICAL - Error importando módulos: cannot import name 'ejecutar_proceso' from partially initialized module 'modulo_compras' (most likely due to a circular import) (c:\Users\tsalvatierra\Desktop\Costeando\modulo_compras.py)
+2025-05-20 16:08:58 - __main__ - CRITICAL - Error importando módulos: cannot import name 'ejecutar_proceso' from partially initialized module 'modulo_compras' (most likely due to a circular import) (c:\Users\tsalvatierra\Desktop\Costeando\modulo_compras.py)
+2025-05-20 16:10:26 - main_interfaz_grafica - CRITICAL - Error importando módulos: cannot import name 'ejecutar_proceso' from partially initialized module 'modulo_compras' (most likely due to a circular import) (c:\Users\tsalvatierra\Desktop\Costeando\modulo_compras.py)
+2025-05-20 16:10:26 - __main__ - CRITICAL - Error importando módulos: cannot import name 'ejecutar_proceso' from partially initialized module 'modulo_compras' (most likely due to a circular import) (c:\Users\tsalvatierra\Desktop\Costeando\modulo_compras.py)
+2025-05-20 16:21:46 - main_interfaz_grafica - CRITICAL - Error importando módulos: cannot import name 'ejecutar_proceso' from partially initialized module 'modulo_compras' (most likely due to a circular import) (c:\Users\tsalvatierra\Desktop\Costeando\modulo_compras.py)
+2025-05-20 16:21:46 - __main__ - CRITICAL - Error importando módulos: cannot import name 'ejecutar_proceso' from partially initialized module 'modulo_compras' (most likely due to a circular import) (c:\Users\tsalvatierra\Desktop\Costeando\modulo_compras.py)
+2025-05-20 16:23:15 - main_interfaz_grafica - CRITICAL - Error importando módulos: cannot import name 'ejecutar_proceso' from partially initialized module 'modulo_compras' (most likely due to a circular import) (c:\Users\tsalvatierra\Desktop\Costeando\modulo_compras.py)
+2025-05-20 16:23:15 - __main__ - CRITICAL - Error importando módulos: cannot import name 'ejecutar_proceso' from partially initialized module 'modulo_compras' (most likely due to a circular import) (c:\Users\tsalvatierra\Desktop\Costeando\modulo_compras.py)
+2025-05-20 16:26:48 - main_interfaz_grafica - CRITICAL - Error importando módulos: cannot import name 'ejecutar_proceso' from partially initialized module 'modulo_compras' (most likely due to a circular import) (c:\Users\tsalvatierra\Desktop\Costeando\modulo_compras.py)
+2025-05-20 16:26:48 - __main__ - CRITICAL - Error importando módulos: cannot import name 'ejecutar_proceso' from partially initialized module 'modulo_compras' (most likely due to a circular import) (c:\Users\tsalvatierra\Desktop\Costeando\modulo_compras.py)
+2025-05-20 16:42:50 - main_interfaz_grafica - CRITICAL - Error importando módulos: cannot import name 'ejecutar_proceso' from partially initialized module 'modulo_compras' (most likely due to a circular import) (c:\Users\tsalvatierra\Desktop\Costeando\modulo_compras.py)
+2025-05-20 16:42:50 - __main__ - CRITICAL - Error importando módulos: cannot import name 'ejecutar_proceso' from partially initialized module 'modulo_compras' (most likely due to a circular import) (c:\Users\tsalvatierra\Desktop\Costeando\modulo_compras.py)
+2025-05-21 10:06:44 - modulo_leader_list - ERROR - Error durante el procesamiento: "['COSTO LISTA 5221'] not in index"
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_leader_list.py", line 127, in procesar_leader_list
+    df_leader_list = pd.merge(df_leader_list, df_costo_anterior[["Codigo", "COSTO LISTA " + año_campaña_anterior]], how = "left")
+                                              ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 3767, in __getitem__
+    indexer = self.columns._get_indexer_strict(key, "columns")[1]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 5877, in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 5941, in _raise_if_missing
+    raise KeyError(f"{not_found} not in index")
+KeyError: "['COSTO LISTA 5221'] not in index"
+2025-05-21 11:34:53 - modulo_proyectados - ERROR - Error en el procesamiento de costos proyectados: 'VARIABLE'
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 176, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'VARIABLE'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_proyectados.py", line 95, in procesar_proyectados
+    df_listado_proyectado[camp] = df_listado_proyectado.apply(lambda row: obtener_coeficiente(camp, row['VARIABLE']), axis=1)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 9423, in apply
+    return op.apply().__finalize__(self, method="apply")
+           ^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py", line 678, in apply
+    return self.apply_standard()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py", line 798, in apply_standard
+    results, res_index = self.apply_series_generator()
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py", line 814, in apply_series_generator
+    results[i] = self.f(v)
+                 ^^^^^^^^^
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_proyectados.py", line 95, in <lambda>
+    df_listado_proyectado[camp] = df_listado_proyectado.apply(lambda row: obtener_coeficiente(camp, row['VARIABLE']), axis=1)
+                                                                                                    ~~~^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\series.py", line 1007, in __getitem__
+    return self._get_value(key)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\series.py", line 1116, in _get_value
+    loc = self.index.get_loc(label)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'VARIABLE'
+2025-05-21 11:36:51 - modulo_proyectados - ERROR - Error generando explicación humanizada: cannot access local variable 'explicar_error_con_ia' where it is not associated with a value
+2025-05-21 11:40:38 - modulo_proyectados - ERROR - Error en proceso proyectados: 'VARIABLE'
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 176, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'VARIABLE'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_proyectados.py", line 97, in procesar_proyectados
+    df_listado_proyectado[camp] = df_listado_proyectado.apply(lambda row: obtener_coeficiente(camp, row['VARIABLE']), axis=1)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 9423, in apply
+    return op.apply().__finalize__(self, method="apply")
+           ^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py", line 678, in apply
+    return self.apply_standard()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py", line 798, in apply_standard
+    results, res_index = self.apply_series_generator()
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py", line 814, in apply_series_generator
+    results[i] = self.f(v)
+                 ^^^^^^^^^
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_proyectados.py", line 97, in <lambda>
+    df_listado_proyectado[camp] = df_listado_proyectado.apply(lambda row: obtener_coeficiente(camp, row['VARIABLE']), axis=1)
+                                                                                                    ~~~^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\series.py", line 1007, in __getitem__
+    return self._get_value(key)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\series.py", line 1116, in _get_value
+    loc = self.index.get_loc(label)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'VARIABLE'
+2025-05-21 11:40:38 - modulo_proyectados - ERROR - Error generando explicación humanizada: cannot access local variable 'explicar_error_con_ia' where it is not associated with a value
+2025-05-21 11:42:23 - modulo_proyectados - ERROR - Error en proceso proyectados: 'VARIABLE'
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 176, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'VARIABLE'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_proyectados.py", line 97, in procesar_proyectados
+    df_listado_proyectado[camp] = df_listado_proyectado.apply(lambda row: obtener_coeficiente(camp, row['VARIABLE']), axis=1)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 9423, in apply
+    return op.apply().__finalize__(self, method="apply")
+           ^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py", line 678, in apply
+    return self.apply_standard()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py", line 798, in apply_standard
+    results, res_index = self.apply_series_generator()
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py", line 814, in apply_series_generator
+    results[i] = self.f(v)
+                 ^^^^^^^^^
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_proyectados.py", line 97, in <lambda>
+    df_listado_proyectado[camp] = df_listado_proyectado.apply(lambda row: obtener_coeficiente(camp, row['VARIABLE']), axis=1)
+                                                                                                    ~~~^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\series.py", line 1007, in __getitem__
+    return self._get_value(key)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\series.py", line 1116, in _get_value
+    loc = self.index.get_loc(label)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'VARIABLE'
+2025-05-21 15:12:54 - modulo_leader_list - ERROR - Error durante el procesamiento: "['DTO ESPECIAL P BASE', 'APLICA DDE CA:'] not in index"
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_leader_list.py", line 134, in procesar_leader_list
+    df_leader_list = pd.merge(df_leader_list,df_costo_anterior[["Codigo", "COSTO LISTA " + año_campaña_anterior,"DTO ESPECIAL P BASE","APLICA DDE CA:"]], how = "left", on="Codigo")
+                                             ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 3767, in __getitem__
+    indexer = self.columns._get_indexer_strict(key, "columns")[1]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 5877, in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 5941, in _raise_if_missing
+    raise KeyError(f"{not_found} not in index")
+KeyError: "['DTO ESPECIAL P BASE', 'APLICA DDE CA:'] not in index"
+2025-05-27 09:56:31 - modulo_primer_comprando - ERROR - Error en el procesamiento de compras: cannot access local variable 'ruta_ficha' where it is not associated with a value
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_primer_comprando.py", line 256, in procesar_comprando
+    ficha_rms = ruta_ficha.get()
+                ^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'ruta_ficha' where it is not associated with a value
+2025-05-27 10:00:10 - modulo_primer_comprando - ERROR - Error en el procesamiento de compras: unsupported operand type(s) for -: 'str' and 'int'
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_primer_comprando.py", line 272, in procesar_comprando
+    campania_ficha = campaña -  5
+                     ~~~~~~~~^~~~
+TypeError: unsupported operand type(s) for -: 'str' and 'int'
+2025-05-27 10:09:37 - modulo_primer_comprando - ERROR - Error en el procesamiento de compras: 'str' object has no attribute 'glob'
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_primer_comprando.py", line 282, in procesar_comprando
+    archivos_excel = sorted(ruta_ficha.glob("*.xlsx"))
+                           ^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'glob'
+2025-05-27 10:33:20 - modulo_segundo_comprando - ERROR - Error en el procesamiento: "['DESCUENTO ESPECIAL'] not in index"
+2025-05-27 10:36:05 - modulo_segundo_comprando - ERROR - No se seleccionó una carpeta para guardar los resultados.
+2025-05-28 15:59:18 - modulo_leader_list - ERROR - Error durante el procesamiento: You are trying to merge on int64 and object columns. If you wish to proceed you should use pd.concat
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_leader_list.py", line 135, in procesar_leader_list
+    df_leader_list = pd.merge(df_leader_list,df_costo_anterior[["Codigo", "COSTO LISTA " + año_campaña_anterior,"DESCUENTO ESPECIAL","APLICA DDE CA:"]], how = "left", on="Codigo")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 148, in merge
+    op = _MergeOperation(
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 741, in __init__
+    self._maybe_coerce_merge_keys()
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 1401, in _maybe_coerce_merge_keys
+    raise ValueError(msg)
+ValueError: You are trying to merge on int64 and object columns. If you wish to proceed you should use pd.concat
+2025-05-28 16:02:36 - modulo_leader_list - ERROR - Error durante el procesamiento: You are trying to merge on int64 and object columns. If you wish to proceed you should use pd.concat
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_leader_list.py", line 135, in procesar_leader_list
+    df_leader_list = pd.merge(df_leader_list,df_costo_anterior[["Codigo", "COSTO LISTA " + año_campaña_anterior,"DESCUENTO ESPECIAL","APLICA DDE CA:"]], how = "left", on="Codigo")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 148, in merge
+    op = _MergeOperation(
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 741, in __init__
+    self._maybe_coerce_merge_keys()
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 1401, in _maybe_coerce_merge_keys
+    raise ValueError(msg)
+ValueError: You are trying to merge on int64 and object columns. If you wish to proceed you should use pd.concat
+2025-05-28 16:05:45 - modulo_leader_list - ERROR - Error durante el procesamiento: You are trying to merge on object and int64 columns. If you wish to proceed you should use pd.concat
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_leader_list.py", line 139, in procesar_leader_list
+    df_leader_list = pd.merge(df_leader_list,df_dobles[["Codigo", "COD MADRE"]], how = "left")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 148, in merge
+    op = _MergeOperation(
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 741, in __init__
+    self._maybe_coerce_merge_keys()
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 1401, in _maybe_coerce_merge_keys
+    raise ValueError(msg)
+ValueError: You are trying to merge on object and int64 columns. If you wish to proceed you should use pd.concat
+2025-05-28 16:59:52 - modulo_leader_list - ERROR - Error durante el procesamiento: cannot reindex on an axis with duplicate labels
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_leader_list.py", line 162, in procesar_leader_list
+    df_leader_list = df_leader_list.reindex(columns = ["CAMP", "ANO", "Codigo", "COD MADRE", "COD COMB",
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 5055, in reindex
+    return super().reindex(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 5360, in reindex
+    return self._reindex_axes(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 4890, in _reindex_axes
+    frame = frame._reindex_columns(
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 4932, in _reindex_columns
+    new_columns, indexer = self.columns.reindex(
+                           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 4275, in reindex
+    raise ValueError("cannot reindex on an axis with duplicate labels")
+ValueError: cannot reindex on an axis with duplicate labels
+2025-05-29 09:47:03 - modulo_primer_comprando - ERROR - Error en el procesamiento de compras: 'TIPO-DESCUENTO'
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 176, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'TIPO-DESCUENTO'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_primer_comprando.py", line 352, in procesar_comprando
+    df_sin_vencidos, df_no_vencidos, df_cambios = actualizar_estado_vencido(
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_primer_comprando.py", line 79, in actualizar_estado_vencido
+    es_descuento_terminado = df_base_dtos['TIPO-DESCUENTO'] == 'AGOTAMIENTO-PRODUCTO TERMINADO'
+                             ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 3761, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'TIPO-DESCUENTO'
+2025-05-29 10:00:17 - modulo_primer_comprando - ERROR - Error en el procesamiento de compras: Can only use .str accessor with string values!
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_primer_comprando.py", line 289, in procesar_comprando
+    lista_dfs = [estandarizar_columna_producto(df, nombre) for df, nombre in lista_dfs]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_primer_comprando.py", line 289, in <listcomp>
+    lista_dfs = [estandarizar_columna_producto(df, nombre) for df, nombre in lista_dfs]
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_primer_comprando.py", line 213, in estandarizar_columna_producto
+    df['Codigo'] = df['Codigo'].astype(object).str.strip()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 5989, in __getattr__
+    return object.__getattribute__(self, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\accessor.py", line 224, in __get__
+    accessor_obj = self._accessor(obj)
+                   ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\strings\accessor.py", line 181, in __init__
+    self._inferred_dtype = self._validate(data)
+                           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\strings\accessor.py", line 235, in _validate
+    raise AttributeError("Can only use .str accessor with string values!")
+AttributeError: Can only use .str accessor with string values!
+2025-05-29 10:24:07 - modulo_primer_comprando - ERROR - Error en el procesamiento de compras: [Errno 13] Permission denied: 'C:/Users/tsalvatierra/Desktop/PRUEBAS/29-04-2025 PRUEBA/comrando primera etapa.xlsx'
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_primer_comprando.py", line 419, in procesar_comprando
+    df_calculo_comprando.to_excel(output_path, index=False, engine='openpyxl')
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 2252, in to_excel
+    formatter.write(
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\formats\excel.py", line 934, in write
+    writer = ExcelWriter(  # type: ignore[abstract]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\excel\_openpyxl.py", line 60, in __init__
+    super().__init__(
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\excel\_base.py", line 1219, in __init__
+    self._handles = get_handle(
+                    ^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\common.py", line 868, in get_handle
+    handle = open(handle, ioargs.mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:/Users/tsalvatierra/Desktop/PRUEBAS/29-04-2025 PRUEBA/comrando primera etapa.xlsx'
+2025-05-29 11:46:05 - modulo_leader_list - ERROR - Error durante el procesamiento: main thread is not in main loop
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_leader_list.py", line 196, in procesar_leader_list
+    ocultar_progreso()
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_leader_list.py", line 18, in ocultar_progreso
+    progress_bar.stop()
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\tkinter\ttk.py", line 1003, in stop
+    self.tk.call(self._w, "stop")
+RuntimeError: main thread is not in main loop
+2025-05-29 11:46:14 - modulo_leader_list - ERROR - Error en el procesamiento de compras: main thread is not in main loop
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_leader_list.py", line 196, in procesar_leader_list
+    ocultar_progreso()
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_leader_list.py", line 18, in ocultar_progreso
+    progress_bar.stop()
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\tkinter\ttk.py", line 1003, in stop
+    self.tk.call(self._w, "stop")
+RuntimeError: main thread is not in main loop
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_leader_list.py", line 28, in procesar_con_progreso
+    procesar_leader_list()
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_leader_list.py", line 216, in procesar_leader_list
+    ventana.destroy()
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\tkinter\__init__.py", line 2636, in destroy
+    self.tk.call('destroy', self._w)
+RuntimeError: main thread is not in main loop
+2025-05-29 12:15:22 - modulo_leader_list - ERROR - Error durante el procesamiento: "['COD COMB'] not in index"
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_leader_list.py", line 170, in procesar_leader_list
+    df_leader_list = pd.merge(df_leader_list,df_combinadas_agrupadas[["Codigo", "COD COMB"]], how = "left")
+                                             ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 3767, in __getitem__
+    indexer = self.columns._get_indexer_strict(key, "columns")[1]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 5877, in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 5941, in _raise_if_missing
+    raise KeyError(f"{not_found} not in index")
+KeyError: "['COD COMB'] not in index"
+2025-05-29 12:19:44 - modulo_leader_list - ERROR - Error durante el procesamiento: "['COD COMB'] not in index"
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_leader_list.py", line 170, in procesar_leader_list
+    df_leader_list = pd.merge(df_leader_list,df_combinadas_agrupadas[["Codigo", "COD COMB"]], how = "left")
+                                             ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 3767, in __getitem__
+    indexer = self.columns._get_indexer_strict(key, "columns")[1]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 5877, in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 5941, in _raise_if_missing
+    raise KeyError(f"{not_found} not in index")
+KeyError: "['COD COMB'] not in index"
+2025-05-29 13:00:01 - modulo_leader_list - ERROR - Error durante el procesamiento: "['COD COMB'] not in index"
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_leader_list.py", line 170, in procesar_leader_list
+    df_leader_list = pd.merge(df_leader_list,df_combinadas_agrupadas[["Codigo", "COD COMB"]], how = "left")
+                                             ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 3767, in __getitem__
+    indexer = self.columns._get_indexer_strict(key, "columns")[1]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 5877, in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 5941, in _raise_if_missing
+    raise KeyError(f"{not_found} not in index")
+KeyError: "['COD COMB'] not in index"
+2025-06-04 16:56:16 - modulo_segundo_comprando - ERROR - Error en el procesamiento: [Errno 2] No such file or directory: ''
+2025-06-05 09:11:33 - modulo_segundo_comprando - ERROR - Error en el procesamiento: 'Costo sin Descuento C14'
+2025-06-05 10:55:12 - modulo_segundo_comprando - ERROR - Error en el procesamiento: "['TIPO-DESCUENTO'] not in index"
+2025-06-05 10:59:13 - modulo_segundo_comprando - ERROR - Error en el procesamiento: [Errno 13] Permission denied: 'C:/Users/tsalvatierra/Desktop/PRUEBAS/PRIUEBA FINAL/Calculo de Comprando 2025 C13 2da Etapa.xlsx'
+2025-06-06 09:18:45 - modulo_segundo_produciendo - ERROR - Error durante el procesamiento: Por favor, seleccione todos los archivos necesarios.
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_segundo_produciendo.py", line 104, in procesar_segundo_produciendo
+    raise ValueError("Por favor, seleccione todos los archivos necesarios.")
+ValueError: Por favor, seleccione todos los archivos necesarios.
+2025-06-06 09:21:27 - modulo_segundo_produciendo - ERROR - Error durante el procesamiento: "['TIPO-DESCUENTO'] not in index"
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_segundo_produciendo.py", line 180, in procesar_segundo_produciendo
+    nuevos_descuentos = pd.merge(nuevos_descuentos, df_produciendo[["Codigo","TIPO-DESCUENTO"]], how='left')
+                                                    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 3767, in __getitem__
+    indexer = self.columns._get_indexer_strict(key, "columns")[1]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 5877, in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 5941, in _raise_if_missing
+    raise KeyError(f"{not_found} not in index")
+KeyError: "['TIPO-DESCUENTO'] not in index"
+2025-06-11 16:29:43 - modulo_primer_produciendo - ERROR - Error en el procesamiento de compras: Invalid file path or buffer object type: <class 'pandas.core.frame.DataFrame'>
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_primer_produciendo.py", line 296, in procesar_produciendo
+    df_produciendo = asignar_faltantes_cotizacion(df_produciendo, df_maestro_produciendo, df_descuentos_especiales)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\tsalvatierra\Desktop\Costeando\func_faltante_cotizacion.py", line 8, in asignar_faltantes_cotizacion
+    df_estructuras = pd.read_excel(estructuras, usecols= "A:O",engine='openpyxl', header=None, skiprows=4)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\excel\_base.py", line 478, in read_excel
+    io = ExcelFile(io, storage_options=storage_options, engine=engine)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\excel\_base.py", line 1513, in __init__
+    self._reader = self._engines[engine](self._io, storage_options=storage_options)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\excel\_openpyxl.py", line 549, in __init__
+    super().__init__(filepath_or_buffer, storage_options=storage_options)
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\excel\_base.py", line 530, in __init__
+    self.handles = get_handle(
+                   ^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\common.py", line 716, in get_handle
+    ioargs = _get_filepath_or_buffer(
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\common.py", line 456, in _get_filepath_or_buffer
+    raise ValueError(msg)
+ValueError: Invalid file path or buffer object type: <class 'pandas.core.frame.DataFrame'>
+2025-06-24 11:53:17 - modulo_primer_produciendo - ERROR - Error, no se ingresaron bien los datos.
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_primer_produciendo.py", line 189, in procesar_produciendo
+    año_actual = int(entry_año.get())
+                 ^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: ''
+2025-06-24 11:59:41 - modulo_primer_produciendo - ERROR - Error en el procesamiento de compras: Invalid file path or buffer object type: <class 'pandas.core.frame.DataFrame'>
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_primer_produciendo.py", line 298, in procesar_produciendo
+    df_produciendo = asignar_faltantes_cotizacion(df_produciendo, df_maestro_produciendo, df_estructuras)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\tsalvatierra\Desktop\Costeando\func_faltante_cotizacion.py", line 8, in asignar_faltantes_cotizacion
+    df_estructuras = pd.read_excel(estructuras, usecols= "A:O",engine='openpyxl', skiprows=4)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\excel\_base.py", line 478, in read_excel
+    io = ExcelFile(io, storage_options=storage_options, engine=engine)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\excel\_base.py", line 1513, in __init__
+    self._reader = self._engines[engine](self._io, storage_options=storage_options)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\excel\_openpyxl.py", line 549, in __init__
+    super().__init__(filepath_or_buffer, storage_options=storage_options)
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\excel\_base.py", line 530, in __init__
+    self.handles = get_handle(
+                   ^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\common.py", line 716, in get_handle
+    ioargs = _get_filepath_or_buffer(
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\common.py", line 456, in _get_filepath_or_buffer
+    raise ValueError(msg)
+ValueError: Invalid file path or buffer object type: <class 'pandas.core.frame.DataFrame'>
+2025-06-24 12:05:02 - modulo_primer_produciendo - ERROR - Error en el procesamiento de compras: You are trying to merge on int64 and object columns. If you wish to proceed you should use pd.concat
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_primer_produciendo.py", line 297, in procesar_produciendo
+    df_produciendo = asignar_faltantes_cotizacion(df_produciendo, df_maestro_produciendo, estructuras)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\tsalvatierra\Desktop\Costeando\func_faltante_cotizacion.py", line 44, in asignar_faltantes_cotizacion
+    df_sin_cotizacion = pd.merge(df_sin_cotizacion, df_maestro[["Codigo", "Blq. de Pant"]], how='left')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 148, in merge
+    op = _MergeOperation(
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 741, in __init__
+    self._maybe_coerce_merge_keys()
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 1401, in _maybe_coerce_merge_keys
+    raise ValueError(msg)
+ValueError: You are trying to merge on int64 and object columns. If you wish to proceed you should use pd.concat
+2025-06-24 14:50:41 - modulo_primer_produciendo - ERROR - Error en el procesamiento de compras: "Only a column name can be used for the key in a dtype mappings argument. 'Codigo' not found in columns."
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_primer_produciendo.py", line 297, in procesar_produciendo
+    df_produciendo = asignar_faltantes_cotizacion(df_produciendo, df_maestro_produciendo, estructuras)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\tsalvatierra\Desktop\Costeando\func_faltante_cotizacion.py", line 12, in asignar_faltantes_cotizacion
+    df_estructuras = df_estructuras.astype({'Codigo': str})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 6290, in astype
+    raise KeyError(
+KeyError: "Only a column name can be used for the key in a dtype mappings argument. 'Codigo' not found in columns."
+2025-06-24 14:55:24 - modulo_primer_produciendo - ERROR - Error en el procesamiento de compras: NDFrame.astype() got an unexpected keyword argument 'inplace'
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_primer_produciendo.py", line 300, in procesar_produciendo
+    df_produciendo.astype({'COMPONENTE FALTANTE': str}, errors='ignore', inplace=True)
+TypeError: NDFrame.astype() got an unexpected keyword argument 'inplace'
+2025-06-24 14:58:07 - modulo_primer_produciendo - ERROR - Error en el procesamiento de compras: 'VENCIDO'
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 176, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'VENCIDO'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_primer_produciendo.py", line 267, in procesar_produciendo
+    df_sin_vencidos.drop(df_sin_vencidos[df_sin_vencidos['VENCIDO'] == 'Si'].index, inplace=True)
+                                         ~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 3761, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'VENCIDO'
+2025-06-24 15:29:56 - modulo_primer_produciendo - ERROR - Error en el procesamiento de compras: cannot access local variable 'df_maestro' where it is not associated with a value
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_primer_produciendo.py", line 231, in procesar_produciendo
+    df_maestro = df_maestro.astype({'Codigo': str})
+                 ^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'df_maestro' where it is not associated with a value
+2025-06-24 15:40:23 - modulo_primer_produciendo - ERROR - Error en el procesamiento de compras: cannot access local variable 'df_produciendo' where it is not associated with a value
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_primer_produciendo.py", line 232, in procesar_produciendo
+    df_produciendo = df_produciendo.astype({'Codigo': str})
+                     ^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'df_produciendo' where it is not associated with a value
+2025-06-24 16:17:03 - modulo_primer_produciendo - ERROR - Error en el procesamiento de compras: [Errno 13] Permission denied: 'C:/Users/tsalvatierra/Desktop/55555.xlsx'
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_primer_produciendo.py", line 319, in procesar_produciendo
+    df_produciendo.to_excel(output_path, index=False, engine="openpyxl")
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 2252, in to_excel
+    formatter.write(
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\formats\excel.py", line 934, in write
+    writer = ExcelWriter(  # type: ignore[abstract]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\excel\_openpyxl.py", line 60, in __init__
+    super().__init__(
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\excel\_base.py", line 1219, in __init__
+    self._handles = get_handle(
+                    ^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\common.py", line 868, in get_handle
+    handle = open(handle, ioargs.mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:/Users/tsalvatierra/Desktop/55555.xlsx'
+2025-06-26 11:27:23 - func_fch_ult_compra - ERROR - Error en el procesamiento de compras: Cannot convert non-finite values (NA or inf) to integer
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\func_fch_ult_compra.py", line 163, in procesar_con_progreso
+    df_fch_161 = procesar_fechas_161(df_compras, df_estructuras, df_maestro)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\tsalvatierra\Desktop\Costeando\func_fch_ult_compra.py", line 85, in procesar_fechas_161
+    df_fch_161['Grupo'] = df_fch_161['Grupo'].astype(int)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 6324, in astype
+    new_data = self._mgr.astype(dtype=dtype, copy=copy, errors=errors)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\managers.py", line 451, in astype
+    return self.apply(
+           ^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\managers.py", line 352, in apply
+    applied = getattr(b, f)(**kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\blocks.py", line 511, in astype
+    new_values = astype_array_safe(values, dtype, copy=copy, errors=errors)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\dtypes\astype.py", line 242, in astype_array_safe
+    new_values = astype_array(values, dtype, copy=copy)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\dtypes\astype.py", line 187, in astype_array
+    values = _astype_nansafe(values, dtype, copy=copy)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\dtypes\astype.py", line 105, in _astype_nansafe
+    return _astype_float_to_int_nansafe(arr, dtype, copy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\dtypes\astype.py", line 150, in _astype_float_to_int_nansafe
+    raise IntCastingNaNError(
+pandas.errors.IntCastingNaNError: Cannot convert non-finite values (NA or inf) to integer
+2025-06-26 11:34:29 - func_fch_ult_compra - ERROR - Error en el procesamiento de compras: Cannot convert non-finite values (NA or inf) to integer
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\func_fch_ult_compra.py", line 166, in procesar_con_progreso
+    df_fch_161 = procesar_fechas_161(df_compras, df_estructuras, df_maestro)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\tsalvatierra\Desktop\Costeando\func_fch_ult_compra.py", line 86, in procesar_fechas_161
+    df_fch_161['Grupo'] = df_fch_161['Grupo'].astype(int)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 6324, in astype
+    new_data = self._mgr.astype(dtype=dtype, copy=copy, errors=errors)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\managers.py", line 451, in astype
+    return self.apply(
+           ^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\managers.py", line 352, in apply
+    applied = getattr(b, f)(**kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\blocks.py", line 511, in astype
+    new_values = astype_array_safe(values, dtype, copy=copy, errors=errors)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\dtypes\astype.py", line 242, in astype_array_safe
+    new_values = astype_array(values, dtype, copy=copy)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\dtypes\astype.py", line 187, in astype_array
+    values = _astype_nansafe(values, dtype, copy=copy)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\dtypes\astype.py", line 105, in _astype_nansafe
+    return _astype_float_to_int_nansafe(arr, dtype, copy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\dtypes\astype.py", line 150, in _astype_float_to_int_nansafe
+    raise IntCastingNaNError(
+pandas.errors.IntCastingNaNError: Cannot convert non-finite values (NA or inf) to integer
+2025-06-26 11:38:10 - func_fch_ult_compra - ERROR - Error en el procesamiento de compras: Cannot convert non-finite values (NA or inf) to integer
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\func_fch_ult_compra.py", line 167, in procesar_con_progreso
+    df_fch_161 = procesar_fechas_161(df_compras, df_estructuras, df_maestro)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\tsalvatierra\Desktop\Costeando\func_fch_ult_compra.py", line 87, in procesar_fechas_161
+    df_fch_161['Grupo'] = df_fch_161['Grupo'].astype(int)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 6324, in astype
+    new_data = self._mgr.astype(dtype=dtype, copy=copy, errors=errors)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\managers.py", line 451, in astype
+    return self.apply(
+           ^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\managers.py", line 352, in apply
+    applied = getattr(b, f)(**kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\blocks.py", line 511, in astype
+    new_values = astype_array_safe(values, dtype, copy=copy, errors=errors)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\dtypes\astype.py", line 242, in astype_array_safe
+    new_values = astype_array(values, dtype, copy=copy)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\dtypes\astype.py", line 187, in astype_array
+    values = _astype_nansafe(values, dtype, copy=copy)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\dtypes\astype.py", line 105, in _astype_nansafe
+    return _astype_float_to_int_nansafe(arr, dtype, copy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\dtypes\astype.py", line 150, in _astype_float_to_int_nansafe
+    raise IntCastingNaNError(
+pandas.errors.IntCastingNaNError: Cannot convert non-finite values (NA or inf) to integer
+2025-06-26 11:40:51 - func_fch_ult_compra - ERROR - Error en el procesamiento de compras: Cannot convert non-finite values (NA or inf) to integer
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\func_fch_ult_compra.py", line 169, in procesar_con_progreso
+    df_fch_161 = procesar_fechas_161(df_compras, df_estructuras, df_maestro)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\tsalvatierra\Desktop\Costeando\func_fch_ult_compra.py", line 89, in procesar_fechas_161
+    df_fch_161['Grupo'] = df_fch_161['Grupo'].astype(int)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 6324, in astype
+    new_data = self._mgr.astype(dtype=dtype, copy=copy, errors=errors)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\managers.py", line 451, in astype
+    return self.apply(
+           ^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\managers.py", line 352, in apply
+    applied = getattr(b, f)(**kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\blocks.py", line 511, in astype
+    new_values = astype_array_safe(values, dtype, copy=copy, errors=errors)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\dtypes\astype.py", line 242, in astype_array_safe
+    new_values = astype_array(values, dtype, copy=copy)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\dtypes\astype.py", line 187, in astype_array
+    values = _astype_nansafe(values, dtype, copy=copy)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\dtypes\astype.py", line 105, in _astype_nansafe
+    return _astype_float_to_int_nansafe(arr, dtype, copy)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\dtypes\astype.py", line 150, in _astype_float_to_int_nansafe
+    raise IntCastingNaNError(
+pandas.errors.IntCastingNaNError: Cannot convert non-finite values (NA or inf) to integer
+2025-06-26 12:10:25 - func_fch_ult_compra - ERROR - Error en el procesamiento de compras: cannot access local variable 'df_resultado' where it is not associated with a value
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\func_fch_ult_compra.py", line 167, in procesar_con_progreso
+    compilar_y_exportar(df_fch_gral, df_fch_servicios, df_fch_161, df_fchs_ordenes, df_maestro, progress_bar, ventana)
+  File "c:\Users\tsalvatierra\Desktop\Costeando\func_fch_ult_compra.py", line 136, in compilar_y_exportar
+    df_resultado = df_resultado.dropna(subset=["FORMATO"])
+                   ^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'df_resultado' where it is not associated with a value
+2025-06-26 16:07:59 - modulo_primer_produciendo - ERROR - Error en el procesamiento de compras: [Errno 13] Permission denied: 'C:/Users/tsalvatierra/Desktop/PRUEBAS/PRUEBAS COMPLETAS/26-06-2025 Produciendo primera etapa 515.xlsx'
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_primer_produciendo.py", line 319, in procesar_produciendo
+    df_produciendo.to_excel(output_path, index=False, engine="openpyxl")
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 2252, in to_excel
+    formatter.write(
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\formats\excel.py", line 934, in write
+    writer = ExcelWriter(  # type: ignore[abstract]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\excel\_openpyxl.py", line 60, in __init__
+    super().__init__(
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\excel\_base.py", line 1219, in __init__
+    self._handles = get_handle(
+                    ^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\common.py", line 868, in get_handle
+    handle = open(handle, ioargs.mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:/Users/tsalvatierra/Desktop/PRUEBAS/PRUEBAS COMPLETAS/26-06-2025 Produciendo primera etapa 515.xlsx'
+2025-06-27 14:08:28 - modulo_segundo_produciendo - ERROR - Error durante el procesamiento: 'Costo 1er Importador'
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 176, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Costo 1er Importador'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_segundo_produciendo.py", line 230, in procesar_segundo_produciendo
+    df_importador = crear_importador(df_produciendo, año_campaña, fecha_compras_inicio, fecha_compras_fin,campaña_año)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_segundo_produciendo.py", line 107, in crear_importador
+    df_importador['Costo 1er Importador'] = df_importador['Costo 1er Importador'].round(2).astype(str)
+                                            ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 3761, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Costo 1er Importador'
+2025-06-27 14:23:52 - modulo_proyectados - ERROR - Error en el procesamiento de costos proyectados: 'VARIABLE'
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 176, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'VARIABLE'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_proyectados.py", line 118, in procesar_proyectados
+    df_listado_proyectado[camp] = df_listado_proyectado.apply(lambda row: obtener_coeficiente(camp, row['VARIABLE']), axis=1)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 9423, in apply
+    return op.apply().__finalize__(self, method="apply")
+           ^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py", line 678, in apply
+    return self.apply_standard()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py", line 798, in apply_standard
+    results, res_index = self.apply_series_generator()
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py", line 814, in apply_series_generator
+    results[i] = self.f(v)
+                 ^^^^^^^^^
+  File "c:\Users\tsalvatierra\Desktop\Costeando\modulo_proyectados.py", line 118, in <lambda>
+    df_listado_proyectado[camp] = df_listado_proyectado.apply(lambda row: obtener_coeficiente(camp, row['VARIABLE']), axis=1)
+                                                                                                    ~~~^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\series.py", line 1007, in __getitem__
+    return self._get_value(key)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\series.py", line 1116, in _get_value
+    loc = self.index.get_loc(label)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'VARIABLE'

@@ -1,0 +1,569 @@
+2025-07-10 11:36:55 - __main__ - DEBUG - Proceso seleccionado por el usuario: 1 - ejecutar_proceso
+2025-07-10 11:36:55 - __main__ - INFO - Iniciando proceso: Ejecutar Proceso
+2025-07-10 11:36:55 - __main__ - INFO - Proceso Ejecutar Proceso iniciado exitosamente
+2025-07-10 11:39:09 - costeando.modulos.modulo_leader_list - INFO - Inicio del procesamiento de Leader List
+2025-07-10 11:39:09 - costeando.modulos.modulo_leader_list - DEBUG - Campaña: 16, Año: 2025
+2025-07-10 11:39:09 - costeando.modulos.modulo_leader_list - DEBUG - Archivos seleccionados: Z:/Costos/Compartido/516 C16-2025/LEADER LIST 516/LL RECIBIDOS 516/10-07-25 Leader List C16 2025 completo (DENU).xlsx, Z:/Costos/Compartido/515 c15-2025/LISTA 515/25-06-25 LISTA 515 C15-2025 consulta_lista_de_precios_140815(Planilla trabajo).xlsx, Z:/Costos/Compartido/516 C16-2025/MAESTRO 516/10-07-25 MAESTRO 516 PARA LL productos_093720.xlsx, Z:/Costos/Compartido/516 C16-2025/DOBLES Y COMB 516/02-07-25 DOBLES 516 ACTUALIZADO A LA FECHA (ANDRE).xlsx, Z:/Costos/Compartido/516 C16-2025/DOBLES Y COMB 516/02-07-25 COMBINADAS 516 ACTUALIZADO A LA FECHA (ANDRE).xlsx
+2025-07-10 11:39:33 - costeando.modulos.modulo_leader_list - DEBUG - Archivos leídos correctamente
+2025-07-10 11:39:33 - costeando.modulos.modulo_leader_list - DEBUG - 621 productos en Leader List original
+2025-07-10 11:39:33 - costeando.modulos.modulo_leader_list - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Listado de Costos N-1.
+2025-07-10 11:39:33 - costeando.modulos.modulo_leader_list - DEBUG - No se encontró la columna 'Producto' en Maestro.
+2025-07-10 11:39:33 - costeando.modulos.modulo_leader_list - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Stock.
+2025-07-10 11:40:11 - costeando.modulos.modulo_leader_list - INFO - El archivo ha sido procesado y guardado en: C:/Users/tsalvatierra/Desktop/PRUEBAS/PRUEBAS COMPLETAS/Leader list C16-2025.xlsx
+2025-07-10 11:40:11 - costeando.modulos.modulo_leader_list - INFO - Combinadas agrupadas guardadas en: C:/Users/tsalvatierra/Desktop/PRUEBAS/PRUEBAS COMPLETAS/Combinadas agrupadas.xlsx
+2025-07-10 11:40:11 - costeando.modulos.modulo_leader_list - INFO - Fin del procesamiento de Leader List
+2025-07-10 11:40:12 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-10 11:40:22 - __main__ - DEBUG - Proceso seleccionado por el usuario: 6 - ejecutar_proceso
+2025-07-10 11:40:22 - __main__ - INFO - Iniciando proceso: Ejecutar Proceso
+2025-07-10 11:40:22 - __main__ - INFO - Proceso Ejecutar Proceso iniciado exitosamente
+2025-07-10 11:42:27 - costeando.modulos.modulo_primer_produciendo - INFO - Iniciando procesamiento de Produciendo primera etapa.
+2025-07-10 11:42:45 - costeando.modulos.modulo_primer_produciendo - INFO - Archivos cargados correctamente
+2025-07-10 11:42:45 - costeando.modulos.modulo_primer_produciendo - DEBUG - No se encontró la columna 'Producto' en Produciendo anterior.
+2025-07-10 11:42:45 - costeando.modulos.modulo_primer_produciendo - DEBUG - No se encontró la columna 'Producto' en Maestro produciendo.
+2025-07-10 11:42:45 - costeando.modulos.modulo_primer_produciendo - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Stock.
+2025-07-10 11:42:45 - costeando.modulos.modulo_primer_produciendo - DEBUG - No se encontró la columna 'Producto' en Base descuentos especiales.
+2025-07-10 11:42:45 - costeando.modulos.modulo_primer_produciendo - DEBUG - No se encontró la columna 'Producto' en Rotacion.
+2025-07-10 11:42:45 - costeando.modulos.modulo_primer_produciendo - INFO - Costo sin descuento calculado
+2025-07-10 11:42:45 - costeando.modulos.modulo_primer_produciendo - INFO - Comenzando a actualizar estado vencido
+2025-07-10 11:42:45 - costeando.modulos.modulo_primer_produciendo - INFO - Actualizando estado vencido
+2025-07-10 11:42:45 - costeando.modulos.modulo_primer_produciendo - INFO - Estado vencido actualizado
+2025-07-10 11:43:07 - costeando.modulos.modulo_primer_produciendo - INFO - Guardando archivos procesados
+2025-07-10 11:45:07 - costeando.modulos.modulo_primer_produciendo - INFO - Guardado de archivos finalizado
+2025-07-10 11:45:09 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-10 11:45:10 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-10 15:20:19 - __main__ - DEBUG - Proceso seleccionado por el usuario: 1 - LeaderListWindow
+2025-07-10 15:20:19 - __main__ - INFO - Iniciando ventana: Leaderlist
+2025-07-10 15:20:19 - __main__ - INFO - Ventana Leaderlist iniciada exitosamente
+2025-07-10 15:20:23 - __main__ - DEBUG - Proceso seleccionado por el usuario: 1 - LeaderListWindow
+2025-07-10 15:20:23 - __main__ - INFO - Iniciando ventana: Leaderlist
+2025-07-10 15:20:23 - __main__ - INFO - Ventana Leaderlist iniciada exitosamente
+2025-07-10 15:20:28 - __main__ - DEBUG - Proceso seleccionado por el usuario: 1 - LeaderListWindow
+2025-07-10 15:20:28 - __main__ - INFO - Iniciando ventana: Leaderlist
+2025-07-10 15:20:28 - __main__ - INFO - Ventana Leaderlist iniciada exitosamente
+2025-07-10 15:20:35 - __main__ - DEBUG - Proceso seleccionado por el usuario: 9 - ActualizacionFCHSWindow
+2025-07-10 15:20:35 - __main__ - INFO - Iniciando ventana: Actualizacionfchs
+2025-07-10 15:20:35 - __main__ - INFO - Ventana Actualizacionfchs iniciada exitosamente
+2025-07-10 15:46:10 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-10 15:46:11 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-10 16:18:17 - __main__ - DEBUG - Proceso seleccionado por el usuario: 2 - ComprasWindow
+2025-07-10 16:18:17 - __main__ - INFO - Iniciando ventana: Compras
+2025-07-10 16:18:17 - __main__ - INFO - Ventana Compras iniciada exitosamente
+2025-07-10 16:22:20 - __main__ - DEBUG - Proceso seleccionado por el usuario: 2 - ComprasWindow
+2025-07-10 16:22:20 - __main__ - INFO - Iniciando ventana: Compras
+2025-07-10 16:22:20 - __main__ - INFO - Ventana Compras iniciada exitosamente
+2025-07-10 16:23:38 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-10 16:23:39 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-10 16:37:24 - __main__ - DEBUG - Proceso seleccionado por el usuario: 7 - SegundoProduciendoWindow
+2025-07-10 16:37:24 - __main__ - INFO - Iniciando ventana: Segundoproduciendo
+2025-07-10 16:37:24 - __main__ - INFO - Ventana Segundoproduciendo iniciada exitosamente
+2025-07-10 16:37:35 - __main__ - DEBUG - Proceso seleccionado por el usuario: 6 - PrimerProduciendoWindow
+2025-07-10 16:37:35 - __main__ - INFO - Iniciando ventana: Primerproduciendo
+2025-07-10 16:37:35 - __main__ - INFO - Ventana Primerproduciendo iniciada exitosamente
+2025-07-10 16:37:37 - __main__ - DEBUG - Proceso seleccionado por el usuario: 5 - SegundoComprandoWindow
+2025-07-10 16:37:37 - __main__ - INFO - Iniciando ventana: Segundocomprando
+2025-07-10 16:37:37 - __main__ - INFO - Ventana Segundocomprando iniciada exitosamente
+2025-07-10 16:37:40 - __main__ - DEBUG - Proceso seleccionado por el usuario: 3 - ValorizacionDYCWindow
+2025-07-10 16:37:40 - __main__ - INFO - Iniciando ventana: Valorizaciondyc
+2025-07-10 16:37:40 - __main__ - INFO - Ventana Valorizaciondyc iniciada exitosamente
+2025-07-10 16:37:44 - __main__ - DEBUG - Proceso seleccionado por el usuario: 2 - ComprasWindow
+2025-07-10 16:37:44 - __main__ - INFO - Iniciando ventana: Compras
+2025-07-10 16:37:44 - __main__ - INFO - Ventana Compras iniciada exitosamente
+2025-07-10 16:37:46 - __main__ - DEBUG - Proceso seleccionado por el usuario: 8 - ProyectadosWindow
+2025-07-10 16:37:46 - __main__ - INFO - Iniciando ventana: Proyectados
+2025-07-10 16:37:46 - __main__ - INFO - Ventana Proyectados iniciada exitosamente
+2025-07-10 16:37:48 - __main__ - DEBUG - Proceso seleccionado por el usuario: 9 - ActualizacionFCHSWindow
+2025-07-10 16:37:48 - __main__ - INFO - Iniciando ventana: Actualizacionfchs
+2025-07-10 16:37:48 - __main__ - INFO - Ventana Actualizacionfchs iniciada exitosamente
+2025-07-10 16:37:57 - __main__ - DEBUG - Proceso seleccionado por el usuario: 1 - LeaderListWindow
+2025-07-10 16:37:57 - __main__ - INFO - Iniciando ventana: Leaderlist
+2025-07-10 16:37:57 - __main__ - INFO - Ventana Leaderlist iniciada exitosamente
+2025-07-10 16:38:02 - __main__ - DEBUG - Proceso seleccionado por el usuario: 2 - ComprasWindow
+2025-07-10 16:38:02 - __main__ - INFO - Iniciando ventana: Compras
+2025-07-10 16:38:02 - __main__ - INFO - Ventana Compras iniciada exitosamente
+2025-07-10 16:38:05 - __main__ - DEBUG - Proceso seleccionado por el usuario: 3 - ValorizacionDYCWindow
+2025-07-10 16:38:05 - __main__ - INFO - Iniciando ventana: Valorizaciondyc
+2025-07-10 16:38:05 - __main__ - INFO - Ventana Valorizaciondyc iniciada exitosamente
+2025-07-10 16:38:08 - __main__ - DEBUG - Proceso seleccionado por el usuario: 4 - PrimerComprandoWindow
+2025-07-10 16:38:08 - __main__ - INFO - Iniciando ventana: Primercomprando
+2025-07-10 16:38:08 - __main__ - INFO - Ventana Primercomprando iniciada exitosamente
+2025-07-10 16:38:11 - __main__ - DEBUG - Proceso seleccionado por el usuario: 5 - SegundoComprandoWindow
+2025-07-10 16:38:11 - __main__ - INFO - Iniciando ventana: Segundocomprando
+2025-07-10 16:38:11 - __main__ - INFO - Ventana Segundocomprando iniciada exitosamente
+2025-07-10 16:38:13 - __main__ - DEBUG - Proceso seleccionado por el usuario: 6 - PrimerProduciendoWindow
+2025-07-10 16:38:13 - __main__ - INFO - Iniciando ventana: Primerproduciendo
+2025-07-10 16:38:13 - __main__ - INFO - Ventana Primerproduciendo iniciada exitosamente
+2025-07-10 16:38:15 - __main__ - DEBUG - Proceso seleccionado por el usuario: 7 - SegundoProduciendoWindow
+2025-07-10 16:38:15 - __main__ - INFO - Iniciando ventana: Segundoproduciendo
+2025-07-10 16:38:15 - __main__ - INFO - Ventana Segundoproduciendo iniciada exitosamente
+2025-07-10 16:38:17 - __main__ - DEBUG - Proceso seleccionado por el usuario: 8 - ProyectadosWindow
+2025-07-10 16:38:17 - __main__ - INFO - Iniciando ventana: Proyectados
+2025-07-10 16:38:17 - __main__ - INFO - Ventana Proyectados iniciada exitosamente
+2025-07-10 16:38:19 - __main__ - DEBUG - Proceso seleccionado por el usuario: 9 - ActualizacionFCHSWindow
+2025-07-10 16:38:19 - __main__ - INFO - Iniciando ventana: Actualizacionfchs
+2025-07-10 16:38:19 - __main__ - INFO - Ventana Actualizacionfchs iniciada exitosamente
+2025-07-10 16:42:58 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-10 16:42:58 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-11 09:08:37 - __main__ - DEBUG - Proceso seleccionado por el usuario: 4 - PrimerComprandoWindow
+2025-07-11 09:08:37 - __main__ - INFO - Iniciando ventana: Primercomprando
+2025-07-11 09:08:37 - __main__ - INFO - Ventana Primercomprando iniciada exitosamente
+2025-07-11 09:08:52 - __main__ - DEBUG - Proceso seleccionado por el usuario: 5 - SegundoComprandoWindow
+2025-07-11 09:08:52 - __main__ - INFO - Iniciando ventana: Segundocomprando
+2025-07-11 09:08:52 - __main__ - INFO - Ventana Segundocomprando iniciada exitosamente
+2025-07-11 09:08:55 - __main__ - DEBUG - Proceso seleccionado por el usuario: 6 - PrimerProduciendoWindow
+2025-07-11 09:08:55 - __main__ - INFO - Iniciando ventana: Primerproduciendo
+2025-07-11 09:08:56 - __main__ - INFO - Ventana Primerproduciendo iniciada exitosamente
+2025-07-11 09:08:58 - __main__ - DEBUG - Proceso seleccionado por el usuario: 7 - SegundoProduciendoWindow
+2025-07-11 09:08:58 - __main__ - INFO - Iniciando ventana: Segundoproduciendo
+2025-07-11 09:08:58 - __main__ - INFO - Ventana Segundoproduciendo iniciada exitosamente
+2025-07-11 09:09:01 - __main__ - DEBUG - Proceso seleccionado por el usuario: 9 - ActualizacionFCHSWindow
+2025-07-11 09:09:01 - __main__ - INFO - Iniciando ventana: Actualizacionfchs
+2025-07-11 09:09:01 - __main__ - INFO - Ventana Actualizacionfchs iniciada exitosamente
+2025-07-11 09:09:11 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-11 09:09:13 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-11 09:10:31 - __main__ - DEBUG - Proceso seleccionado por el usuario: 9 - ActualizacionFCHSWindow
+2025-07-11 09:10:31 - __main__ - INFO - Iniciando ventana: Actualizacionfchs
+2025-07-11 09:10:31 - __main__ - INFO - Ventana Actualizacionfchs iniciada exitosamente
+2025-07-11 09:10:35 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-11 09:10:36 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-11 09:20:17 - __main__ - DEBUG - Proceso seleccionado por el usuario: 1 - LeaderListWindow
+2025-07-11 09:20:17 - __main__ - INFO - Iniciando ventana: Leaderlist
+2025-07-11 09:20:17 - __main__ - INFO - Ventana Leaderlist iniciada exitosamente
+2025-07-11 09:20:21 - __main__ - DEBUG - Proceso seleccionado por el usuario: 2 - ComprasWindow
+2025-07-11 09:20:21 - __main__ - INFO - Iniciando ventana: Compras
+2025-07-11 09:20:21 - __main__ - INFO - Ventana Compras iniciada exitosamente
+2025-07-11 09:20:23 - __main__ - DEBUG - Proceso seleccionado por el usuario: 3 - ValorizacionDYCWindow
+2025-07-11 09:20:23 - __main__ - INFO - Iniciando ventana: Valorizaciondyc
+2025-07-11 09:20:23 - __main__ - INFO - Ventana Valorizaciondyc iniciada exitosamente
+2025-07-11 09:20:26 - __main__ - DEBUG - Proceso seleccionado por el usuario: 4 - PrimerComprandoWindow
+2025-07-11 09:20:26 - __main__ - INFO - Iniciando ventana: Primercomprando
+2025-07-11 09:20:26 - __main__ - INFO - Ventana Primercomprando iniciada exitosamente
+2025-07-11 09:20:29 - __main__ - DEBUG - Proceso seleccionado por el usuario: 5 - SegundoComprandoWindow
+2025-07-11 09:20:29 - __main__ - INFO - Iniciando ventana: Segundocomprando
+2025-07-11 09:20:29 - __main__ - INFO - Ventana Segundocomprando iniciada exitosamente
+2025-07-11 09:20:41 - __main__ - DEBUG - Proceso seleccionado por el usuario: 8 - ProyectadosWindow
+2025-07-11 09:20:41 - __main__ - INFO - Iniciando ventana: Proyectados
+2025-07-11 09:20:41 - __main__ - INFO - Ventana Proyectados iniciada exitosamente
+2025-07-11 09:20:44 - __main__ - DEBUG - Proceso seleccionado por el usuario: 9 - ActualizacionFCHSWindow
+2025-07-11 09:20:44 - __main__ - INFO - Iniciando ventana: Actualizacionfchs
+2025-07-11 09:20:44 - __main__ - INFO - Ventana Actualizacionfchs iniciada exitosamente
+2025-07-11 09:20:47 - __main__ - DEBUG - Proceso seleccionado por el usuario: 8 - ProyectadosWindow
+2025-07-11 09:20:47 - __main__ - INFO - Iniciando ventana: Proyectados
+2025-07-11 09:20:47 - __main__ - INFO - Ventana Proyectados iniciada exitosamente
+2025-07-11 09:21:07 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-11 09:21:10 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-11 11:55:17 - __main__ - DEBUG - Proceso seleccionado por el usuario: 4 - PrimerComprandoWindow
+2025-07-11 11:55:17 - __main__ - INFO - Iniciando ventana: Primercomprando
+2025-07-11 11:55:17 - __main__ - INFO - Ventana Primercomprando iniciada exitosamente
+2025-07-11 11:57:34 - costeando.modulos.procesamiento_primer_comprando - ERROR - Error en procesamiento primer comprando: 'Codigo'
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 176, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Codigo'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\modulos\procesamiento_primer_comprando.py", line 185, in procesar_primer_comprando
+    df_compras['Codigo'] = df_compras['Codigo'].astype(str).str.strip()
+                           ~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 3761, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Codigo'
+2025-07-11 11:57:34 - costeando.gui.primer_comprando_window - ERROR - Error en el procesamiento de primer comprando: 'Codigo'
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 176, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Codigo'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\gui\primer_comprando_window.py", line 151, in procesar_primer_comprando
+    resultado = procesar_primer_comprando(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\modulos\procesamiento_primer_comprando.py", line 185, in procesar_primer_comprando
+    df_compras['Codigo'] = df_compras['Codigo'].astype(str).str.strip()
+                           ~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 3761, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Codigo'
+2025-07-11 11:58:42 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-11 11:58:42 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-11 14:49:39 - __main__ - DEBUG - Proceso seleccionado por el usuario: 4 - PrimerComprandoWindow
+2025-07-11 14:49:39 - __main__ - INFO - Iniciando ventana: Primercomprando
+2025-07-11 14:49:39 - __main__ - INFO - Ventana Primercomprando iniciada exitosamente
+2025-07-11 14:52:04 - costeando.modulos.procesamiento_primer_comprando - DEBUG - No se encontró la columna 'Producto' en Maestro.
+2025-07-11 14:52:04 - costeando.modulos.procesamiento_primer_comprando - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Compras.
+2025-07-11 14:52:04 - costeando.modulos.procesamiento_primer_comprando - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Stock.
+2025-07-11 14:52:04 - costeando.modulos.procesamiento_primer_comprando - DEBUG - No se encontró la columna 'Producto' en Base Especiales.
+2025-07-11 14:52:04 - costeando.modulos.procesamiento_primer_comprando - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Listado.
+2025-07-11 14:52:04 - costeando.modulos.procesamiento_primer_comprando - DEBUG - No se encontró la columna 'Producto' en Comprando Anterior.
+2025-07-11 14:52:04 - costeando.modulos.procesamiento_primer_comprando - DEBUG - No se encontró la columna 'Producto' en Ficha RMS.
+2025-07-11 14:52:35 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-11 14:52:36 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-11 15:58:08 - __main__ - DEBUG - Proceso seleccionado por el usuario: 7 - SegundoProduciendoWindow
+2025-07-11 15:58:08 - __main__ - INFO - Iniciando ventana: Segundoproduciendo
+2025-07-11 15:58:08 - __main__ - INFO - Ventana Segundoproduciendo iniciada exitosamente
+2025-07-11 15:59:00 - costeando.modulos.procesamiento_segundo_produciendo - INFO - Iniciando procesamiento puro de segundo produciendo
+2025-07-11 15:59:05 - costeando.modulos.procesamiento_segundo_produciendo - DEBUG - No se encontró la columna 'Producto' en Produciendo.
+2025-07-11 15:59:05 - costeando.modulos.procesamiento_segundo_produciendo - DEBUG - No se encontró la columna 'Producto' en Base Descuentos Especiales.
+2025-07-11 15:59:05 - costeando.modulos.procesamiento_segundo_produciendo - DEBUG - No se encontró la columna 'Producto' en Importador Descuentos Especiales.
+2025-07-11 15:59:13 - costeando.modulos.procesamiento_segundo_produciendo - INFO - Archivos guardados exitosamente, en la ruta: C:/Users/tsalvatierra/Desktop/PRUEBAS/PRUEBAS COMPLETAS
+2025-07-11 15:59:18 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-11 15:59:20 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-14 10:14:38 - __main__ - DEBUG - Proceso seleccionado por el usuario: 3 - ValorizacionDYCWindow
+2025-07-14 10:14:38 - __main__ - INFO - Iniciando ventana: Valorizaciondyc
+2025-07-14 10:14:38 - __main__ - INFO - Ventana Valorizaciondyc iniciada exitosamente
+2025-07-14 10:17:09 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-14 10:17:10 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-14 10:22:31 - __main__ - DEBUG - Proceso seleccionado por el usuario: 3 - ValorizacionDYCWindow
+2025-07-14 10:22:31 - __main__ - INFO - Iniciando ventana: Valorizaciondyc
+2025-07-14 10:22:31 - __main__ - INFO - Ventana Valorizaciondyc iniciada exitosamente
+2025-07-14 10:23:03 - costeando.modulos.procesamiento_valorizacion_dyc - INFO - Iniciando procesamiento puro de Valorización DYC
+2025-07-14 10:23:12 - costeando.modulos.procesamiento_valorizacion_dyc - INFO - Archivo guardado en: C:/Users/tsalvatierra/Desktop/PRUEBAS/PRUEBAS COMPLETAS\Valorizacion DyC.xlsx
+2025-07-14 10:23:35 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-14 10:23:36 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-14 10:39:27 - __main__ - DEBUG - Proceso seleccionado por el usuario: 3 - ValorizacionDYCWindow
+2025-07-14 10:39:27 - __main__ - INFO - Iniciando ventana: Valorizaciondyc
+2025-07-14 10:39:27 - __main__ - INFO - Ventana Valorizaciondyc iniciada exitosamente
+2025-07-14 10:40:28 - costeando.modulos.procesamiento_valorizacion_dyc - INFO - Iniciando procesamiento puro de Valorización DYC
+2025-07-14 10:40:38 - costeando.modulos.procesamiento_valorizacion_dyc - INFO - Archivo guardado en: C:/Users/tsalvatierra/Desktop/PRUEBAS/PRUEBAS COMPLETAS\Valorizacion DyC.xlsx
+2025-07-14 10:40:42 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-14 10:40:43 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-14 10:54:56 - __main__ - DEBUG - Proceso seleccionado por el usuario: 6 - PrimerProduciendoWindow
+2025-07-14 10:54:56 - __main__ - INFO - Iniciando ventana: Primerproduciendo
+2025-07-14 10:54:57 - __main__ - INFO - Ventana Primerproduciendo iniciada exitosamente
+2025-07-14 10:54:59 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-14 10:54:59 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-14 12:13:30 - __main__ - DEBUG - Proceso seleccionado por el usuario: 9 - ActualizacionFCHSWindow
+2025-07-14 12:13:30 - __main__ - INFO - Iniciando ventana: Actualizacionfchs
+2025-07-14 12:13:30 - __main__ - INFO - Ventana Actualizacionfchs iniciada exitosamente
+2025-07-14 12:15:29 - costeando.modulos.procesamiento_actualizacion_fchs - INFO - Iniciando procesamiento puro de Actualización FCHS
+2025-07-14 12:16:02 - costeando.gui.actualizacion_fchs_window - ERROR - Error en la actualización de fechas: Faltan columnas en estructuras: ['CODIGO_PLANO']
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\gui\actualizacion_fchs_window.py", line 102, in procesar_actualizacion_fechas
+    resultado = procesar_actualizacion_fchs_puro(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\modulos\procesamiento_actualizacion_fchs.py", line 101, in procesar_actualizacion_fchs_puro
+    validar_columnas(df_estructuras, ["COD_NIVEL0", "CODIGO_PLANO"], "estructuras")
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\utilidades\validaciones.py", line 13, in validar_columnas
+    raise ValueError(f"Faltan columnas en {nombre_df}: {faltantes}")
+ValueError: Faltan columnas en estructuras: ['CODIGO_PLANO']
+2025-07-14 12:16:24 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-14 12:16:25 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-14 16:24:15 - __main__ - DEBUG - Proceso seleccionado por el usuario: 8 - ProyectadosWindow
+2025-07-14 16:24:15 - __main__ - INFO - Iniciando ventana: Proyectados
+2025-07-14 16:24:15 - __main__ - INFO - Ventana Proyectados iniciada exitosamente
+2025-07-14 16:29:02 - costeando.modulos.procesamiento_proyectados - INFO - Iniciando procesamiento puro de Proyectados
+2025-07-14 16:31:30 - costeando.modulos.procesamiento_proyectados - INFO - Archivos guardados en: C:/Users/tsalvatierra/Desktop/PRUEBAS/PRUEBAS COMPLETAS
+2025-07-14 16:31:36 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-14 16:31:39 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-15 09:26:11 - __main__ - DEBUG - Proceso seleccionado por el usuario: 2 - ComprasWindow
+2025-07-15 09:26:11 - __main__ - INFO - Iniciando ventana: Compras
+2025-07-15 09:26:11 - __main__ - INFO - Ventana Compras iniciada exitosamente
+2025-07-15 09:26:22 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-15 09:26:23 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-15 10:26:18 - __main__ - DEBUG - Proceso seleccionado por el usuario: 1 - LeaderListWindow
+2025-07-15 10:26:18 - __main__ - INFO - Iniciando ventana: Leaderlist
+2025-07-15 10:26:18 - __main__ - INFO - Ventana Leaderlist iniciada exitosamente
+2025-07-15 10:27:21 - costeando.modulos.procesamiento_leader_list - INFO - Iniciando procesamiento puro de Leader List
+2025-07-15 10:27:43 - costeando.modulos.procesamiento_leader_list - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Listado de Costos N-1.
+2025-07-15 10:27:43 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Maestro.
+2025-07-15 10:27:43 - costeando.modulos.procesamiento_leader_list - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Stock.
+2025-07-15 10:27:43 - costeando.gui.leader_list_window - ERROR - Error en el procesamiento de leader list: 'str' object has no attribute 'columns'
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\gui\leader_list_window.py", line 127, in procesar_leader_list
+    resultado = procesar_leader_list_puro(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\modulos\procesamiento_leader_list.py", line 82, in procesar_leader_list_puro
+    lista_dfs = [estandarizar_columna_producto(df, nombre) for df, nombre in lista_dfs]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\modulos\procesamiento_leader_list.py", line 82, in <listcomp>
+    lista_dfs = [estandarizar_columna_producto(df, nombre) for df, nombre in lista_dfs]
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\modulos\procesamiento_leader_list.py", line 10, in estandarizar_columna_producto
+    if 'Producto' in df.columns:
+                     ^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'columns'
+2025-07-15 10:28:01 - costeando.gui.leader_list_window - ERROR - Error en el procesamiento de leader list: invalid command name ".!leaderlistwindow.!progressbar"
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\gui\leader_list_window.py", line 95, in procesar_con_progreso
+    self.procesar_leader_list()
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\gui\leader_list_window.py", line 143, in procesar_leader_list
+    self.ocultar_progreso()
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\gui\leader_list_window.py", line 86, in ocultar_progreso
+    self.progress_bar.stop()
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\tkinter\ttk.py", line 1003, in stop
+    self.tk.call(self._w, "stop")
+_tkinter.TclError: invalid command name ".!leaderlistwindow.!progressbar"
+2025-07-15 10:28:05 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-15 10:28:06 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-15 10:29:23 - __main__ - DEBUG - Proceso seleccionado por el usuario: 1 - LeaderListWindow
+2025-07-15 10:29:23 - __main__ - INFO - Iniciando ventana: Leaderlist
+2025-07-15 10:29:23 - __main__ - INFO - Ventana Leaderlist iniciada exitosamente
+2025-07-15 10:30:09 - costeando.modulos.procesamiento_leader_list - INFO - Iniciando procesamiento puro de Leader List
+2025-07-15 10:30:29 - costeando.modulos.procesamiento_leader_list - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Listado de Costos N-1.
+2025-07-15 10:30:29 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Maestro.
+2025-07-15 10:30:29 - costeando.modulos.procesamiento_leader_list - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Stock.
+2025-07-15 10:30:29 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Combinadas agrupadas.
+2025-07-15 10:30:29 - costeando.gui.leader_list_window - ERROR - Error en el procesamiento de leader list: name 'Codigo' is not defined
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\scope.py", line 233, in resolve
+    return self.resolvers[key]
+           ~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\collections\__init__.py", line 1004, in __getitem__
+    return self.__missing__(key)            # support subclasses that define __missing__
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\collections\__init__.py", line 996, in __missing__
+    raise KeyError(key)
+KeyError: 'Codigo'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\scope.py", line 244, in resolve
+    return self.temps[key]
+           ~~~~~~~~~~^^^^^
+KeyError: 'Codigo'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\gui\leader_list_window.py", line 127, in procesar_leader_list
+    resultado = procesar_leader_list_puro(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\modulos\procesamiento_leader_list.py", line 85, in procesar_leader_list_puro
+    df_leader_list = df_leader_list.query("Codigo not in [99000, 99001, 99002, 99003, 99004, 99005]")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 4440, in query
+    res = self.eval(expr, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 4566, in eval
+    return _eval(expr, inplace=inplace, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\eval.py", line 336, in eval
+    parsed_expr = Expr(expr, engine=engine, parser=parser, env=env)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 809, in __init__
+    self.terms = self.parse()
+                 ^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 828, in parse
+    return self._visitor.visit(self.expr)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 415, in visit
+    return visitor(node, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 421, in visit_Module
+    return self.visit(expr, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 415, in visit
+    return visitor(node, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 424, in visit_Expr
+    return self.visit(node.value, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 415, in visit
+    return visitor(node, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 719, in visit_Compare
+    return self.visit(binop)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 415, in visit
+    return visitor(node, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 535, in visit_BinOp
+    op, op_class, left, right = self._maybe_transform_eq_ne(node)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 455, in _maybe_transform_eq_ne
+    left = self.visit(node.left, side="left")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 415, in visit
+    return visitor(node, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 548, in visit_Name
+    return self.term_type(node.id, self.env, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\ops.py", line 86, in __init__
+    self._value = self._resolve_name()
+                  ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\ops.py", line 110, in _resolve_name
+    res = self.env.resolve(local_name, is_local=is_local)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\scope.py", line 246, in resolve
+    raise UndefinedVariableError(key, is_local) from err
+pandas.errors.UndefinedVariableError: name 'Codigo' is not defined
+2025-07-15 10:30:56 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-15 10:30:56 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-15 10:34:52 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-15 10:34:53 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-15 10:48:57 - __main__ - DEBUG - Proceso seleccionado por el usuario: 1 - LeaderListWindow
+2025-07-15 10:48:57 - __main__ - INFO - Iniciando ventana: Leaderlist
+2025-07-15 10:48:57 - __main__ - INFO - Ventana Leaderlist iniciada exitosamente
+2025-07-15 10:49:51 - costeando.modulos.procesamiento_leader_list - INFO - Iniciando procesamiento puro de Leader List
+2025-07-15 10:50:11 - costeando.modulos.procesamiento_leader_list - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Listado de Costos N-1.
+2025-07-15 10:50:11 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Maestro.
+2025-07-15 10:50:11 - costeando.modulos.procesamiento_leader_list - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Stock.
+2025-07-15 10:50:11 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Combinadas.
+2025-07-15 10:50:11 - costeando.gui.leader_list_window - ERROR - Error en el procesamiento de leader list: name 'Codigo' is not defined
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\scope.py", line 233, in resolve
+    return self.resolvers[key]
+           ~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\collections\__init__.py", line 1004, in __getitem__
+    return self.__missing__(key)            # support subclasses that define __missing__
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\collections\__init__.py", line 996, in __missing__
+    raise KeyError(key)
+KeyError: 'Codigo'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\scope.py", line 244, in resolve
+    return self.temps[key]
+           ~~~~~~~~~~^^^^^
+KeyError: 'Codigo'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\gui\leader_list_window.py", line 127, in procesar_leader_list
+    resultado = procesar_leader_list_puro(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\modulos\procesamiento_leader_list.py", line 88, in procesar_leader_list_puro
+    df_leader_list = df_leader_list.query("Codigo not in [99000, 99001, 99002, 99003, 99004, 99005]")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 4440, in query
+    res = self.eval(expr, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 4566, in eval
+    return _eval(expr, inplace=inplace, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\eval.py", line 336, in eval
+    parsed_expr = Expr(expr, engine=engine, parser=parser, env=env)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 809, in __init__
+    self.terms = self.parse()
+                 ^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 828, in parse
+    return self._visitor.visit(self.expr)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 415, in visit
+    return visitor(node, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 421, in visit_Module
+    return self.visit(expr, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 415, in visit
+    return visitor(node, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 424, in visit_Expr
+    return self.visit(node.value, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 415, in visit
+    return visitor(node, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 719, in visit_Compare
+    return self.visit(binop)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 415, in visit
+    return visitor(node, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 535, in visit_BinOp
+    op, op_class, left, right = self._maybe_transform_eq_ne(node)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 455, in _maybe_transform_eq_ne
+    left = self.visit(node.left, side="left")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 415, in visit
+    return visitor(node, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\expr.py", line 548, in visit_Name
+    return self.term_type(node.id, self.env, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\ops.py", line 86, in __init__
+    self._value = self._resolve_name()
+                  ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\ops.py", line 110, in _resolve_name
+    res = self.env.resolve(local_name, is_local=is_local)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\computation\scope.py", line 246, in resolve
+    raise UndefinedVariableError(key, is_local) from err
+pandas.errors.UndefinedVariableError: name 'Codigo' is not defined
+2025-07-15 10:55:20 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-15 10:55:21 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-15 10:55:33 - __main__ - DEBUG - Proceso seleccionado por el usuario: 1 - LeaderListWindow
+2025-07-15 10:55:33 - __main__ - INFO - Iniciando ventana: Leaderlist
+2025-07-15 10:55:33 - __main__ - INFO - Ventana Leaderlist iniciada exitosamente
+2025-07-15 10:56:20 - costeando.modulos.procesamiento_leader_list - INFO - Iniciando procesamiento puro de Leader List
+2025-07-15 10:56:46 - costeando.modulos.procesamiento_leader_list - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Listado de Costos N-1.
+2025-07-15 10:56:46 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Maestro.
+2025-07-15 10:56:46 - costeando.modulos.procesamiento_leader_list - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Stock.
+2025-07-15 10:56:46 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Combinadas.
+2025-07-15 10:56:46 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Dobles.
+2025-07-15 10:56:46 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Leader List.
+2025-07-15 10:56:46 - costeando.gui.leader_list_window - ERROR - Error en el procesamiento de leader list: "['Codigo'] not in index"
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\gui\leader_list_window.py", line 127, in procesar_leader_list
+    resultado = procesar_leader_list_puro(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\modulos\procesamiento_leader_list.py", line 103, in procesar_leader_list_puro
+    df_leader_list = pd.merge(df_leader_list,df_costo_anterior[["Codigo", "COSTO LISTA " + anio_campana_anterior,"DESCUENTO ESPECIAL","APLICA DDE CA:"]], how = "left", on="Codigo")
+                                             ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 3767, in __getitem__
+    indexer = self.columns._get_indexer_strict(key, "columns")[1]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 5877, in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 5941, in _raise_if_missing
+    raise KeyError(f"{not_found} not in index")
+KeyError: "['Codigo'] not in index"
+2025-07-15 11:08:15 - costeando.gui.leader_list_window - ERROR - Error en el procesamiento de leader list: invalid command name ".!leaderlistwindow.!progressbar"
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\gui\leader_list_window.py", line 95, in procesar_con_progreso
+    self.procesar_leader_list()
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\gui\leader_list_window.py", line 143, in procesar_leader_list
+    self.ocultar_progreso()
+  File "C:\Users\tsalvatierra\Desktop\Proyectos\Costeando1.1\costeando\gui\leader_list_window.py", line 86, in ocultar_progreso
+    self.progress_bar.stop()
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\tkinter\ttk.py", line 1003, in stop
+    self.tk.call(self._w, "stop")
+_tkinter.TclError: invalid command name ".!leaderlistwindow.!progressbar"
+2025-07-15 11:08:17 - __main__ - DEBUG - Proceso seleccionado por el usuario: 1 - LeaderListWindow
+2025-07-15 11:08:17 - __main__ - INFO - Iniciando ventana: Leaderlist
+2025-07-15 11:08:17 - __main__ - INFO - Ventana Leaderlist iniciada exitosamente
+2025-07-15 11:08:19 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-15 11:08:20 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-15 11:08:27 - __main__ - DEBUG - Proceso seleccionado por el usuario: 1 - LeaderListWindow
+2025-07-15 11:08:27 - __main__ - INFO - Iniciando ventana: Leaderlist
+2025-07-15 11:08:27 - __main__ - INFO - Ventana Leaderlist iniciada exitosamente
+2025-07-15 11:19:57 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-15 11:19:58 - __main__ - INFO - Aplicación cerrada por el usuario
+2025-07-15 16:16:31 - __main__ - DEBUG - Proceso seleccionado por el usuario: 4 - PrimerComprandoWindow
+2025-07-15 16:16:31 - __main__ - INFO - Iniciando ventana: Primercomprando
+2025-07-15 16:16:31 - __main__ - INFO - Ventana Primercomprando iniciada exitosamente
+2025-07-15 16:18:48 - costeando.modulos.procesamiento_primer_comprando - DEBUG - No se encontró la columna 'Producto' en Maestro.
+2025-07-15 16:18:48 - costeando.modulos.procesamiento_primer_comprando - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Compras.
+2025-07-15 16:18:48 - costeando.modulos.procesamiento_primer_comprando - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Stock.
+2025-07-15 16:18:48 - costeando.modulos.procesamiento_primer_comprando - DEBUG - No se encontró la columna 'Producto' en Base Especiales.
+2025-07-15 16:18:48 - costeando.modulos.procesamiento_primer_comprando - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Listado.
+2025-07-15 16:18:48 - costeando.modulos.procesamiento_primer_comprando - DEBUG - No se encontró la columna 'Producto' en Comprando Anterior.
+2025-07-15 16:18:48 - costeando.modulos.procesamiento_primer_comprando - DEBUG - No se encontró la columna 'Producto' en Ficha RMS.
+2025-07-15 16:19:11 - __main__ - INFO - Solicitud para cerrar la ventana
+2025-07-15 16:19:12 - __main__ - INFO - Aplicación cerrada por el usuario

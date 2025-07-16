@@ -1,0 +1,6 @@
+# Ignora la carpeta dist/ (y todo su contenido)
+dist/
+# Ignora la carpeta build/ (y todo su contenido)
+build/
+versiones/
+
