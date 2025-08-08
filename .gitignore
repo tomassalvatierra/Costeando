@@ -1,6 +1,44 @@
-# Ignora la carpeta dist/ (y todo su contenido)
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches y logs
+*.log
+logs/
+costeando/utilidades/logs/
+
+# Distribución y builds
 dist/
-# Ignora la carpeta build/ (y todo su contenido)
 build/
+*.egg-info/
+.eggs/
 versiones/
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+ENV/
+
+# Archivos de configuración de IDEs
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de pruebas
+.coverage
+htmlcov/
+.tox/
+.pytest_cache/
+.cache/
+
+# Otros
+*.bak
+*.swp
 

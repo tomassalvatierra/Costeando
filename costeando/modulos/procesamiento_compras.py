@@ -150,6 +150,8 @@ def procesar_compras_puro(ruta_compras: str, dolar: float, carpeta_guardado: str
         df_depuradas = pd.concat([df_compras, df_repetidos], ignore_index=True)
         df_depuradas['Tasa Moneda'] = np.where(df_depuradas['MONEDA'] == 'Dolar', dolar, 1.0)
         df_depuradas['ULTCOS'] = (df_depuradas['Prc.Unitario'] * df_depuradas['Tasa Moneda']).round(2)
+        df_depuradas['Var'] = ((df_depuradas['ULTCOS'] / df_depuradas['Costo Estand']) - 1).replace({np.inf: 'NUEVO'})
+
         df_depuradas.drop(columns=['Verificacion'], inplace=True, errors='ignore')
         df_depuradas.sort_values(by=['Producto', 'Fch Emision', 'ULTCOS'], ascending=[True, False, False], inplace=True)
         df_depuradas["OBSERVACIONES COSTOS"] = ""

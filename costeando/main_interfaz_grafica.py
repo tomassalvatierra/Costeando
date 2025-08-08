@@ -15,6 +15,7 @@ from costeando.gui.segundo_comprando_window import SegundoComprandoWindow
 from costeando.gui.primer_produciendo_window import PrimerProduciendoWindow
 from costeando.gui.segundo_produciendo_window import SegundoProduciendoWindow
 from costeando.gui.actualizacion_fchs_window import ActualizacionFCHSWindow
+from costeando.gui.listado_gral_window import ListadoGralWindow
 
 configurar_logging()
 logger = logging.getLogger(__name__)
@@ -42,7 +43,8 @@ class ProcesadorCostosApp(tk.Tk):
             6: PrimerProduciendoWindow,
             7: SegundoProduciendoWindow,
             8: ProyectadosWindow,
-            9: ActualizacionFCHSWindow}
+            9: ActualizacionFCHSWindow,
+            10: ListadoGralWindow}
 
         # Crear la UI
         self.crear_interfaz()
@@ -63,7 +65,8 @@ class ProcesadorCostosApp(tk.Tk):
             ("Primer Produciendo", 6),
             ("Segundo Produciendo", 7),
             ("Proyectados", 8),
-            ("Actualización de Fechas", 9)]
+            ("Actualización de Fechas", 9),
+            ("Completar Listado General", 10)]
 
         for text, value in opciones:
             ttk.Radiobutton(frame_procesos, text=text, variable=self.opcion_var, value=value).pack(anchor="w", padx=5, pady=2)

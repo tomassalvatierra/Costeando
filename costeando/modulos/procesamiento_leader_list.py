@@ -36,10 +36,6 @@ def proceso_combinadas(df_combinadas: pd.DataFrame) -> pd.DataFrame:
     df_grouped.rename(columns={'COMBINADA': 'Codigo'}, inplace=True)
     return df_grouped
 
-def estandarizar_codigo(df: pd.DataFrame) -> pd.DataFrame:
-    df["Codigo"] = df["Codigo"].astype(str).str.strip()
-    return df
-
 def procesar_leader_list_puro(
     ruta_leader_list: str,
     ruta_listado_anterior: str,
