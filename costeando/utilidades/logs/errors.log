@@ -282,3 +282,118 @@ Traceback (most recent call last):
   File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\tkinter\ttk.py", line 1003, in stop
     self.tk.call(self._w, "stop")
 _tkinter.TclError: invalid command name ".!leaderlistwindow.!progressbar"
+2025-08-13 09:05:26 - costeando.modulos.procesamiento_listado_gral - ERROR - Error durante el procesamiento de Leader List.
+Traceback (most recent call last):
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 72, in procesar_listado_gral_puro
+    lista_df = [estandarizar_columna_producto(df) for df in lista_df]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 72, in <listcomp>
+    lista_df = [estandarizar_columna_producto(df) for df in lista_df]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: estandarizar_columna_producto() missing 1 required positional argument: 'nombre_df'
+2025-08-13 09:18:42 - costeando.modulos.procesamiento_listado_gral - ERROR - Error durante el procesamiento de Leader List.
+Traceback (most recent call last):
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 78, in procesar_listado_gral_puro
+    lista_df = [estandarizar_columna_producto(df, nombre) for df in lista_df]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 78, in <listcomp>
+    lista_df = [estandarizar_columna_producto(df, nombre) for df in lista_df]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 12, in estandarizar_columna_producto
+    if 'Producto' in df.columns:
+                     ^^^^^^^^^^
+AttributeError: 'tuple' object has no attribute 'columns'
+2025-08-13 09:20:17 - costeando.modulos.procesamiento_listado_gral - ERROR - Error durante el procesamiento de Leader List.
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 176, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Codigo'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 78, in procesar_listado_gral_puro
+    lista_df = [estandarizar_columna_producto(df, nombre) for df,nombre in lista_df]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 78, in <listcomp>
+    lista_df = [estandarizar_columna_producto(df, nombre) for df,nombre in lista_df]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 18, in estandarizar_columna_producto
+    df['Codigo'] = df['Codigo'].astype(str).str.strip()
+                   ~~^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 3761, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Codigo'
+2025-08-13 09:23:02 - costeando.modulos.procesamiento_listado_gral - ERROR - Error durante el procesamiento de Leader List.
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 176, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Costo Lista'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 143, in procesar_listado_gral_puro
+    df_listado_general["Costo sin Descuento C"+campania] = df_listado_general["Costo Lista"] / (df_listado_general["% Sumatoria de Descuentos"]/100)
+                                                           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 3761, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Costo Lista'
+2025-08-13 09:41:03 - costeando.modulos.procesamiento_listado_gral - ERROR - Error durante el procesamiento de Leader List.
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 176, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Costo Lista'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 146, in procesar_listado_gral_puro
+    df_listado_general["Descuento aplicado $"] = df_listado_general["Costo Lista"] - df_listado_general["Costo sin Descuento C"+campania]
+                                                 ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 3761, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Costo Lista'
+2025-08-13 09:42:11 - costeando.modulos.procesamiento_listado_gral - ERROR - Error durante el procesamiento de Leader List.
+Traceback (most recent call last):
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 153, in procesar_listado_gral_puro
+    df_listado_general.to_excel(path_listado, index=False, engine="openpyxl")
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 2252, in to_excel
+    formatter.write(
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\formats\excel.py", line 934, in write
+    writer = ExcelWriter(  # type: ignore[abstract]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\excel\_openpyxl.py", line 60, in __init__
+    super().__init__(
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\excel\_base.py", line 1219, in __init__
+    self._handles = get_handle(
+                    ^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\common.py", line 737, in get_handle
+    check_parent_directory(str(handle))
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\common.py", line 600, in check_parent_directory
+    raise OSError(rf"Cannot save file into a non-existent directory: '{parent}'")
+OSError: Cannot save file into a non-existent directory: 'Z:\Costos\Compartido\517 c17-2025\LISTA 517\PRUEBAS.xlsx'

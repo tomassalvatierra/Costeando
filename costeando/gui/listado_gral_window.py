@@ -37,41 +37,46 @@ class ListadoGralWindow(tk.Toplevel):
                   "- Leader List: puede ser Leader List original o el depurado\n"
                   ).grid(row=0, column=0, columnspan=4, padx=10, pady=(10, 5), sticky='w')
         
-        # Entradas de campaña y año
-        ttk.Label(self, text='Campaña (CC):').grid(row=1, column=0, padx=5, pady=2)
-        self.entry_campaña = ttk.Entry(self)
-        self.entry_campaña.grid(row=1, column=1, padx=5, pady=2)
-
+        
         # Selección de archivos (cada uno en su fila)
-        ttk.Button(self, text='Seleccionar lista', command=lambda: self.seleccionar_archivo(self.ruta_listado, "Seleccionar la lista a procesar"), width=25).grid(row=2, column=0, padx=5, pady=2)
-        ttk.Entry(self, textvariable=self.ruta_listado, width=50).grid(row=2, column=1, padx=5, pady=2)
+        ttk.Button(self, text='Seleccionar lista', command=lambda: self.seleccionar_archivo(self.ruta_listado, "Seleccionar la lista a procesar"), width=25).grid(row=1, column=0, padx=5, pady=2)
+        ttk.Entry(self, textvariable=self.ruta_listado, width=50).grid(row=1, column=1, padx=5, pady=2)
 
-        ttk.Button(self, text='Seleccionar produciendo', command=lambda: self.seleccionar_archivo(self.ruta_produciendo, "Seleccionar archivo Produciendo N"), width=25).grid(row=3, column=0, padx=5, pady=2)
-        ttk.Entry(self, textvariable=self.ruta_produciendo, width=50).grid(row=3, column=1, padx=5, pady=2)
+        ttk.Button(self, text='Seleccionar produciendo', command=lambda: self.seleccionar_archivo(self.ruta_produciendo, "Seleccionar archivo Produciendo N"), width=25).grid(row=2, column=0, padx=5, pady=2)
+        ttk.Entry(self, textvariable=self.ruta_produciendo, width=50).grid(row=2, column=1, padx=5, pady=2)
 
-        ttk.Button(self, text='Seleccionar comprando', command=lambda: self.seleccionar_archivo(self.ruta_comprando, "Seleccionar archivo Comprando N"), width=25).grid(row=4, column=0, padx=5, pady=2)
-        ttk.Entry(self, textvariable=self.ruta_comprando, width=50).grid(row=4, column=1, padx=5, pady=2)
+        ttk.Button(self, text='Seleccionar comprando', command=lambda: self.seleccionar_archivo(self.ruta_comprando, "Seleccionar archivo Comprando N"), width=25).grid(row=3, column=0, padx=5, pady=2)
+        ttk.Entry(self, textvariable=self.ruta_comprando, width=50).grid(row=3, column=1, padx=5, pady=2)
 
-        ttk.Button(self, text='Seleccionar costo primo', command=lambda: self.seleccionar_archivo(self.ruta_costo_primo, "Seleccionar archivo maestro Costo primo"), width=25).grid(row=5, column=0, padx=5, pady=2)
-        ttk.Entry(self, textvariable=self.ruta_costo_primo, width=50).grid(row=5, column=1, padx=5, pady=2)
+        ttk.Button(self, text='Seleccionar costo primo', command=lambda: self.seleccionar_archivo(self.ruta_costo_primo, "Seleccionar archivo maestro Costo primo"), width=25).grid(row=4, column=0, padx=5, pady=2)
+        ttk.Entry(self, textvariable=self.ruta_costo_primo, width=50).grid(row=4, column=1, padx=5, pady=2)
 
-        ttk.Button(self, text='Seleccionar base descuento', command=lambda: self.seleccionar_archivo(self.ruta_base_descuentos, "Seleccionar base de descuentos especiales"), width=25).grid(row=6, column=0, padx=5, pady=2)
-        ttk.Entry(self, textvariable=self.ruta_base_descuentos, width=50).grid(row=6, column=1, padx=5, pady=2)
+        ttk.Button(self, text='Seleccionar base descuento', command=lambda: self.seleccionar_archivo(self.ruta_base_descuentos, "Seleccionar base de descuentos especiales"), width=25).grid(row=5, column=0, padx=5, pady=2)
+        ttk.Entry(self, textvariable=self.ruta_base_descuentos, width=50).grid(row=5, column=1, padx=5, pady=2)
 
-        ttk.Button(self, text='Seleccionar MDO', command=lambda: self.seleccionar_archivo(self.ruta_mdo, "Seleccionar archivo Mano de obra"), width=25).grid(row=7, column=0, padx=5, pady=2)
-        ttk.Entry(self, textvariable=self.ruta_mdo, width=50).grid(row=7, column=1, padx=5, pady=2)
+        ttk.Button(self, text='Seleccionar MDO', command=lambda: self.seleccionar_archivo(self.ruta_mdo, "Seleccionar archivo Mano de obra"), width=25).grid(row=6, column=0, padx=5, pady=2)
+        ttk.Entry(self, textvariable=self.ruta_mdo, width=50).grid(row=6, column=1, padx=5, pady=2)
 
-        ttk.Button(self, text='Seleccionar Lerader List', command=lambda: self.seleccionar_archivo(self.ruta_leader_list, "Seleccionar archivo Leader list"), width=25).grid(row=8, column=0, padx=5, pady=2)
-        ttk.Entry(self, textvariable=self.ruta_leader_list, width=50).grid(row=8, column=1, padx=5, pady=2)
+        ttk.Button(self, text='Seleccionar Leader List', command=lambda: self.seleccionar_archivo(self.ruta_leader_list, "Seleccionar archivo Leader list"), width=25).grid(row=7, column=0, padx=5, pady=2)
+        ttk.Entry(self, textvariable=self.ruta_leader_list, width=50).grid(row=7, column=1, padx=5, pady=2)
+        
+        # Entradas de campaña y año
+        ttk.Label(self, text='Campaña (CC):').grid(row=8, column=0, padx=5, pady=2)
+        self.entry_campaña = ttk.Entry(self)
+        self.entry_campaña.grid(row=8, column=1, padx=5, pady=2)
+        
+        ttk.Label(self, text='Año (AAAA):').grid(row=9, column=0, padx=5, pady=2)
+        self.entry_anio = ttk.Entry(self)
+        self.entry_anio.grid(row=9, column=1, padx=5, pady=2)
         
         # Barra de progreso
         self.progress_bar = ttk.Progressbar(self, mode='indeterminate')
-        self.progress_bar.grid(row=9, column=0, columnspan=2, padx=10, pady=(5, 10), sticky='ew')
+        self.progress_bar.grid(row=10, column=0, columnspan=2, padx=10, pady=(5, 10), sticky='ew')
         self.progress_bar.grid_remove()
 
         # Botones
         frame_botones = ttk.Frame(self)
-        frame_botones.grid(row=10, column=0, columnspan=2, sticky='e', padx=5, pady=2)
+        frame_botones.grid(row=9, column=2, columnspan=2, sticky='e', padx=5, pady=2)
         ttk.Button(frame_botones, text='Procesar', command=self.ejecutar_hilo).pack(side='left', padx=(0, 5))
         ttk.Button(frame_botones, text='Cancelar', command=self.destroy).pack(side='left')
         
@@ -101,7 +106,7 @@ class ListadoGralWindow(tk.Toplevel):
             
     def procesar_datos_dyc(self):
         campania = self.entry_campaña.get()
-        
+        anio = self.entry_anio.get()
         listado = self.ruta_listado.get()
         produciendo = self.ruta_produciendo.get()
         comprando = self.ruta_comprando.get()
@@ -111,8 +116,8 @@ class ListadoGralWindow(tk.Toplevel):
         leader_list = self.ruta_leader_list.get()
 
 
-        if not campania:
-            messagebox.showerror("Error", "Campaña es un campo obligatorio.")
+        if not campania or not anio:
+            messagebox.showerror("Error", "Campaña y Año son campos obligatorios.")
             self.ocultar_progreso()
             return
         if not all([listado, produciendo, comprando, costo_primo, base_descuentos, mano_de_obra, leader_list]):
@@ -127,6 +132,8 @@ class ListadoGralWindow(tk.Toplevel):
             return
         try:
             resultado = procesar_listado_gral_puro(
+                campania=campania,
+                anio=anio,
                 ruta_listado=listado,
                 carpeta_guardado=carpeta_guardado,
                 ruta_produciendo = produciendo,

@@ -28,6 +28,7 @@ def procesar_listado_gral_puro(
     ruta_mdo: str,
     ruta_leader_list: str,
     campania: str,
+    anio: str,
     carpeta_guardado: str
 ) -> Dict[str, str]:
     
@@ -36,7 +37,7 @@ def procesar_listado_gral_puro(
     Devuelve un diccionario con los paths de los archivos generados.
     """
     logger.info("Iniciando procesamiento puro de Leader List")
-    campana = campana.zfill(2)
+    campania = campania.zfill(2)
     
     
     lista = [(ruta_produciendo, "produciendo"),
@@ -67,9 +68,16 @@ def procesar_listado_gral_puro(
     try:
         df_listado_general = df_listado.copy()
 
-        lista_df = [df_produciendo,df_costo_primo,df_base_descuentos,df_listado, df_comprando,df_mdo,df_leader_list]
+        lista_df = [(df_produciendo,'produciendo'),
+                    (df_costo_primo,'costo_primo'),
+                    (df_base_descuentos,'base_descuentos'),
+                    (df_listado, 'listado'),
+                    (df_comprando, 'comprando'),
+                    (df_mdo, 'mdo'),
+                    (df_leader_list, 'leader_list')]
 
-        lista_df = [estandarizar_columna_producto(df) for df in lista_df]
+        lista_df = [estandarizar_columna_producto(df, nombre) for df,nombre in lista_df]
+        
         df_produciendo,df_costo_primo,df_base_descuentos,df_listado_general,df_comprando,df_mdo, df_leader_list= lista_df
 
         df_listado_general.rename(columns={"Costo Estandard":"Costo Lista"}, inplace= True)
@@ -96,7 +104,7 @@ def procesar_listado_gral_puro(
         #Merge con CALCULO PRODUCIENDO
         logger.debug("Realizando merge costo de producción y carga fabril")
         df_listado_general = pd.merge(df_listado_general,df_produciendo[["Codigo", "Costo Producción"]], how="left", on="Codigo")
-        df_listado_general = pd.merge(df_listado_general,df_produciendo[["Codigo", "Lleva CF?"]], how="left", on="Codigo")
+        #df_listado_general = pd.merge(df_listado_general,df_produciendo[["Codigo", "Lleva CF?"]], how="left", on="Codigo")
 
         # Selecciona las columnas relevantes
         cols = ["Codigo", "Costo sin Descuento C"+campania, "% de obsolescencia", "ROYALTY", "DESCUENTO ESPECIAL", "APLICA DDE CA:"]
@@ -127,19 +135,26 @@ def procesar_listado_gral_puro(
         logger.debug("Realizando merges con el leader list")
         df_listado_general = pd.merge(df_listado_general,df_leader_list[["Codigo", "TIPO_OF"]], how="left", on="Codigo")
         df_listado_general = pd.merge(df_listado_general,df_leader_list[["Codigo", "LEYEOFE"]], how="left", on="Codigo")
-
+        
+        df_listado_general.drop_duplicates(subset=["Codigo"], keep="first", inplace=True)
+        
         logger.debug("Sumatoria de descuentos")
         df_listado_general["% Sumatoria de Descuentos"]= df_listado_general["DESCUENTO ESPECIAL"]+df_listado_general["ROYALTY"]+df_listado_general["% de obsolescencia"]
-
+        df_listado_general["% Sumatoria de Descuentos"] = df_listado_general["% Sumatoria de Descuentos"].fillna(0)
+        
         logger.debug("Inicia fase de calculos")
+        
         df_listado_general["Mano de Obra"] = df_listado_general["Costo Producción"] - df_listado_general["Costo Primo (materiales)"]
-        df_listado_general["Costo sin Descuento C"+campania] = df_listado_general["Costo Lista"] / (df_listado_general["% Sumatoria de Descuentos"]/100)
+        df_listado_general["Costo sin Descuento C"+campania] = df_listado_general["COSTO LISTA " + anio[-1] +campania] / ((100-df_listado_general["% Sumatoria de Descuentos"])/100)
         df_listado_general["Carga Fabril"] = df_listado_general["Costo sin Descuento C"+campania] - df_listado_general["Costo Producción"]
-        df_listado_general["Descuento aplicado $"] = df_listado_general["Costo Lista"] - df_listado_general["Costo sin Descuento C"+campania]
-        df_listado_general["Costo Total Con Descuento"] = df_listado_general["Stock Actual"] * df_listado_general["Costo Lista"]
+        df_listado_general["Descuento aplicado $"] = df_listado_general["COSTO LISTA " + anio[-1] +campania] - df_listado_general["Costo sin Descuento C"+campania]
+        df_listado_general["Costo Total Con Descuento"] = df_listado_general["Stock Actual"] * df_listado_general["COSTO LISTA " + anio[-1] +campania]
         logger.info("termina fase de calculos")
+        
+        df_listado_general["Mano de Obra"] = df_listado_general["Mano de Obra"].fillna(0)
+        df_listado_general["Carga Fabril"] = df_listado_general["Carga Fabril"].fillna(0)
 
-
+    
         path_listado = os.path.join(carpeta_guardado, "Listado General Completo.xlsx")
         logger.info(f"Guardando Listado gral procesado en: {path_listado}")
         df_listado_general.to_excel(path_listado, index=False, engine="openpyxl")
