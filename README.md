@@ -185,9 +185,9 @@ pyinstaller --noconfirm --onefile --windowed --add-data "configuracion_logging.p
 
 ## 11. Contacto y Soporte
 
-- **Responsable inicial:** [Completar con nombre o equipo]
+- **Responsable inicial:** [www.linkedin.com/in/tomas-lahuel-salvatierra-787a53249]
 - **Consultas técnicas:** Revisar primero los logs y la documentación de cada módulo.
-- **Soporte:** [Completar con correo o canal interno]
+- **Soporte:** [salvatierratomaslahuel@gmail.com]
 
 ---
 
@@ -201,4 +201,7 @@ pyinstaller --noconfirm --onefile --windowed --add-data "configuracion_logging.p
 
 ---
 
-¡Bienvenido al equipo! Si sigues estas pautas, podrás mantener y extender el sistema de forma segura y profesional. 
+**Este fue el primer proyecto que realize como desarrollador, aprendi, acerte y me equivoque, seguramente si sos un dev esperimentado vas a encontrar millones de errores, y agradeceria mucho que me dieras un feedback. Siempre el fin fue empezar e ir mejorando.**
+
+**"En este trabajo, si te mantienes igual, estas retrocediento." Endeveador.**
+
