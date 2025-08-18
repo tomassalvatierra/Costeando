@@ -203,5 +203,5 @@ pyinstaller --noconfirm --onefile --windowed --add-data "configuracion_logging.p
 
 **Este fue el primer proyecto que realize como desarrollador, aprendi, acerte y me equivoque, seguramente si sos un dev esperimentado vas a encontrar millones de errores, y agradeceria mucho que me dieras un feedback. Siempre el fin fue empezar e ir mejorando.**
 
-**"En este trabajo, si te mantienes igual, estas retrocediento." Endeveador.**
+**"Adelanten a su yo de ayer. Mantenerse igual, es lo mismo que retroceder." Endeavor.**
 
