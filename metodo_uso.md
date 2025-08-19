@@ -186,6 +186,38 @@ La interfaz pedirá los siguientes datos.
 Presione el botón "Procesar" y este comenzara a trabajar, si la ventana no responde no se preocupe, mantenga la calma y pronto abrirá un cuadro para que usted guarde el archivo final con el nombre que elija en la parte inferior. De ocurrir un error se abrirá un cuadro de texto indicando porque no se pudo terminar el proceso.
 Una vez finalizado el guardado del archivo aparecerá un cartel de aviso, presione "Aceptar" y el programa lo enviará al menú principal.
 
+# ACTUALIZACÍON DE FECHAS
+
+Objetivo: crear un compilado con el cual se actualizaran las fechas de ultima compra del maestro de productos.
+
+Solicitará los siguientes archivos.
+
+- Estructuras: estructuras por nivel, archivo original de TOTVS.
+- Maestro: maestro original de TOTVS.
+- Compras: archivo "Compras y cotizaciones revisadas", las fechas que no deban tomarse tiene que estar sobreescritas con alguna leyenda, por ejemplo "COTIZACION".
+- Ord Apuntadas: ordenes apuntadas originales de TOTVS.
+
+
+# COMPLETAR LISTADO GENERAL
+
+Objetivo: agregar a la lista de costos toda informacion que el sector cree relevante, en este caso, costo primo, costo de produccion, costos con y sin descuento, descuentos aplicados etc.
+
+Solicitará los siguientes archivos.
+
+- Lista: lista de costos a completar.
+- Produciendo: archivo produciendo de la campaña que se esta procesando
+- Comprando: archivo comprando de la campaña que se esta procesando
+- Costo Primo: maestro costo primo, original de TOTVS.
+- Base Descuento: ultima base disponible.
+- MDO: archivo PT X COMPONENTE, original de TOTVS, las 3 manos de obras deben estar incluidad aqui.
+- Leader List: archivo leader list, puede ser el depurado o el original, debe ser el mas actualizado.
+
+La interfaz pedirá los siguientes datos. 
+    
+- Campaña a procesar (CC): ejemplo, 09.
+- Año (AAAA): ejemplo, 2025.
+
+
 *Comentarios adicionales*
 
 Base de descuentos: este archivo es la base de datos de los descuentos especiales que se aplican cada campaña, descuentos por producto terminado o por componentes. Luego de la utilización del primer comprando, una vez finalizado el cálculo del costo especial a otorgar en la campaña corriente, el usuario debe crear un importador para en la segunda etapa poder introducirlos en el proceso. El importador debe tener la siguiente estructura.
@@ -202,3 +234,4 @@ Ejemplo:
 Los demás campos no son obligatorios, puede llenarlos para tener más información en la base, pero no se necesitan para el proceso.
 
 Para salir del programa presione el botón "Salir" o la equis de arriba a la derecha, le repreguntará si desea salir, presione que sí y el programa se habrá cerrado.
+
