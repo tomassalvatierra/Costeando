@@ -146,9 +146,16 @@ def procesar_listado_gral_puro(
         
         df_listado_general.drop_duplicates(subset=["Codigo"], keep="first", inplace=True)
         
+        #Convertir columnas de descuentos a numéricas
+        df_listado_general["DESCUENTO ESPECIAL"] = pd.to_numeric(df_listado_general["DESCUENTO ESPECIAL"], errors='coerce')
+        df_listado_general["ROYALTY"] = pd.to_numeric(df_listado_general["ROYALTY"], errors='coerce')
+        df_listado_general["% de obsolescencia"] = pd.to_numeric(df_listado_general["% de obsolescencia"], errors='coerce')
+        
         logger.debug("Sumatoria de descuentos")
-        df_listado_general["% Sumatoria de Descuentos"]= df_listado_general["DESCUENTO ESPECIAL"]+df_listado_general["ROYALTY"]+df_listado_general["% de obsolescencia"]
-        df_listado_general["% Sumatoria de Descuentos"] = df_listado_general["% Sumatoria de Descuentos"].fillna(0)
+        df_listado_general["% Sumatoria de Descuentos"] = (
+        df_listado_general["DESCUENTO ESPECIAL"].fillna(0) +
+        df_listado_general["ROYALTY"].fillna(0) +
+        df_listado_general["% de obsolescencia"].fillna(0))     
         
         logger.debug("Inicia fase de calculos")
         
