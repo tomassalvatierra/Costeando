@@ -164,10 +164,10 @@ class PrimerComprandoWindow(tk.Toplevel):
                 ruta_salida=ruta_salida
             )
             messagebox.showinfo("Éxito", f"El procesamiento ha finalizado con éxito.")
+            self.destroy()  # Cerrar la ventana después de un proceso exitoso
         except Exception as e:
             logger.error(f"Error en el procesamiento de primer comprando: {str(e)}", exc_info=True)
             messagebox.showerror("Error", f"Ocurrió un error durante el procesamiento:\n{e}")
-        finally:
             self.ocultar_progreso()
 
     def destroy(self):

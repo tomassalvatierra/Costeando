@@ -134,11 +134,12 @@ class SegundoProduciendoWindow(tk.Toplevel):
                 fecha_compras_final=fecha_final,
                 carpeta_guardado=carpeta_guardado
             )
+       
             messagebox.showinfo("Éxito", f"El archivo ha sido procesado y guardado con éxito en:\n{carpeta_guardado}")
+            self.destroy()
         except Exception as e:
             logger.error(f"Error en el procesamiento de segundo produciendo: {str(e)}", exc_info=True)
             messagebox.showerror("Error", f"Ocurrió un error durante el procesamiento:\n{e}")
-        finally:
             self.ocultar_progreso()
         
     def destroy(self):

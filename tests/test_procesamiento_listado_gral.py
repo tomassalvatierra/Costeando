@@ -11,6 +11,7 @@ paths = {
     'ruta_listado':r'Z:/Costos/Compartido/517 c17-2025/LISTA 517/08-08-2025 LISTA 517 consulta_lista_de_precios_153702.xlsx',
     'ruta_mdo': r'Z:/Costos/Compartido/517 c17-2025/PT X COMPO 517/13-08-2025 PT X COMPONENTE 517.xlsx',
     'ruta_leader_list': r'Z:/Costos/Compartido/517 c17-2025/LEADER LIST 517/28-07-2025 RESUMEN LEADER LIST 517.xlsx',
+    'ruta_compilado_fechas_ult_compra': r'Z:/Costos/Compartido/517 c17-2025/FCHS ULT COMPRA 517/Compilado de fchs ult compra.xlsx',    
     'campania': r'17',
     'anio': r'2025',
     'carpeta_guardado':r'Z:\Costos\Compartido\517 c17-2025\LISTA 517',
@@ -27,6 +28,7 @@ if __name__ == '__main__':
             paths['ruta_listado'],
             paths['ruta_mdo'],
             paths['ruta_leader_list'],
+            paths['ruta_compilado_fechas_ult_compra'],
             paths['campania'],
             paths['anio'],
             paths['carpeta_guardado']

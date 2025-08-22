@@ -48,19 +48,20 @@ class ValorizacionDYCWindow(tk.Toplevel):
         
         ttk.Button(self, text='Seleccionar Lista', command=lambda: self.seleccionar_archivo(self.ruta_listado, "Seleccionar Listado"), width=25).grid(row=3, column=0, padx=5, pady=2)
         ttk.Entry(self, textvariable=self.ruta_listado, width=50).grid(row=3, column=1, padx=5, pady=2)
+    
+        # Botones
+        frame_botones = ttk.Frame(self)
+        frame_botones.grid(row=3, column=2, columnspan=2, sticky='e', padx=5, pady=2)
 
+        ttk.Button(frame_botones, text='Procesar', command=self.ejecutar_hilo).pack(side='left', padx=(0, 5))
+        ttk.Button(frame_botones, text='Cancelar', command=self.destroy).pack(side='left')
+        
         # Barra de progreso
         self.progress_bar = ttk.Progressbar(self, mode='indeterminate')
         self.progress_bar.grid(row=5, column=0, columnspan=4, padx=10, pady=(5, 10), sticky='ew')
         self.progress_bar.grid_remove()
 
-        # Botones
-        frame_botones = ttk.Frame(self)
-        frame_botones.grid(row=4, column=2, columnspan=2, sticky='e', padx=5, pady=2)
 
-        ttk.Button(frame_botones, text='Procesar', command=self.ejecutar_hilo).pack(side='left', padx=(0, 5))
-        ttk.Button(frame_botones, text='Cancelar', command=self.destroy).pack(side='left')
-        
     def seleccionar_archivo(self, variable, titulo):
         archivo = filedialog.askopenfilename(title=titulo, filetypes=[("Archivos Excel", "*.xlsx")])
         if archivo:
@@ -117,13 +118,15 @@ class ValorizacionDYCWindow(tk.Toplevel):
             )
             path_guardado = resultado.get("valorizacion_dyc", "")
             if path_guardado and os.path.exists(path_guardado):
+               
                 messagebox.showinfo("Éxito", f"El archivo ha sido procesado y guardado con éxito en:\n{path_guardado}")
+                self.destroy()
             else:
+                self.ocultar_progreso()
                 messagebox.showwarning("Advertencia", "El procesamiento terminó pero no se encontró el archivo de salida.")
         except Exception as e:
             logger.error(f"Error en el procesamiento de valorización DyC: {str(e)}", exc_info=True)
             messagebox.showerror("Error", f"Ocurrió un error durante el procesamiento:\n{e}")
-        finally:
             self.ocultar_progreso()
         
     def destroy(self):

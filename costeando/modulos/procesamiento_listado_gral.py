@@ -27,6 +27,7 @@ def procesar_listado_gral_puro(
     ruta_listado: str,
     ruta_mdo: str,
     ruta_leader_list: str,
+    ruta_compilado_fechas_ult_compra: str,
     campania: str,
     anio: str,
     carpeta_guardado: str
@@ -39,14 +40,16 @@ def procesar_listado_gral_puro(
     logger.info("Iniciando procesamiento puro de Leader List")
     campania = campania.zfill(2)
     
-    
-    lista = [(ruta_produciendo, "produciendo"),
-    (ruta_comprando,"comprando"),
-    (ruta_costo_primo ,"costo_primo"),
-    (ruta_base_descuentos,"base_descuentos"),
-    (ruta_listado,"listado"),
-    (ruta_mdo,"mdo"),
-    (ruta_leader_list,"leader_list")] 
+    lista = [
+        (ruta_produciendo, "produciendo"),
+        (ruta_comprando, "comprando"),
+        (ruta_costo_primo, "costo_primo"),
+        (ruta_base_descuentos, "base_descuentos"),
+        (ruta_listado, "listado"),
+        (ruta_mdo, "mdo"),
+        (ruta_leader_list, "leader_list"),
+        (ruta_compilado_fechas_ult_compra, "compilado_fechas_ult_compra")
+    ]
 
     for df,nombre in lista:
         logger.debug(f"Validando archivo: {nombre} ({df})")
@@ -54,13 +57,14 @@ def procesar_listado_gral_puro(
 
     try:
         logger.info("Leyendo archivos Excel de entrada...")    
-        df_produciendo= pd.read_excel(ruta_produciendo ,engine="openpyxl")
-        df_comprando= pd.read_excel(ruta_comprando ,engine="openpyxl")
-        df_costo_primo= pd.read_excel(ruta_costo_primo ,engine="openpyxl")
-        df_base_descuentos= pd.read_excel(ruta_base_descuentos ,engine="openpyxl")
-        df_listado= pd.read_excel(ruta_listado ,engine="openpyxl")
-        df_mdo= pd.read_excel(ruta_mdo ,engine="openpyxl", skiprows=1)
-        df_leader_list = pd.read_excel(ruta_leader_list,engine="openpyxl")
+        df_produciendo = pd.read_excel(ruta_produciendo, engine="openpyxl")
+        df_comprando = pd.read_excel(ruta_comprando, engine="openpyxl")
+        df_costo_primo = pd.read_excel(ruta_costo_primo, engine="openpyxl")
+        df_base_descuentos = pd.read_excel(ruta_base_descuentos, engine="openpyxl")
+        df_listado = pd.read_excel(ruta_listado, engine="openpyxl")
+        df_mdo = pd.read_excel(ruta_mdo, engine="openpyxl", skiprows=1)
+        df_leader_list = pd.read_excel(ruta_leader_list, engine="openpyxl")
+        df_compilado_fechas_ult_compra = pd.read_excel(ruta_compilado_fechas_ult_compra, engine="openpyxl")
     except Exception as e:
         logger.error(f"Error al leer los archivos de entrada: {e}")
         raise
@@ -68,28 +72,30 @@ def procesar_listado_gral_puro(
     try:
         df_listado_general = df_listado.copy()
 
-        lista_df = [(df_produciendo,'produciendo'),
-                    (df_costo_primo,'costo_primo'),
-                    (df_base_descuentos,'base_descuentos'),
-                    (df_listado, 'listado'),
-                    (df_comprando, 'comprando'),
-                    (df_mdo, 'mdo'),
-                    (df_leader_list, 'leader_list')]
-
-        lista_df = [estandarizar_columna_producto(df, nombre) for df,nombre in lista_df]
+        lista_df = [
+            (df_produciendo, 'produciendo'),
+            (df_costo_primo, 'costo_primo'),
+            (df_base_descuentos, 'base_descuentos'),
+            (df_listado, 'listado'),
+            (df_comprando, 'comprando'),
+            (df_mdo, 'mdo'),
+            (df_leader_list, 'leader_list'),
+            (df_compilado_fechas_ult_compra, 'compilado_fechas_ult_compra')]
         
-        df_produciendo,df_costo_primo,df_base_descuentos,df_listado_general,df_comprando,df_mdo, df_leader_list= lista_df
-
-        df_listado_general.rename(columns={"Costo Estandard":"Costo Lista"}, inplace= True)
+        lista_df = [estandarizar_columna_producto(df, nombre) for df, nombre in lista_df]
+        
+        df_produciendo, df_costo_primo, df_base_descuentos, df_listado_general, df_comprando, df_mdo, df_leader_list, df_compilado_fechas_ult_compra = lista_df
+        
+        df_listado_general.rename(columns={"Costo Estandard":"COSTO LISTA " + anio[-1] +campania}, inplace= True)
 
         df_mdo_806 = df_mdo.loc[df_mdo["Componente"].isin(["MOD0806"])]
         df_mdo_807 = df_mdo.loc[df_mdo["Componente"].isin(["MOD0807"])]
         df_mdo_808 = df_mdo.loc[df_mdo["Componente"].isin(["MOD0808"])]
 
         #Merge con Maestro Costo Primo
-        logger.debug("Realizando merges de mano de obra")
+        logger.debug("Realizando merges de MANO DE OBRA TOTAL")
         df_listado_general = pd.merge(df_listado_general,df_costo_primo[["Codigo","Costo Estand"]], how="left", on="Codigo")
-        df_listado_general.rename(columns={"Costo Estand":"Costo Primo (materiales)"}, inplace= True)
+        df_listado_general.rename(columns={"Costo Estand":"COSTO PRIMO (MATERIALES)"}, inplace= True)
 
         df_listado_general = pd.merge(df_listado_general,df_mdo_806[["Codigo","Cantidad"]], how="left", on="Codigo")
         df_listado_general.rename(columns={"Cantidad":"MOD 0806 SEGUNDOS MO ELAB. X KILO"}, inplace= True)
@@ -100,9 +106,11 @@ def procesar_listado_gral_puro(
         df_listado_general = pd.merge(df_listado_general,df_mdo_808[["Codigo","Cantidad"]], how="left", on="Codigo")
         df_listado_general.rename(columns={"Cantidad":"MOD 0808 SEGUNDOS MO ACOND.X UNIDAD"}, inplace= True)
 
-
+        df_listado_general = pd.merge(df_listado_general,df_compilado_fechas_ult_compra[["Codigo", "Tipo Orden"]], how="left", on="Codigo")
+        df_listado_general.rename(columns={"Tipo Orden":"TIPO ULT COMPRA"}, inplace=True)
+        
         #Merge con CALCULO PRODUCIENDO
-        logger.debug("Realizando merge costo de producción y carga fabril")
+        logger.debug("Realizando merge costo de producción y CARGA FABRIL")
         df_listado_general = pd.merge(df_listado_general,df_produciendo[["Codigo", "Costo Producción"]], how="left", on="Codigo")
         #df_listado_general = pd.merge(df_listado_general,df_produciendo[["Codigo", "Lleva CF?"]], how="left", on="Codigo")
 
@@ -144,17 +152,29 @@ def procesar_listado_gral_puro(
         
         logger.debug("Inicia fase de calculos")
         
-        df_listado_general["Mano de Obra"] = df_listado_general["Costo Producción"] - df_listado_general["Costo Primo (materiales)"]
+        df_listado_general["MANO DE OBRA TOTAL"] = df_listado_general["Costo Producción"] - df_listado_general["COSTO PRIMO (MATERIALES)"]
         df_listado_general["Costo sin Descuento C"+campania] = df_listado_general["COSTO LISTA " + anio[-1] +campania] / ((100-df_listado_general["% Sumatoria de Descuentos"])/100)
-        df_listado_general["Carga Fabril"] = df_listado_general["Costo sin Descuento C"+campania] - df_listado_general["Costo Producción"]
-        df_listado_general["Descuento aplicado $"] = df_listado_general["COSTO LISTA " + anio[-1] +campania] - df_listado_general["Costo sin Descuento C"+campania]
-        df_listado_general["Costo Total Con Descuento"] = df_listado_general["Stock Actual"] * df_listado_general["COSTO LISTA " + anio[-1] +campania]
+        df_listado_general["CARGA FABRIL"] = df_listado_general["Costo sin Descuento C"+campania] - df_listado_general["Costo Producción"]
+        df_listado_general["DESCUENTO APLICADO $"] = df_listado_general["COSTO LISTA " + anio[-1] +campania] - df_listado_general["Costo sin Descuento C"+campania]
+        df_listado_general["VALOR STOCK CON DESCUENTO"] = df_listado_general["Stock Actual"] * df_listado_general["COSTO LISTA " + anio[-1] +campania]
         logger.info("termina fase de calculos")
         
-        df_listado_general["Mano de Obra"] = df_listado_general["Mano de Obra"].fillna(0)
-        df_listado_general["Carga Fabril"] = df_listado_general["Carga Fabril"].fillna(0)
+        #Las columnas COSTO PRIMO (MATERIALES), MANO DE OBRA TOTAL, COSTO DE PRODUCCION Y CARGA FABRIL DEBEN SER CERO SI LA COLUMNA COSTO LISTA ES CERO
+        df_listado_general.loc[df_listado_general["COSTO LISTA " + anio[-1] +campania] == 0, ["COSTO PRIMO (MATERIALES)", "MANO DE OBRA TOTAL", "Costo Producción", "CARGA FABRIL"]] = 0
+        
+        # al costo de prouccion hay qyue sacarle lo que este en cero en el costo final.
+        
+        df_listado_general["MANO DE OBRA TOTAL"] = df_listado_general["MANO DE OBRA TOTAL"].fillna(0)
+        df_listado_general["CARGA FABRIL"] = df_listado_general["CARGA FABRIL"].fillna(0)
 
-    
+        # Reindexar columnas según el orden solicitado
+        columnas_ordenadas = [
+            "Periodo", "Codigo", "COD MADRE", "COD COMB", "Descripcion", "COSTO PRIMO (MATERIALES)", "MANO DE OBRA TOTAL", "Costo Producción", "CARGA FABRIL", "Costo sin Descuento C" + campania, "% Sumatoria de Descuentos", "COSTO LISTA " + anio[-1] +campania, "TIPO COSTO", "Ult. Compra", "TIPO ULT COMPRA", "MOD 0806 SEGUNDOS MO ELAB. X KILO", "MOD 0807 SEGUNDOS MO ENV. X UNIDAD", "MOD 0808 SEGUNDOS MO ACOND.X UNIDAD", "% de obsolescencia", "ROYALTY", "DESCUENTO ESPECIAL", "APLICA DDE CA:", "TIPO-DESCUENTO", "DESCUENTO APLICADO $", "Stock Actual", "VALOR STOCK CON DESCUENTO", "TIPO_OF", "LEYEOFE", "Estado", "Cod Actualiz", "VARIABLE", "LLEVA CF", "Tipo", "Desc.Tipo", "Grupo", "Desc. Grupo", "Sub Grupo", "Desc.Sub Grupo", "Entra MRP", "Atiende Necsdd", "Prov", "Ult P/C", "Razon Social", "Fecha Alta"
+        ]
+        # Reindex solo si existen las columnas, las que falten se ignoran
+        columnas_existentes = [col for col in columnas_ordenadas if col in df_listado_general.columns]
+        df_listado_general = df_listado_general.reindex(columns=columnas_existentes)
+
         path_listado = os.path.join(carpeta_guardado, "Listado General Completo.xlsx")
         logger.info(f"Guardando Listado gral procesado en: {path_listado}")
         df_listado_general.to_excel(path_listado, index=False, engine="openpyxl")

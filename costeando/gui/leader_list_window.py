@@ -68,7 +68,7 @@ class LeaderListWindow(tk.Toplevel):
 
         # Frame para botones inferiores
         frame_botones = ttk.Frame(self)
-        frame_botones.grid(row=10, column=0, columnspan=2, sticky='e', padx=10, pady=2)
+        frame_botones.grid(row=8, column=0, columnspan=2, sticky='e', padx=10, pady=2)
         
         ttk.Button(frame_botones, text='Procesar', command=self.ejecutar_hilo).pack(side='left', padx=(0, 5))
         ttk.Button(frame_botones, text='Cancelar', command=self.destroy).pack(side='left')
@@ -136,10 +136,10 @@ class LeaderListWindow(tk.Toplevel):
                 carpeta_guardado=carpeta_guardado
             )
             messagebox.showinfo("Éxito", f"Los archivos han sido procesados y guardados con éxito en:\n{carpeta_guardado}")
+            self.destroy()  # Cerrar la ventana después de un proceso exitoso
         except Exception as e:
             logger.error(f"Error en el procesamiento de leader list: {str(e)}", exc_info=True)
             messagebox.showerror("Error", f"Ocurrió un error durante el procesamiento:\n{e}")
-        finally:
             self.ocultar_progreso()
         
     def destroy(self):

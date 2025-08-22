@@ -119,11 +119,12 @@ class PrimerProduciendoWindow(tk.Toplevel):
                 ruta_estructuras=self.ruta_estructuras.get(),
                 ruta_salida=ruta_salida
             )
+         
             messagebox.showinfo("Éxito", f"El procesamiento ha finalizado con éxito.\n\nArchivos generados:\n" + '\n'.join([f"- {v}" for v in resultado.values()]))
+            self.destroy()
         except Exception as e:
             logger.error(f"Error en el procesamiento de primer produciendo: {str(e)}", exc_info=True)
             messagebox.showerror("Error", f"Ocurrió un error durante el procesamiento:\n{e}")
-        finally:
             self.ocultar_progreso()
 
     def destroy(self):

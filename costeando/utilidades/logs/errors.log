@@ -397,3 +397,67 @@ Traceback (most recent call last):
   File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\common.py", line 600, in check_parent_directory
     raise OSError(rf"Cannot save file into a non-existent directory: '{parent}'")
 OSError: Cannot save file into a non-existent directory: 'Z:\Costos\Compartido\517 c17-2025\LISTA 517\PRUEBAS.xlsx'
+2025-08-19 16:13:00 - costeando.modulos.procesamiento_listado_gral - ERROR - Error durante el procesamiento de Leader List.
+Traceback (most recent call last):
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 93, in procesar_listado_gral_puro
+    df_listado_general = pd.merge(
+                         ^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 148, in merge
+    op = _MergeOperation(
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 737, in __init__
+    ) = self._get_merge_keys()
+        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 1221, in _get_merge_keys
+    left_keys.append(left._get_label_or_level_values(lk))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 1778, in _get_label_or_level_values
+    raise KeyError(key)
+KeyError: 'Tipo Orden'
+2025-08-19 16:16:06 - costeando.modulos.procesamiento_listado_gral - ERROR - Error durante el procesamiento de Leader List.
+Traceback (most recent call last):
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 115, in procesar_listado_gral_puro
+    df_listado_general = pd.merge(
+                         ^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 148, in merge
+    op = _MergeOperation(
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 737, in __init__
+    ) = self._get_merge_keys()
+        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 1221, in _get_merge_keys
+    left_keys.append(left._get_label_or_level_values(lk))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 1778, in _get_label_or_level_values
+    raise KeyError(key)
+KeyError: 'Tipo Orden'
+2025-08-19 16:24:19 - costeando.modulos.procesamiento_listado_gral - ERROR - Error durante el procesamiento de Leader List.
+Traceback (most recent call last):
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 115, in procesar_listado_gral_puro
+    df_listado_general = pd.merge(
+                         ^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 148, in merge
+    op = _MergeOperation(
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 737, in __init__
+    ) = self._get_merge_keys()
+        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 1221, in _get_merge_keys
+    left_keys.append(left._get_label_or_level_values(lk))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 1778, in _get_label_or_level_values
+    raise KeyError(key)
+KeyError: 'Tipo Orden'
+2025-08-20 14:26:31 - costeando.modulos.procesamiento_listado_gral - ERROR - Error durante el procesamiento de Leader List.
+Traceback (most recent call last):
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 114, in procesar_listado_gral_puro
+    df_listado_general = pd.merge(df_listado_general,df_produciendo[["Codigo", "COSTO PRODUCCION"]], how="left", on="Codigo")
+                                                     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 3767, in __getitem__
+    indexer = self.columns._get_indexer_strict(key, "columns")[1]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 5877, in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 5941, in _raise_if_missing
+    raise KeyError(f"{not_found} not in index")
+KeyError: "['COSTO PRODUCCION'] not in index"

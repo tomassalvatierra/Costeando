@@ -42,19 +42,20 @@ class ProyectadosWindow(tk.Toplevel):
         ttk.Label(self, text='Año (AAAA):').grid(row=4, column=0, padx=10, pady=2)
         self.entry_año = ttk.Entry(self)
         self.entry_año.grid(row=4, column=1, padx=10, pady=2, sticky='w')
+        
+        # Botones
+        frame_botones = ttk.Frame(self)
+        frame_botones.grid(row=4, column=0, columnspan=3, sticky='e', padx=10, pady=2)
 
+        ttk.Button(frame_botones, text='Procesar', command=self.ejecutar_hilo).pack(side='left', padx=(0, 5))
+        ttk.Button(frame_botones, text='Cancelar', command=self.destroy).pack(side='left')
+        
         # Barra de progreso
         self.progress_bar = ttk.Progressbar(self, mode='indeterminate')
         self.progress_bar.grid(row=6, column=0, columnspan=2, padx=10, pady=(5, 10), sticky='ew')
         self.progress_bar.grid_remove()
 
-        # Botones
-        frame_botones = ttk.Frame(self)
-        frame_botones.grid(row=5, column=0, columnspan=3, sticky='e', padx=10, pady=2)
 
-        ttk.Button(frame_botones, text='Procesar', command=self.ejecutar_hilo).pack(side='left', padx=(0, 5))
-        ttk.Button(frame_botones, text='Cancelar', command=self.destroy).pack(side='left')
-        
     def seleccionar_archivo(self, variable, titulo):
         archivo = filedialog.askopenfilename(title=titulo, filetypes=[("Archivos Excel", "*.xlsx")])
         if archivo:
@@ -114,10 +115,10 @@ class ProyectadosWindow(tk.Toplevel):
                 carpeta_guardado=carpeta_guardado
             )
             messagebox.showinfo("Éxito", f"Los archivos han sido procesados y guardados con éxito en:\n{carpeta_guardado}")
+            self.destroy()
         except Exception as e:
             logger.error(f"Error en el procesamiento de proyectados: {str(e)}", exc_info=True)
             messagebox.showerror("Error", f"Ocurrió un error durante el procesamiento:\n{e}")
-        finally:
             self.ocultar_progreso()
             
     def destroy(self):

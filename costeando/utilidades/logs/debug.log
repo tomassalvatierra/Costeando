@@ -925,3 +925,302 @@ OSError: Cannot save file into a non-existent directory: 'Z:\Costos\Compartido\5
 2025-08-18 11:10:25 - costeando.modulos.procesamiento_listado_gral - INFO - termina fase de calculos
 2025-08-18 11:10:25 - costeando.modulos.procesamiento_listado_gral - INFO - Guardando Listado gral procesado en: Z:\Costos\Compartido\517 c17-2025\LISTA 517\Listado General Completo.xlsx
 2025-08-18 11:10:42 - costeando.modulos.procesamiento_listado_gral - INFO - Archivos guardados correctamente en: Z:\Costos\Compartido\517 c17-2025\LISTA 517
+2025-08-19 16:12:23 - costeando.modulos.procesamiento_listado_gral - INFO - Iniciando procesamiento puro de Leader List
+2025-08-19 16:12:23 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: produciendo (Z:/Costos/Compartido/517 c17-2025/CALCULO COSTOS 517/07-08-2025 CALCULO PRODUCIENDO 517.xlsx)
+2025-08-19 16:12:23 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: comprando (Z:/Costos/Compartido/517 c17-2025/CALCULO COSTOS 517/07-08-2025 CALCULO COMPRANDO 517.xlsx)
+2025-08-19 16:12:23 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: costo_primo (Z:/Costos/Compartido/517 c17-2025/COSTO PRIMO 517/07-08-2025 MAESTRO COSTO PRIMO 517.xlsx)
+2025-08-19 16:12:23 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: base_descuentos (Z:/Costos/Compartido/517 c17-2025/BASE DTOS 517/07-08-2025 Descuentos Especiales - Base de Datos C17 2025 produciendo 2da etapa.xlsx)
+2025-08-19 16:12:23 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: listado (Z:/Costos/Compartido/517 c17-2025/LISTA 517/08-08-2025 LISTA 517 consulta_lista_de_precios_153702.xlsx)
+2025-08-19 16:12:23 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: mdo (Z:/Costos/Compartido/517 c17-2025/PT X COMPO 517/13-08-2025 PT X COMPONENTE 517.xlsx)
+2025-08-19 16:12:23 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: leader_list (Z:/Costos/Compartido/517 c17-2025/LEADER LIST 517/28-07-2025 RESUMEN LEADER LIST 517.xlsx)
+2025-08-19 16:12:23 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: compilado_fechas_ult_compra (Z:/Costos/Compartido/517 c17-2025/FCHS ULT COMPRA 517/Compilado de fchs ult compra.xlsx)
+2025-08-19 16:12:23 - costeando.modulos.procesamiento_listado_gral - INFO - Leyendo archivos Excel de entrada...
+2025-08-19 16:13:00 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en produciendo.
+2025-08-19 16:13:00 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en costo_primo.
+2025-08-19 16:13:00 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en base_descuentos.
+2025-08-19 16:13:00 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en listado.
+2025-08-19 16:13:00 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en comprando.
+2025-08-19 16:13:00 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en mdo.
+2025-08-19 16:13:00 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en leader_list.
+2025-08-19 16:13:00 - costeando.modulos.procesamiento_listado_gral - DEBUG - Columna 'Producto' renombrada a 'Codigo' en compilado_fechas_ult_compra.
+2025-08-19 16:13:00 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merge con compilado de fechas ult compra
+2025-08-19 16:13:00 - costeando.modulos.procesamiento_listado_gral - ERROR - Error durante el procesamiento de Leader List.
+Traceback (most recent call last):
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 93, in procesar_listado_gral_puro
+    df_listado_general = pd.merge(
+                         ^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 148, in merge
+    op = _MergeOperation(
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 737, in __init__
+    ) = self._get_merge_keys()
+        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 1221, in _get_merge_keys
+    left_keys.append(left._get_label_or_level_values(lk))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 1778, in _get_label_or_level_values
+    raise KeyError(key)
+KeyError: 'Tipo Orden'
+2025-08-19 16:15:22 - costeando.modulos.procesamiento_listado_gral - INFO - Iniciando procesamiento puro de Leader List
+2025-08-19 16:15:22 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: produciendo (Z:/Costos/Compartido/517 c17-2025/CALCULO COSTOS 517/07-08-2025 CALCULO PRODUCIENDO 517.xlsx)
+2025-08-19 16:15:22 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: comprando (Z:/Costos/Compartido/517 c17-2025/CALCULO COSTOS 517/07-08-2025 CALCULO COMPRANDO 517.xlsx)
+2025-08-19 16:15:22 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: costo_primo (Z:/Costos/Compartido/517 c17-2025/COSTO PRIMO 517/07-08-2025 MAESTRO COSTO PRIMO 517.xlsx)
+2025-08-19 16:15:22 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: base_descuentos (Z:/Costos/Compartido/517 c17-2025/BASE DTOS 517/07-08-2025 Descuentos Especiales - Base de Datos C17 2025 produciendo 2da etapa.xlsx)
+2025-08-19 16:15:22 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: listado (Z:/Costos/Compartido/517 c17-2025/LISTA 517/08-08-2025 LISTA 517 consulta_lista_de_precios_153702.xlsx)
+2025-08-19 16:15:22 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: mdo (Z:/Costos/Compartido/517 c17-2025/PT X COMPO 517/13-08-2025 PT X COMPONENTE 517.xlsx)
+2025-08-19 16:15:22 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: leader_list (Z:/Costos/Compartido/517 c17-2025/LEADER LIST 517/28-07-2025 RESUMEN LEADER LIST 517.xlsx)
+2025-08-19 16:15:22 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: compilado_fechas_ult_compra (Z:/Costos/Compartido/517 c17-2025/FCHS ULT COMPRA 517/Compilado de fchs ult compra.xlsx)
+2025-08-19 16:15:22 - costeando.modulos.procesamiento_listado_gral - INFO - Leyendo archivos Excel de entrada...
+2025-08-19 16:16:06 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en produciendo.
+2025-08-19 16:16:06 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en costo_primo.
+2025-08-19 16:16:06 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en base_descuentos.
+2025-08-19 16:16:06 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en listado.
+2025-08-19 16:16:06 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en comprando.
+2025-08-19 16:16:06 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en mdo.
+2025-08-19 16:16:06 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en leader_list.
+2025-08-19 16:16:06 - costeando.modulos.procesamiento_listado_gral - DEBUG - Columna 'Producto' renombrada a 'Codigo' en compilado_fechas_ult_compra.
+2025-08-19 16:16:06 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merges de mano de obra
+2025-08-19 16:16:06 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merge con compilado de fechas ult compra
+2025-08-19 16:16:06 - costeando.modulos.procesamiento_listado_gral - ERROR - Error durante el procesamiento de Leader List.
+Traceback (most recent call last):
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 115, in procesar_listado_gral_puro
+    df_listado_general = pd.merge(
+                         ^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 148, in merge
+    op = _MergeOperation(
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 737, in __init__
+    ) = self._get_merge_keys()
+        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 1221, in _get_merge_keys
+    left_keys.append(left._get_label_or_level_values(lk))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 1778, in _get_label_or_level_values
+    raise KeyError(key)
+KeyError: 'Tipo Orden'
+2025-08-19 16:23:41 - costeando.modulos.procesamiento_listado_gral - INFO - Iniciando procesamiento puro de Leader List
+2025-08-19 16:23:41 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: produciendo (Z:/Costos/Compartido/517 c17-2025/CALCULO COSTOS 517/07-08-2025 CALCULO PRODUCIENDO 517.xlsx)
+2025-08-19 16:23:41 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: comprando (Z:/Costos/Compartido/517 c17-2025/CALCULO COSTOS 517/07-08-2025 CALCULO COMPRANDO 517.xlsx)
+2025-08-19 16:23:41 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: costo_primo (Z:/Costos/Compartido/517 c17-2025/COSTO PRIMO 517/07-08-2025 MAESTRO COSTO PRIMO 517.xlsx)
+2025-08-19 16:23:41 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: base_descuentos (Z:/Costos/Compartido/517 c17-2025/BASE DTOS 517/07-08-2025 Descuentos Especiales - Base de Datos C17 2025 produciendo 2da etapa.xlsx)
+2025-08-19 16:23:41 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: listado (Z:/Costos/Compartido/517 c17-2025/LISTA 517/08-08-2025 LISTA 517 consulta_lista_de_precios_153702.xlsx)
+2025-08-19 16:23:41 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: mdo (Z:/Costos/Compartido/517 c17-2025/PT X COMPO 517/13-08-2025 PT X COMPONENTE 517.xlsx)
+2025-08-19 16:23:41 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: leader_list (Z:/Costos/Compartido/517 c17-2025/LEADER LIST 517/28-07-2025 RESUMEN LEADER LIST 517.xlsx)
+2025-08-19 16:23:41 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: compilado_fechas_ult_compra (Z:/Costos/Compartido/517 c17-2025/FCHS ULT COMPRA 517/Compilado de fchs ult compra.xlsx)
+2025-08-19 16:23:41 - costeando.modulos.procesamiento_listado_gral - INFO - Leyendo archivos Excel de entrada...
+2025-08-19 16:24:19 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en produciendo.
+2025-08-19 16:24:19 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en costo_primo.
+2025-08-19 16:24:19 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en base_descuentos.
+2025-08-19 16:24:19 - costeando.modulos.procesamiento_listado_gral - DEBUG - Columna 'Producto' renombrada a 'Codigo' en listado.
+2025-08-19 16:24:19 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en comprando.
+2025-08-19 16:24:19 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en mdo.
+2025-08-19 16:24:19 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en leader_list.
+2025-08-19 16:24:19 - costeando.modulos.procesamiento_listado_gral - DEBUG - Columna 'Producto' renombrada a 'Codigo' en compilado_fechas_ult_compra.
+2025-08-19 16:24:19 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merges de mano de obra
+2025-08-19 16:24:19 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merge con compilado de fechas ult compra
+2025-08-19 16:24:19 - costeando.modulos.procesamiento_listado_gral - ERROR - Error durante el procesamiento de Leader List.
+Traceback (most recent call last):
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 115, in procesar_listado_gral_puro
+    df_listado_general = pd.merge(
+                         ^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 148, in merge
+    op = _MergeOperation(
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 737, in __init__
+    ) = self._get_merge_keys()
+        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\reshape\merge.py", line 1221, in _get_merge_keys
+    left_keys.append(left._get_label_or_level_values(lk))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 1778, in _get_label_or_level_values
+    raise KeyError(key)
+KeyError: 'Tipo Orden'
+2025-08-19 16:24:56 - costeando.modulos.procesamiento_listado_gral - INFO - Iniciando procesamiento puro de Leader List
+2025-08-19 16:24:56 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: produciendo (Z:/Costos/Compartido/517 c17-2025/CALCULO COSTOS 517/07-08-2025 CALCULO PRODUCIENDO 517.xlsx)
+2025-08-19 16:24:56 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: comprando (Z:/Costos/Compartido/517 c17-2025/CALCULO COSTOS 517/07-08-2025 CALCULO COMPRANDO 517.xlsx)
+2025-08-19 16:24:56 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: costo_primo (Z:/Costos/Compartido/517 c17-2025/COSTO PRIMO 517/07-08-2025 MAESTRO COSTO PRIMO 517.xlsx)
+2025-08-19 16:24:56 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: base_descuentos (Z:/Costos/Compartido/517 c17-2025/BASE DTOS 517/07-08-2025 Descuentos Especiales - Base de Datos C17 2025 produciendo 2da etapa.xlsx)
+2025-08-19 16:24:56 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: listado (Z:/Costos/Compartido/517 c17-2025/LISTA 517/08-08-2025 LISTA 517 consulta_lista_de_precios_153702.xlsx)
+2025-08-19 16:24:56 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: mdo (Z:/Costos/Compartido/517 c17-2025/PT X COMPO 517/13-08-2025 PT X COMPONENTE 517.xlsx)
+2025-08-19 16:24:56 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: leader_list (Z:/Costos/Compartido/517 c17-2025/LEADER LIST 517/28-07-2025 RESUMEN LEADER LIST 517.xlsx)
+2025-08-19 16:24:56 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: compilado_fechas_ult_compra (Z:/Costos/Compartido/517 c17-2025/FCHS ULT COMPRA 517/Compilado de fchs ult compra.xlsx)
+2025-08-19 16:24:56 - costeando.modulos.procesamiento_listado_gral - INFO - Leyendo archivos Excel de entrada...
+2025-08-19 16:25:31 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en produciendo.
+2025-08-19 16:25:31 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en costo_primo.
+2025-08-19 16:25:31 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en base_descuentos.
+2025-08-19 16:25:31 - costeando.modulos.procesamiento_listado_gral - DEBUG - Columna 'Producto' renombrada a 'Codigo' en listado.
+2025-08-19 16:25:31 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en comprando.
+2025-08-19 16:25:31 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en mdo.
+2025-08-19 16:25:31 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en leader_list.
+2025-08-19 16:25:31 - costeando.modulos.procesamiento_listado_gral - DEBUG - Columna 'Producto' renombrada a 'Codigo' en compilado_fechas_ult_compra.
+2025-08-19 16:25:31 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merges de mano de obra
+2025-08-19 16:25:31 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merge costo de producción y carga fabril
+2025-08-19 16:25:32 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merges con el leader list
+2025-08-19 16:25:32 - costeando.modulos.procesamiento_listado_gral - DEBUG - Sumatoria de descuentos
+2025-08-19 16:25:32 - costeando.modulos.procesamiento_listado_gral - DEBUG - Inicia fase de calculos
+2025-08-19 16:25:32 - costeando.modulos.procesamiento_listado_gral - INFO - termina fase de calculos
+2025-08-19 16:25:32 - costeando.modulos.procesamiento_listado_gral - INFO - Guardando Listado gral procesado en: Z:\Costos\Compartido\517 c17-2025\LISTA 517\Listado General Completo.xlsx
+2025-08-19 16:25:48 - costeando.modulos.procesamiento_listado_gral - INFO - Archivos guardados correctamente en: Z:\Costos\Compartido\517 c17-2025\LISTA 517
+2025-08-20 14:25:52 - costeando.modulos.procesamiento_listado_gral - INFO - Iniciando procesamiento puro de Leader List
+2025-08-20 14:25:52 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: produciendo (Z:/Costos/Compartido/517 c17-2025/CALCULO COSTOS 517/07-08-2025 CALCULO PRODUCIENDO 517.xlsx)
+2025-08-20 14:25:52 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: comprando (Z:/Costos/Compartido/517 c17-2025/CALCULO COSTOS 517/07-08-2025 CALCULO COMPRANDO 517.xlsx)
+2025-08-20 14:25:52 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: costo_primo (Z:/Costos/Compartido/517 c17-2025/COSTO PRIMO 517/07-08-2025 MAESTRO COSTO PRIMO 517.xlsx)
+2025-08-20 14:25:53 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: base_descuentos (Z:/Costos/Compartido/517 c17-2025/BASE DTOS 517/07-08-2025 Descuentos Especiales - Base de Datos C17 2025 produciendo 2da etapa.xlsx)
+2025-08-20 14:25:53 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: listado (Z:/Costos/Compartido/517 c17-2025/LISTA 517/08-08-2025 LISTA 517 consulta_lista_de_precios_153702.xlsx)
+2025-08-20 14:25:53 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: mdo (Z:/Costos/Compartido/517 c17-2025/PT X COMPO 517/13-08-2025 PT X COMPONENTE 517.xlsx)
+2025-08-20 14:25:53 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: leader_list (Z:/Costos/Compartido/517 c17-2025/LEADER LIST 517/28-07-2025 RESUMEN LEADER LIST 517.xlsx)
+2025-08-20 14:25:53 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: compilado_fechas_ult_compra (Z:/Costos/Compartido/517 c17-2025/FCHS ULT COMPRA 517/Compilado de fchs ult compra.xlsx)
+2025-08-20 14:25:53 - costeando.modulos.procesamiento_listado_gral - INFO - Leyendo archivos Excel de entrada...
+2025-08-20 14:26:31 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en produciendo.
+2025-08-20 14:26:31 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en costo_primo.
+2025-08-20 14:26:31 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en base_descuentos.
+2025-08-20 14:26:31 - costeando.modulos.procesamiento_listado_gral - DEBUG - Columna 'Producto' renombrada a 'Codigo' en listado.
+2025-08-20 14:26:31 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en comprando.
+2025-08-20 14:26:31 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en mdo.
+2025-08-20 14:26:31 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en leader_list.
+2025-08-20 14:26:31 - costeando.modulos.procesamiento_listado_gral - DEBUG - Columna 'Producto' renombrada a 'Codigo' en compilado_fechas_ult_compra.
+2025-08-20 14:26:31 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merges de MANO DE OBRA TOTAL
+2025-08-20 14:26:31 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merge costo de producción y CARGA FABRIL
+2025-08-20 14:26:31 - costeando.modulos.procesamiento_listado_gral - ERROR - Error durante el procesamiento de Leader List.
+Traceback (most recent call last):
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 114, in procesar_listado_gral_puro
+    df_listado_general = pd.merge(df_listado_general,df_produciendo[["Codigo", "COSTO PRODUCCION"]], how="left", on="Codigo")
+                                                     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 3767, in __getitem__
+    indexer = self.columns._get_indexer_strict(key, "columns")[1]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 5877, in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 5941, in _raise_if_missing
+    raise KeyError(f"{not_found} not in index")
+KeyError: "['COSTO PRODUCCION'] not in index"
+2025-08-20 14:28:30 - costeando.modulos.procesamiento_listado_gral - INFO - Iniciando procesamiento puro de Leader List
+2025-08-20 14:28:30 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: produciendo (Z:/Costos/Compartido/517 c17-2025/CALCULO COSTOS 517/07-08-2025 CALCULO PRODUCIENDO 517.xlsx)
+2025-08-20 14:28:30 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: comprando (Z:/Costos/Compartido/517 c17-2025/CALCULO COSTOS 517/07-08-2025 CALCULO COMPRANDO 517.xlsx)
+2025-08-20 14:28:30 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: costo_primo (Z:/Costos/Compartido/517 c17-2025/COSTO PRIMO 517/07-08-2025 MAESTRO COSTO PRIMO 517.xlsx)
+2025-08-20 14:28:30 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: base_descuentos (Z:/Costos/Compartido/517 c17-2025/BASE DTOS 517/07-08-2025 Descuentos Especiales - Base de Datos C17 2025 produciendo 2da etapa.xlsx)
+2025-08-20 14:28:30 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: listado (Z:/Costos/Compartido/517 c17-2025/LISTA 517/08-08-2025 LISTA 517 consulta_lista_de_precios_153702.xlsx)
+2025-08-20 14:28:30 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: mdo (Z:/Costos/Compartido/517 c17-2025/PT X COMPO 517/13-08-2025 PT X COMPONENTE 517.xlsx)
+2025-08-20 14:28:30 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: leader_list (Z:/Costos/Compartido/517 c17-2025/LEADER LIST 517/28-07-2025 RESUMEN LEADER LIST 517.xlsx)
+2025-08-20 14:28:30 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: compilado_fechas_ult_compra (Z:/Costos/Compartido/517 c17-2025/FCHS ULT COMPRA 517/Compilado de fchs ult compra.xlsx)
+2025-08-20 14:28:30 - costeando.modulos.procesamiento_listado_gral - INFO - Leyendo archivos Excel de entrada...
+2025-08-20 14:29:04 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en produciendo.
+2025-08-20 14:29:04 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en costo_primo.
+2025-08-20 14:29:04 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en base_descuentos.
+2025-08-20 14:29:04 - costeando.modulos.procesamiento_listado_gral - DEBUG - Columna 'Producto' renombrada a 'Codigo' en listado.
+2025-08-20 14:29:04 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en comprando.
+2025-08-20 14:29:04 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en mdo.
+2025-08-20 14:29:04 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en leader_list.
+2025-08-20 14:29:04 - costeando.modulos.procesamiento_listado_gral - DEBUG - Columna 'Producto' renombrada a 'Codigo' en compilado_fechas_ult_compra.
+2025-08-20 14:29:04 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merges de MANO DE OBRA TOTAL
+2025-08-20 14:29:04 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merge costo de producción y CARGA FABRIL
+2025-08-20 14:29:04 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merges con el leader list
+2025-08-20 14:29:04 - costeando.modulos.procesamiento_listado_gral - DEBUG - Sumatoria de descuentos
+2025-08-20 14:29:04 - costeando.modulos.procesamiento_listado_gral - DEBUG - Inicia fase de calculos
+2025-08-20 14:29:04 - costeando.modulos.procesamiento_listado_gral - INFO - termina fase de calculos
+2025-08-20 14:29:04 - costeando.modulos.procesamiento_listado_gral - INFO - Guardando Listado gral procesado en: Z:\Costos\Compartido\517 c17-2025\LISTA 517\Listado General Completo.xlsx
+2025-08-20 14:29:19 - costeando.modulos.procesamiento_listado_gral - INFO - Archivos guardados correctamente en: Z:\Costos\Compartido\517 c17-2025\LISTA 517
+2025-08-20 14:33:43 - costeando.modulos.procesamiento_listado_gral - INFO - Iniciando procesamiento puro de Leader List
+2025-08-20 14:33:43 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: produciendo (Z:/Costos/Compartido/517 c17-2025/CALCULO COSTOS 517/07-08-2025 CALCULO PRODUCIENDO 517.xlsx)
+2025-08-20 14:33:43 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: comprando (Z:/Costos/Compartido/517 c17-2025/CALCULO COSTOS 517/07-08-2025 CALCULO COMPRANDO 517.xlsx)
+2025-08-20 14:33:43 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: costo_primo (Z:/Costos/Compartido/517 c17-2025/COSTO PRIMO 517/07-08-2025 MAESTRO COSTO PRIMO 517.xlsx)
+2025-08-20 14:33:43 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: base_descuentos (Z:/Costos/Compartido/517 c17-2025/BASE DTOS 517/07-08-2025 Descuentos Especiales - Base de Datos C17 2025 produciendo 2da etapa.xlsx)
+2025-08-20 14:33:43 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: listado (Z:/Costos/Compartido/517 c17-2025/LISTA 517/08-08-2025 LISTA 517 consulta_lista_de_precios_153702.xlsx)
+2025-08-20 14:33:43 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: mdo (Z:/Costos/Compartido/517 c17-2025/PT X COMPO 517/13-08-2025 PT X COMPONENTE 517.xlsx)
+2025-08-20 14:33:43 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: leader_list (Z:/Costos/Compartido/517 c17-2025/LEADER LIST 517/28-07-2025 RESUMEN LEADER LIST 517.xlsx)
+2025-08-20 14:33:43 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: compilado_fechas_ult_compra (Z:/Costos/Compartido/517 c17-2025/FCHS ULT COMPRA 517/Compilado de fchs ult compra.xlsx)
+2025-08-20 14:33:43 - costeando.modulos.procesamiento_listado_gral - INFO - Leyendo archivos Excel de entrada...
+2025-08-20 14:34:16 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en produciendo.
+2025-08-20 14:34:16 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en costo_primo.
+2025-08-20 14:34:16 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en base_descuentos.
+2025-08-20 14:34:16 - costeando.modulos.procesamiento_listado_gral - DEBUG - Columna 'Producto' renombrada a 'Codigo' en listado.
+2025-08-20 14:34:16 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en comprando.
+2025-08-20 14:34:16 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en mdo.
+2025-08-20 14:34:16 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en leader_list.
+2025-08-20 14:34:16 - costeando.modulos.procesamiento_listado_gral - DEBUG - Columna 'Producto' renombrada a 'Codigo' en compilado_fechas_ult_compra.
+2025-08-20 14:34:16 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merges de MANO DE OBRA TOTAL
+2025-08-20 14:34:16 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merge costo de producción y CARGA FABRIL
+2025-08-20 14:34:16 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merges con el leader list
+2025-08-20 14:34:16 - costeando.modulos.procesamiento_listado_gral - DEBUG - Sumatoria de descuentos
+2025-08-20 14:34:16 - costeando.modulos.procesamiento_listado_gral - DEBUG - Inicia fase de calculos
+2025-08-20 14:34:16 - costeando.modulos.procesamiento_listado_gral - INFO - termina fase de calculos
+2025-08-20 14:34:16 - costeando.modulos.procesamiento_listado_gral - INFO - Guardando Listado gral procesado en: Z:\Costos\Compartido\517 c17-2025\LISTA 517\Listado General Completo.xlsx
+2025-08-20 14:34:31 - costeando.modulos.procesamiento_listado_gral - INFO - Archivos guardados correctamente en: Z:\Costos\Compartido\517 c17-2025\LISTA 517
+2025-08-20 14:36:36 - costeando.modulos.procesamiento_listado_gral - INFO - Iniciando procesamiento puro de Leader List
+2025-08-20 14:36:36 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: produciendo (Z:/Costos/Compartido/517 c17-2025/CALCULO COSTOS 517/07-08-2025 CALCULO PRODUCIENDO 517.xlsx)
+2025-08-20 14:36:36 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: comprando (Z:/Costos/Compartido/517 c17-2025/CALCULO COSTOS 517/07-08-2025 CALCULO COMPRANDO 517.xlsx)
+2025-08-20 14:36:36 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: costo_primo (Z:/Costos/Compartido/517 c17-2025/COSTO PRIMO 517/07-08-2025 MAESTRO COSTO PRIMO 517.xlsx)
+2025-08-20 14:36:36 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: base_descuentos (Z:/Costos/Compartido/517 c17-2025/BASE DTOS 517/07-08-2025 Descuentos Especiales - Base de Datos C17 2025 produciendo 2da etapa.xlsx)
+2025-08-20 14:36:36 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: listado (Z:/Costos/Compartido/517 c17-2025/LISTA 517/08-08-2025 LISTA 517 consulta_lista_de_precios_153702.xlsx)
+2025-08-20 14:36:36 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: mdo (Z:/Costos/Compartido/517 c17-2025/PT X COMPO 517/13-08-2025 PT X COMPONENTE 517.xlsx)
+2025-08-20 14:36:36 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: leader_list (Z:/Costos/Compartido/517 c17-2025/LEADER LIST 517/28-07-2025 RESUMEN LEADER LIST 517.xlsx)
+2025-08-20 14:36:36 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: compilado_fechas_ult_compra (Z:/Costos/Compartido/517 c17-2025/FCHS ULT COMPRA 517/Compilado de fchs ult compra.xlsx)
+2025-08-20 14:36:36 - costeando.modulos.procesamiento_listado_gral - INFO - Leyendo archivos Excel de entrada...
+2025-08-20 14:37:09 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en produciendo.
+2025-08-20 14:37:09 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en costo_primo.
+2025-08-20 14:37:09 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en base_descuentos.
+2025-08-20 14:37:09 - costeando.modulos.procesamiento_listado_gral - DEBUG - Columna 'Producto' renombrada a 'Codigo' en listado.
+2025-08-20 14:37:09 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en comprando.
+2025-08-20 14:37:09 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en mdo.
+2025-08-20 14:37:09 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en leader_list.
+2025-08-20 14:37:09 - costeando.modulos.procesamiento_listado_gral - DEBUG - Columna 'Producto' renombrada a 'Codigo' en compilado_fechas_ult_compra.
+2025-08-20 14:37:09 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merges de MANO DE OBRA TOTAL
+2025-08-20 14:37:09 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merge costo de producción y CARGA FABRIL
+2025-08-20 14:37:09 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merges con el leader list
+2025-08-20 14:37:09 - costeando.modulos.procesamiento_listado_gral - DEBUG - Sumatoria de descuentos
+2025-08-20 14:37:09 - costeando.modulos.procesamiento_listado_gral - DEBUG - Inicia fase de calculos
+2025-08-20 14:37:09 - costeando.modulos.procesamiento_listado_gral - INFO - termina fase de calculos
+2025-08-20 14:37:09 - costeando.modulos.procesamiento_listado_gral - INFO - Guardando Listado gral procesado en: Z:\Costos\Compartido\517 c17-2025\LISTA 517\Listado General Completo.xlsx
+2025-08-20 14:37:25 - costeando.modulos.procesamiento_listado_gral - INFO - Archivos guardados correctamente en: Z:\Costos\Compartido\517 c17-2025\LISTA 517
+2025-08-20 15:28:25 - costeando.modulos.procesamiento_listado_gral - INFO - Iniciando procesamiento puro de Leader List
+2025-08-20 15:28:25 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: produciendo (Z:/Costos/Compartido/517 c17-2025/CALCULO COSTOS 517/07-08-2025 CALCULO PRODUCIENDO 517.xlsx)
+2025-08-20 15:28:25 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: comprando (Z:/Costos/Compartido/517 c17-2025/CALCULO COSTOS 517/07-08-2025 CALCULO COMPRANDO 517.xlsx)
+2025-08-20 15:28:25 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: costo_primo (Z:/Costos/Compartido/517 c17-2025/COSTO PRIMO 517/07-08-2025 MAESTRO COSTO PRIMO 517.xlsx)
+2025-08-20 15:28:25 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: base_descuentos (Z:/Costos/Compartido/517 c17-2025/BASE DTOS 517/07-08-2025 Descuentos Especiales - Base de Datos C17 2025 produciendo 2da etapa.xlsx)
+2025-08-20 15:28:25 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: listado (Z:/Costos/Compartido/517 c17-2025/LISTA 517/08-08-2025 LISTA 517 consulta_lista_de_precios_153702.xlsx)
+2025-08-20 15:28:25 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: mdo (Z:/Costos/Compartido/517 c17-2025/PT X COMPO 517/13-08-2025 PT X COMPONENTE 517.xlsx)
+2025-08-20 15:28:25 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: leader_list (Z:/Costos/Compartido/517 c17-2025/LEADER LIST 517/28-07-2025 RESUMEN LEADER LIST 517.xlsx)
+2025-08-20 15:28:25 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: compilado_fechas_ult_compra (Z:/Costos/Compartido/517 c17-2025/FCHS ULT COMPRA 517/Compilado de fchs ult compra.xlsx)
+2025-08-20 15:28:25 - costeando.modulos.procesamiento_listado_gral - INFO - Leyendo archivos Excel de entrada...
+2025-08-20 15:29:02 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en produciendo.
+2025-08-20 15:29:02 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en costo_primo.
+2025-08-20 15:29:02 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en base_descuentos.
+2025-08-20 15:29:02 - costeando.modulos.procesamiento_listado_gral - DEBUG - Columna 'Producto' renombrada a 'Codigo' en listado.
+2025-08-20 15:29:02 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en comprando.
+2025-08-20 15:29:02 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en mdo.
+2025-08-20 15:29:02 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en leader_list.
+2025-08-20 15:29:02 - costeando.modulos.procesamiento_listado_gral - DEBUG - Columna 'Producto' renombrada a 'Codigo' en compilado_fechas_ult_compra.
+2025-08-20 15:29:02 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merges de MANO DE OBRA TOTAL
+2025-08-20 15:29:02 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merge costo de producción y CARGA FABRIL
+2025-08-20 15:29:02 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merges con el leader list
+2025-08-20 15:29:02 - costeando.modulos.procesamiento_listado_gral - DEBUG - Sumatoria de descuentos
+2025-08-20 15:29:02 - costeando.modulos.procesamiento_listado_gral - DEBUG - Inicia fase de calculos
+2025-08-20 15:29:02 - costeando.modulos.procesamiento_listado_gral - INFO - termina fase de calculos
+2025-08-20 15:29:02 - costeando.modulos.procesamiento_listado_gral - INFO - Guardando Listado gral procesado en: Z:\Costos\Compartido\517 c17-2025\LISTA 517\Listado General Completo.xlsx
+2025-08-20 15:29:17 - costeando.modulos.procesamiento_listado_gral - INFO - Archivos guardados correctamente en: Z:\Costos\Compartido\517 c17-2025\LISTA 517
+2025-08-21 11:40:18 - costeando.modulos.procesamiento_listado_gral - INFO - Iniciando procesamiento puro de Leader List
+2025-08-21 11:40:18 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: produciendo (Z:/Costos/Compartido/517 c17-2025/CALCULO COSTOS 517/07-08-2025 CALCULO PRODUCIENDO 517.xlsx)
+2025-08-21 11:40:18 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: comprando (Z:/Costos/Compartido/517 c17-2025/CALCULO COSTOS 517/07-08-2025 CALCULO COMPRANDO 517.xlsx)
+2025-08-21 11:40:18 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: costo_primo (Z:/Costos/Compartido/517 c17-2025/COSTO PRIMO 517/07-08-2025 MAESTRO COSTO PRIMO 517.xlsx)
+2025-08-21 11:40:18 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: base_descuentos (Z:/Costos/Compartido/517 c17-2025/BASE DTOS 517/07-08-2025 Descuentos Especiales - Base de Datos C17 2025 produciendo 2da etapa.xlsx)
+2025-08-21 11:40:18 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: listado (Z:/Costos/Compartido/517 c17-2025/LISTA 517/08-08-2025 LISTA 517 consulta_lista_de_precios_153702.xlsx)
+2025-08-21 11:40:18 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: mdo (Z:/Costos/Compartido/517 c17-2025/PT X COMPO 517/13-08-2025 PT X COMPONENTE 517.xlsx)
+2025-08-21 11:40:18 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: leader_list (Z:/Costos/Compartido/517 c17-2025/LEADER LIST 517/28-07-2025 RESUMEN LEADER LIST 517.xlsx)
+2025-08-21 11:40:18 - costeando.modulos.procesamiento_listado_gral - DEBUG - Validando archivo: compilado_fechas_ult_compra (Z:/Costos/Compartido/517 c17-2025/FCHS ULT COMPRA 517/Compilado de fchs ult compra.xlsx)
+2025-08-21 11:40:18 - costeando.modulos.procesamiento_listado_gral - INFO - Leyendo archivos Excel de entrada...
+2025-08-21 11:40:58 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en produciendo.
+2025-08-21 11:40:58 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en costo_primo.
+2025-08-21 11:40:58 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en base_descuentos.
+2025-08-21 11:40:58 - costeando.modulos.procesamiento_listado_gral - DEBUG - Columna 'Producto' renombrada a 'Codigo' en listado.
+2025-08-21 11:40:58 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en comprando.
+2025-08-21 11:40:58 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en mdo.
+2025-08-21 11:40:58 - costeando.modulos.procesamiento_listado_gral - DEBUG - No se encontró la columna 'Producto' en leader_list.
+2025-08-21 11:40:58 - costeando.modulos.procesamiento_listado_gral - DEBUG - Columna 'Producto' renombrada a 'Codigo' en compilado_fechas_ult_compra.
+2025-08-21 11:40:58 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merges de MANO DE OBRA TOTAL
+2025-08-21 11:40:58 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merge costo de producción y CARGA FABRIL
+2025-08-21 11:40:58 - costeando.modulos.procesamiento_listado_gral - DEBUG - Realizando merges con el leader list
+2025-08-21 11:40:58 - costeando.modulos.procesamiento_listado_gral - DEBUG - Sumatoria de descuentos
+2025-08-21 11:40:58 - costeando.modulos.procesamiento_listado_gral - DEBUG - Inicia fase de calculos
+2025-08-21 11:40:58 - costeando.modulos.procesamiento_listado_gral - INFO - termina fase de calculos
+2025-08-21 11:40:58 - costeando.modulos.procesamiento_listado_gral - INFO - Guardando Listado gral procesado en: Z:\Costos\Compartido\517 c17-2025\LISTA 517\Listado General Completo.xlsx
+2025-08-21 11:41:15 - costeando.modulos.procesamiento_listado_gral - INFO - Archivos guardados correctamente en: Z:\Costos\Compartido\517 c17-2025\LISTA 517
