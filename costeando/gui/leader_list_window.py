@@ -2,8 +2,6 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 import threading
 import logging
-import pandas as pd
-import os
 from costeando.modulos.procesamiento_leader_list import procesar_leader_list_puro
 
 logger = logging.getLogger(__name__)
@@ -124,7 +122,7 @@ class LeaderListWindow(tk.Toplevel):
             self.ocultar_progreso()
             return
         try:
-            resultado = procesar_leader_list_puro(
+            resultado=procesar_leader_list_puro(
                 ruta_leader_list=leader_list,
                 ruta_listado_anterior=listado,
                 ruta_maestro=maestro,
@@ -135,10 +133,11 @@ class LeaderListWindow(tk.Toplevel):
                 anio=año,
                 carpeta_guardado=carpeta_guardado
             )
-            messagebox.showinfo("Éxito", f"Los archivos han sido procesados y guardados con éxito en:\n{carpeta_guardado}")
+            self.ocultar_progreso()
+            messagebox.showinfo("Éxito", "El procesamiento ha finalizado con éxito.")
             self.destroy()  # Cerrar la ventana después de un proceso exitoso
         except Exception as e:
-            logger.error(f"Error en el procesamiento de leader list: {str(e)}", exc_info=True)
+            logger.error(f"Error en el procesamiento de primer comprando: {str(e)}", exc_info=True)
             messagebox.showerror("Error", f"Ocurrió un error durante el procesamiento:\n{e}")
             self.ocultar_progreso()
         

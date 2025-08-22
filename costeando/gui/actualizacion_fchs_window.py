@@ -2,8 +2,6 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 import threading
 import logging
-import pandas as pd
-import os
 from costeando.modulos.procesamiento_actualizacion_fchs import procesar_actualizacion_fchs_puro
 
 logger = logging.getLogger(__name__)
@@ -100,25 +98,20 @@ class ActualizacionFCHSWindow(tk.Toplevel):
             self.ocultar_progreso()
             return
         try:
-            resultado = procesar_actualizacion_fchs_puro(
+            resultado=procesar_actualizacion_fchs_puro(
                 ruta_estructuras=self.ruta_estructuras.get(),
                 ruta_compras=self.ruta_compras.get(),
                 ruta_maestro=self.ruta_maestro.get(),
                 ruta_ordenes_apuntadas=self.ruta_ordenes_apuntadas.get(),
                 carpeta_guardado=carpeta_guardado
             )
-            path_guardado = resultado.get("actualizacion_fchs", "")
-            if path_guardado and os.path.exists(path_guardado):
-                self.ocultar_progreso()
-                messagebox.showinfo("Éxito", f"El archivo ha sido procesado y guardado con éxito en:\n{path_guardado}")
-                self.destroy()  # Cerrar la ventana después de un proceso exitoso
-            else:
-                self.ocultar_progreso()
-                messagebox.showwarning("Advertencia", "El procesamiento terminó pero no se encontró el archivo de salida, vuelva a seleccionar la carpeta de guardado.")
-        except Exception as e:
-            logger.error(f"Error en la actualización de fechas: {str(e)}", exc_info=True)
             self.ocultar_progreso()
+            messagebox.showinfo("Éxito", "El procesamiento ha finalizado con éxito.")
+            self.destroy()  # Cerrar la ventana después de un proceso exitoso
+        except Exception as e:
+            logger.error(f"Error en el procesamiento de primer comprando: {str(e)}", exc_info=True)
             messagebox.showerror("Error", f"Ocurrió un error durante el procesamiento:\n{e}")
+            self.ocultar_progreso()
             
     def destroy(self):
         self.ocultar_progreso()

@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 import threading
 import logging
-import pandas as pd
 
 from costeando.modulos.procesamiento_segundo_produciendo import procesar_segundo_produciendo
 
@@ -124,7 +123,7 @@ class SegundoProduciendoWindow(tk.Toplevel):
             self.ocultar_progreso()
             return
         try:
-            resultado = procesar_segundo_produciendo(
+            resultado=procesar_segundo_produciendo(
                 ruta_produciendo=self.ruta_segundo_produciendo.get(),
                 ruta_base_especiales=self.ruta_base_especiales.get(),
                 ruta_importador_descuentos=self.ruta_importador_descuentos.get() or None,
@@ -135,10 +134,11 @@ class SegundoProduciendoWindow(tk.Toplevel):
                 carpeta_guardado=carpeta_guardado
             )
        
-            messagebox.showinfo("Éxito", f"El archivo ha sido procesado y guardado con éxito en:\n{carpeta_guardado}")
-            self.destroy()
+            self.ocultar_progreso()
+            messagebox.showinfo("Éxito", "El procesamiento ha finalizado con éxito.")
+            self.destroy()  # Cerrar la ventana después de un proceso exitoso
         except Exception as e:
-            logger.error(f"Error en el procesamiento de segundo produciendo: {str(e)}", exc_info=True)
+            logger.error(f"Error en el procesamiento de primer comprando: {str(e)}", exc_info=True)
             messagebox.showerror("Error", f"Ocurrió un error durante el procesamiento:\n{e}")
             self.ocultar_progreso()
         

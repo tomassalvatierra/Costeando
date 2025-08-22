@@ -2,9 +2,7 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 import threading
 import logging
-import pandas as pd
-import numpy as np
-import os
+
 from costeando.modulos.procesamiento_valorizacion_dyc import procesar_valorizacion_dyc_puro
 
 logger = logging.getLogger(__name__)
@@ -108,7 +106,7 @@ class ValorizacionDYCWindow(tk.Toplevel):
             self.ocultar_progreso()
             return
         try:
-            resultado = procesar_valorizacion_dyc_puro(
+            resultado=procesar_valorizacion_dyc_puro(
                 ruta_listado=listado,
                 ruta_combinadas=combinadas,
                 ruta_dobles=dobles,
@@ -116,16 +114,11 @@ class ValorizacionDYCWindow(tk.Toplevel):
                 anio=año,
                 carpeta_guardado=carpeta_guardado
             )
-            path_guardado = resultado.get("valorizacion_dyc", "")
-            if path_guardado and os.path.exists(path_guardado):
-               
-                messagebox.showinfo("Éxito", f"El archivo ha sido procesado y guardado con éxito en:\n{path_guardado}")
-                self.destroy()
-            else:
-                self.ocultar_progreso()
-                messagebox.showwarning("Advertencia", "El procesamiento terminó pero no se encontró el archivo de salida.")
+            self.ocultar_progreso()
+            messagebox.showinfo("Éxito", "El procesamiento ha finalizado con éxito.")
+            self.destroy()  # Cerrar la ventana después de un proceso exitoso
         except Exception as e:
-            logger.error(f"Error en el procesamiento de valorización DyC: {str(e)}", exc_info=True)
+            logger.error(f"Error en el procesamiento de primer comprando: {str(e)}", exc_info=True)
             messagebox.showerror("Error", f"Ocurrió un error durante el procesamiento:\n{e}")
             self.ocultar_progreso()
         

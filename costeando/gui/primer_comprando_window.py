@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 import threading
 import logging
-import pandas as pd
 # Importar la función de lógica pura
 from costeando.modulos.procesamiento_primer_comprando import procesar_primer_comprando
 
@@ -148,7 +147,7 @@ class PrimerComprandoWindow(tk.Toplevel):
             self.ocultar_progreso()
             return
         try:
-            resultado = procesar_primer_comprando(
+            resultado=procesar_primer_comprando(
                 campaña=campaña,
                 año=año,
                 indice_a=float(indice_a),
@@ -163,7 +162,8 @@ class PrimerComprandoWindow(tk.Toplevel):
                 ruta_ficha=self.ruta_ficha.get(),
                 ruta_salida=ruta_salida
             )
-            messagebox.showinfo("Éxito", f"El procesamiento ha finalizado con éxito.")
+            self.ocultar_progreso()
+            messagebox.showinfo("Éxito", "El procesamiento ha finalizado con éxito.")
             self.destroy()  # Cerrar la ventana después de un proceso exitoso
         except Exception as e:
             logger.error(f"Error en el procesamiento de primer comprando: {str(e)}", exc_info=True)

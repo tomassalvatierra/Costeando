@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 import threading
 import logging
-import pandas as pd
 from costeando.modulos.procesamiento_proyectados import procesar_proyectados_puro
 
 logger = logging.getLogger(__name__)
@@ -107,17 +106,18 @@ class ProyectadosWindow(tk.Toplevel):
             self.ocultar_progreso()
             return
         try:
-            resultado = procesar_proyectados_puro(
+            resultado=procesar_proyectados_puro(
                 ruta_lista=lista,
                 ruta_coef=coef,
                 camp_inicial=camp_inicial,
                 anio_inicial=año_inicial,
                 carpeta_guardado=carpeta_guardado
             )
-            messagebox.showinfo("Éxito", f"Los archivos han sido procesados y guardados con éxito en:\n{carpeta_guardado}")
-            self.destroy()
+            self.ocultar_progreso()
+            messagebox.showinfo("Éxito", "El procesamiento ha finalizado con éxito.")
+            self.destroy()  # Cerrar la ventana después de un proceso exitoso
         except Exception as e:
-            logger.error(f"Error en el procesamiento de proyectados: {str(e)}", exc_info=True)
+            logger.error(f"Error en el procesamiento de primer comprando: {str(e)}", exc_info=True)
             messagebox.showerror("Error", f"Ocurrió un error durante el procesamiento:\n{e}")
             self.ocultar_progreso()
             

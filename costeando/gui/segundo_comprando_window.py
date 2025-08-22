@@ -116,7 +116,7 @@ class SegundoComprandoWindow(tk.Toplevel):
             self.ocultar_progreso()
             return
         try:
-            resultado = procesar_segundo_comprando(
+            resultado=procesar_segundo_comprando(
                 ruta_comprando=self.ruta_comprando.get(),
                 ruta_costos_especiales=self.ruta_costos_especiales.get(),
                 ruta_importador_descuentos=self.ruta_importador_descuentos.get() or None,
@@ -127,10 +127,11 @@ class SegundoComprandoWindow(tk.Toplevel):
                 carpeta_guardado=carpeta_guardado
             )
        
-            messagebox.showinfo("Éxito", f"El archivo ha sido procesado y guardado con éxito en:\n{carpeta_guardado}")
-            self.destroy()
+            self.ocultar_progreso()
+            messagebox.showinfo("Éxito", "El procesamiento ha finalizado con éxito.")
+            self.destroy()  # Cerrar la ventana después de un proceso exitoso
         except Exception as e:
-            logger.error(f"Error en el procesamiento de segundo comprando: {str(e)}", exc_info=True)
+            logger.error(f"Error en el procesamiento de primer comprando: {str(e)}", exc_info=True)
             messagebox.showerror("Error", f"Ocurrió un error durante el procesamiento:\n{e}")
             self.ocultar_progreso()
         

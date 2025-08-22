@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 import threading
 import logging
-import pandas as pd
 
 from costeando.modulos.procesamiento_primer_produciendo import procesar_primer_produciendo
 
@@ -108,7 +107,7 @@ class PrimerProduciendoWindow(tk.Toplevel):
             self.ocultar_progreso()
             return
         try:
-            resultado = procesar_primer_produciendo(
+            resultado=procesar_primer_produciendo(
                 campaña_actual=campaña,
                 año_actual=año,
                 ruta_produciendo_anterior=self.ruta_produciendo_anterior.get(),
@@ -120,10 +119,11 @@ class PrimerProduciendoWindow(tk.Toplevel):
                 ruta_salida=ruta_salida
             )
          
-            messagebox.showinfo("Éxito", f"El procesamiento ha finalizado con éxito.\n\nArchivos generados:\n" + '\n'.join([f"- {v}" for v in resultado.values()]))
-            self.destroy()
+            self.ocultar_progreso()
+            messagebox.showinfo("Éxito", "El procesamiento ha finalizado con éxito.")
+            self.destroy()  # Cerrar la ventana después de un proceso exitoso
         except Exception as e:
-            logger.error(f"Error en el procesamiento de primer produciendo: {str(e)}", exc_info=True)
+            logger.error(f"Error en el procesamiento de primer comprando: {str(e)}", exc_info=True)
             messagebox.showerror("Error", f"Ocurrió un error durante el procesamiento:\n{e}")
             self.ocultar_progreso()
 

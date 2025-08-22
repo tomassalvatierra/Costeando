@@ -2,9 +2,6 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 import threading
 import logging
-import pandas as pd
-import numpy as np
-import time
 from costeando.modulos.procesamiento_compras import procesar_compras_puro
 
 logger = logging.getLogger(__name__)
@@ -93,18 +90,18 @@ class ComprasWindow(tk.Toplevel):
             self.ocultar_progreso()
             return
         try:
-            resultado = procesar_compras_puro(
+            resultado=procesar_compras_puro(
                 ruta_compras=compras,
                 dolar=dolar,
                 carpeta_guardado=carpeta_guardado
             )
-            messagebox.showinfo("Éxito", f"El archivo ha sido procesado y guardado con éxito en:\n{resultado['compras_depuradas']}")
+            self.ocultar_progreso()
+            messagebox.showinfo("Éxito", "El procesamiento ha finalizado con éxito.")
             self.destroy()  # Cerrar la ventana después de un proceso exitoso
         except Exception as e:
-            logger.error(f"Error en el procesamiento de compras: {str(e)}", exc_info=True)
-            self.ocultar_progreso()
+            logger.error(f"Error en el procesamiento de primer comprando: {str(e)}", exc_info=True)
             messagebox.showerror("Error", f"Ocurrió un error durante el procesamiento:\n{e}")
-  
+            self.ocultar_progreso()
         
     def destroy(self):
         self.ocultar_progreso()

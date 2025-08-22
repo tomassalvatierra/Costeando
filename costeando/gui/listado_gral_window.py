@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 import threading
 import logging
-import os
 from costeando.modulos.procesamiento_listado_gral import procesar_listado_gral_puro
 
 logger = logging.getLogger(__name__)
@@ -135,28 +134,24 @@ class ListadoGralWindow(tk.Toplevel):
             self.ocultar_progreso()
             return
         try:
-            resultado = procesar_listado_gral_puro(
-                campania=campania,
-                anio=anio,
-                ruta_listado=listado,
-                carpeta_guardado=carpeta_guardado,
+            resultado=procesar_listado_gral_puro(
                 ruta_produciendo=produciendo,
                 ruta_comprando=comprando,
                 ruta_costo_primo=costo_primo,
                 ruta_base_descuentos=base_descuentos,
+                ruta_listado=listado,
                 ruta_mdo=mano_de_obra,
                 ruta_leader_list=leader_list,
-                ruta_compilado_fechas_ult_compra=compilado_fechas_ult_compra
-            )
-            path_guardado = resultado.get("listado gral completo", "")
-            if path_guardado and os.path.exists(path_guardado):
-                messagebox.showinfo("Éxito", f"El archivo ha sido procesado y guardado con éxito en:\n{path_guardado}")
-                self.destroy()  # Cerrar la ventana después de un proceso exitoso
-            else:
-                messagebox.showwarning("Advertencia", "El procesamiento terminó pero no se encontró el archivo de salida.")
-                self.ocultar_progreso()
+                ruta_compilado_fechas_ult_compra=compilado_fechas_ult_compra,
+                campania=campania,
+                anio=anio,
+                carpeta_guardado=carpeta_guardado
+            )     
+            self.ocultar_progreso()
+            messagebox.showinfo("Éxito", "El procesamiento ha finalizado con éxito.")
+            self.destroy()  # Cerrar la ventana después de un proceso exitoso
         except Exception as e:
-            logger.error(f"Error en el procesamiento del listado general: {str(e)}", exc_info=True)
+            logger.error(f"Error en el procesamiento de primer comprando: {str(e)}", exc_info=True)
             messagebox.showerror("Error", f"Ocurrió un error durante el procesamiento:\n{e}")
             self.ocultar_progreso()
         
