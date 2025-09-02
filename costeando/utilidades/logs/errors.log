@@ -461,3 +461,57 @@ Traceback (most recent call last):
   File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 5941, in _raise_if_missing
     raise KeyError(f"{not_found} not in index")
 KeyError: "['COSTO PRODUCCION'] not in index"
+2025-09-02 14:45:30 - costeando.modulos.procesamiento_listado_gral - ERROR - Error durante el procesamiento de Leader List.
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 171, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 214, in pandas._libs.index.IndexEngine._get_loc_duplicates
+  File "pandas\_libs\index.pyx", line 222, in pandas._libs.index.IndexEngine._maybe_get_bool_indexer
+  File "pandas\_libs\index.pyx", line 114, in pandas._libs.index._unpack_bool_indexer
+KeyError: 'DESCUENTO ESPECIAL'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 146, in procesar_listado_gral_puro
+    df_listado_general.loc[df_listado_general["DESCUENTO ESPECIAL"].fillna(0) == 0, "TIPO-DESCUENTO"] = None
+                           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 3761, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'DESCUENTO ESPECIAL'
+2025-09-02 14:48:41 - costeando.modulos.procesamiento_listado_gral - ERROR - Error durante el procesamiento de Leader List.
+Traceback (most recent call last):
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 171, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 214, in pandas._libs.index.IndexEngine._get_loc_duplicates
+  File "pandas\_libs\index.pyx", line 222, in pandas._libs.index.IndexEngine._maybe_get_bool_indexer
+  File "pandas\_libs\index.pyx", line 114, in pandas._libs.index._unpack_bool_indexer
+KeyError: 'DESCUENTO ESPECIAL'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 146, in procesar_listado_gral_puro
+    df_listado_general.loc[df_listado_general["DESCUENTO ESPECIAL"].fillna(0) == 0, "TIPO-DESCUENTO"] = None
+                           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 3761, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexes\base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'DESCUENTO ESPECIAL'
+2025-09-02 16:18:39 - costeando.modulos.procesamiento_listado_gral - ERROR - Ninguna de las columnas 'Costo Estandard' o 'COSTO LISTA 517' existe en el listado.
+2025-09-02 16:18:39 - costeando.modulos.procesamiento_listado_gral - ERROR - Error durante el procesamiento de Leader List.
+Traceback (most recent call last):
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 95, in procesar_listado_gral_puro
+    raise ValueError(error_msg)
+ValueError: Ninguna de las columnas 'Costo Estandard' o 'COSTO LISTA 517' existe en el listado.
