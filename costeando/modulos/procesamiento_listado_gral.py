@@ -70,7 +70,7 @@ def procesar_listado_gral_puro(
         raise
     
     try:
-        df_listado_general = df_listado.copy()
+        
 
         lista_df = [
             (df_produciendo, 'produciendo'),
@@ -84,13 +84,17 @@ def procesar_listado_gral_puro(
         
         lista_df = [estandarizar_columna_producto(df, nombre) for df, nombre in lista_df]
         
-        df_produciendo, df_costo_primo, df_base_descuentos, df_listado_general, df_comprando, df_mdo, df_leader_list, df_compilado_fechas_ult_compra = lista_df
+        df_produciendo, df_costo_primo, df_base_descuentos, df_listado, df_comprando, df_mdo, df_leader_list, df_compilado_fechas_ult_compra = lista_df
         
+        df_listado_general = df_listado.copy()
+        
+      
         df_listado_general.rename(columns={"Costo Estandard":"COSTO LISTA " + anio[-1] +campania}, inplace= True)
-
+        
         df_mdo_806 = df_mdo.loc[df_mdo["Componente"].isin(["MOD0806"])]
         df_mdo_807 = df_mdo.loc[df_mdo["Componente"].isin(["MOD0807"])]
         df_mdo_808 = df_mdo.loc[df_mdo["Componente"].isin(["MOD0808"])]
+        
 
         #Merge con Maestro Costo Primo
         logger.debug("Realizando merges de MANO DE OBRA TOTAL")
@@ -155,15 +159,15 @@ def procesar_listado_gral_puro(
         df_listado_general["% Sumatoria de Descuentos"] = (
         df_listado_general["DESCUENTO ESPECIAL"].fillna(0) +
         df_listado_general["ROYALTY"].fillna(0) +
-        df_listado_general["% de obsolescencia"].fillna(0))     
+        df_listado_general["% de obsolescencia"].fillna(0)).round(2)     
         
         logger.debug("Inicia fase de calculos")
         
-        df_listado_general["MANO DE OBRA TOTAL"] = df_listado_general["Costo Producción"] - df_listado_general["COSTO PRIMO (MATERIALES)"]
-        df_listado_general["Costo sin Descuento C"+campania] = df_listado_general["COSTO LISTA " + anio[-1] +campania] / ((100-df_listado_general["% Sumatoria de Descuentos"])/100)
-        df_listado_general["CARGA FABRIL"] = df_listado_general["Costo sin Descuento C"+campania] - df_listado_general["Costo Producción"]
-        df_listado_general["DESCUENTO APLICADO $"] = df_listado_general["COSTO LISTA " + anio[-1] +campania] - df_listado_general["Costo sin Descuento C"+campania]
-        df_listado_general["VALOR STOCK CON DESCUENTO"] = df_listado_general["Stock Actual"] * df_listado_general["COSTO LISTA " + anio[-1] +campania]
+        df_listado_general["MANO DE OBRA TOTAL"] = (df_listado_general["Costo Producción"] - df_listado_general["COSTO PRIMO (MATERIALES)"]).round(2)
+        df_listado_general["Costo sin Descuento C"+campania] = (df_listado_general["COSTO LISTA " + anio[-1] +campania] / ((100-df_listado_general["% Sumatoria de Descuentos"])/100)).round(2)
+        df_listado_general["CARGA FABRIL"] = (df_listado_general["Costo sin Descuento C"+campania] - df_listado_general["Costo Producción"]).round(1)
+        df_listado_general["DESCUENTO APLICADO $"] = (df_listado_general["COSTO LISTA " + anio[-1] +campania] - df_listado_general["Costo sin Descuento C"+campania]).round(2)
+        df_listado_general["VALOR STOCK CON DESCUENTO"] = (df_listado_general["Stock Actual"] * df_listado_general["COSTO LISTA " + anio[-1] +campania]).round(2)
         logger.info("termina fase de calculos")
         
         #Las columnas COSTO PRIMO (MATERIALES), MANO DE OBRA TOTAL, COSTO DE PRODUCCION Y CARGA FABRIL DEBEN SER CERO SI LA COLUMNA COSTO LISTA ES CERO
@@ -176,7 +180,7 @@ def procesar_listado_gral_puro(
 
         # Reindexar columnas según el orden solicitado
         columnas_ordenadas = [
-            "Periodo", "Codigo", "COD MADRE", "COD COMB", "Descripcion", "COSTO PRIMO (MATERIALES)", "MANO DE OBRA TOTAL", "Costo Producción", "CARGA FABRIL", "Costo sin Descuento C" + campania, "% Sumatoria de Descuentos", "COSTO LISTA " + anio[-1] +campania, "TIPO COSTO", "Ult. Compra", "TIPO ULT COMPRA", "MOD 0806 SEGUNDOS MO ELAB. X KILO", "MOD 0807 SEGUNDOS MO ENV. X UNIDAD", "MOD 0808 SEGUNDOS MO ACOND.X UNIDAD", "% de obsolescencia", "ROYALTY", "DESCUENTO ESPECIAL", "APLICA DDE CA:", "TIPO-DESCUENTO", "DESCUENTO APLICADO $", "Stock Actual", "VALOR STOCK CON DESCUENTO", "TIPO_OF", "LEYEOFE", "Estado", "Cod Actualiz", "VARIABLE", "LLEVA CF", "Tipo", "Desc.Tipo", "Grupo", "Desc. Grupo", "Sub Grupo", "Desc.Sub Grupo", "Entra MRP", "Atiende Necsdd", "Prov", "Ult P/C", "Razon Social", "Fecha Alta"
+            "Periodo", "Codigo", "COD MADRE", "COD COMB", "Descripcion", "COSTO PRIMO (MATERIALES)", "MANO DE OBRA TOTAL", "Costo Producción", "CARGA FABRIL", "Costo sin Descuento C" + campania, "% Sumatoria de Descuentos", "COSTO LISTA " + anio[-1] +campania, "TIPO COSTO","ADI N°", "Ult. Compra", "TIPO ULT COMPRA", "MOD 0806 SEGUNDOS MO ELAB. X KILO", "MOD 0807 SEGUNDOS MO ENV. X UNIDAD", "MOD 0808 SEGUNDOS MO ACOND.X UNIDAD", "% de obsolescencia", "ROYALTY", "DESCUENTO ESPECIAL", "APLICA DDE CA:", "TIPO-DESCUENTO", "DESCUENTO APLICADO $", "Stock Actual", "VALOR STOCK CON DESCUENTO", "TIPO_OF", "LEYEOFE", "Estado", "Cod Actualiz", "VARIABLE", "LLEVA CF", "Tipo", "Desc.Tipo", "Grupo", "Desc. Grupo", "Sub Grupo", "Desc.Sub Grupo", "Entra MRP", "Atiende Necsdd", "Prov", "Ult P/C", "Razon Social", "Fecha Alta"
         ]
         # Reindex solo si existen las columnas, las que falten se ignoran
         columnas_existentes = [col for col in columnas_ordenadas if col in df_listado_general.columns]

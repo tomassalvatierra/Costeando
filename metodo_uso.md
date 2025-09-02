@@ -205,13 +205,13 @@ Objetivo: agregar a la lista de costos toda informacion que el sector cree relev
 Solicitará los siguientes archivos.
 
 - Lista: lista de costos a completar.
-- Produciendo: archivo produciendo de la campaña que se esta procesando
-- Comprando: archivo comprando de la campaña que se esta procesando
+- Produciendo: archivo produciendo de la campaña que se esta procesando.
+- Comprando: archivo comprando de la campaña que se esta procesando.
 - Costo Primo: maestro costo primo, original de TOTVS.
 - Base Descuento: ultima base disponible.
 - MDO: archivo PT X COMPONENTE, original de TOTVS, las 3 manos de obras deben estar incluidad aqui.
 - Leader List: archivo leader list, puede ser el depurado o el original, debe ser el mas actualizado.
-
+- Compilado fchs: el compilado que se corrio con anterioridad, debe contener la columna "Tipo Orden".
 La interfaz pedirá los siguientes datos. 
     
 - Campaña a procesar (CC): ejemplo, 09.

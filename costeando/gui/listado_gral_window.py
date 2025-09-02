@@ -60,7 +60,7 @@ class ListadoGralWindow(tk.Toplevel):
         ttk.Button(self, text='Seleccionar Leader List', command=lambda: self.seleccionar_archivo(self.ruta_leader_list, "Seleccionar archivo Leader list"), width=25).grid(row=7, column=0, padx=5, pady=2)
         ttk.Entry(self, textvariable=self.ruta_leader_list, width=50).grid(row=7, column=1, padx=5, pady=2)
 
-        ttk.Button(self, text='Seleccionar compilado fechas ult compra', command=lambda: self.seleccionar_archivo(self.ruta_compilado_fechas_ult_compra, "Seleccionar archivo compilado de fechas ult compra"), width=25).grid(row=8, column=0, padx=5, pady=2)
+        ttk.Button(self, text='Seleccionar Compilado fchs', command=lambda: self.seleccionar_archivo(self.ruta_compilado_fechas_ult_compra, "Seleccionar archivo compilado de fechas ult compra"), width=25).grid(row=8, column=0, padx=5, pady=2)
         ttk.Entry(self, textvariable=self.ruta_compilado_fechas_ult_compra, width=50).grid(row=8, column=1, padx=5, pady=2)
 
         # Entradas de campaña y año
