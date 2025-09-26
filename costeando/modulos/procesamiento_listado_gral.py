@@ -2,6 +2,8 @@ import pandas as pd
 import logging
 from typing import Dict
 import os
+from datetime import datetime
+
 from costeando.utilidades.validaciones import validar_archivo_excel
 from costeando.utilidades.configuracion_logging import configurar_logging
 
@@ -141,9 +143,7 @@ def procesar_listado_gral_puro(
         # Haz un solo merge con el listado general
         df_listado_general = pd.merge(df_listado_general, df_aux, how="left", on="Codigo")
 
-        #Merge con Base de Descuentos
         df_listado_general = pd.merge(df_listado_general,df_base_descuentos[["Codigo", "TIPO-DESCUENTO"]], how="left", on="Codigo")
-        print(df_listado_general.info())
         #Si el DESCUENTO ESPECIAL es cero quitar el TIPO-DESCUENTO
         df_listado_general.loc[df_listado_general["DESCUENTO ESPECIAL"].fillna(0) == 0, "TIPO-DESCUENTO"] = None
         
@@ -191,7 +191,9 @@ def procesar_listado_gral_puro(
         columnas_existentes = [col for col in columnas_ordenadas if col in df_listado_general.columns]
         df_listado_general = df_listado_general.reindex(columns=columnas_existentes)
 
-        path_listado = os.path.join(carpeta_guardado, "Listado General Completo.xlsx")
+        fecha_hoy = datetime.now().strftime("%Y-%m-%d")
+
+        path_listado = os.path.join(carpeta_guardado, f"{fecha_hoy} Listado General Completo C{campania}_{anio}.xlsx")
         logger.info(f"Guardando Listado gral procesado en: {path_listado}")
         df_listado_general.to_excel(path_listado, index=False, engine="openpyxl")
 

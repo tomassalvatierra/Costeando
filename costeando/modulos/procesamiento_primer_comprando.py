@@ -392,13 +392,15 @@ def procesar_primer_comprando(
         
         df_calculo_comprando = pd.merge(df_calculo_comprando, df_rotacion[['Codigo', 'Clasificacion']], how='left', on='Codigo')  
         
+        fecha_hoy = datetime.now().strftime("%Y-%m-%d")
+
         if not os.path.exists(ruta_salida):
             os.makedirs(ruta_salida)
         
-        path_rotacion = os.path.join(ruta_salida, f'Rotacion_calculada_C{campaña}_{año}.xlsx')
-        path_base_descuentos = os.path.join(ruta_salida, f'Base_Descuentos_Especiales_1era_Etapa_C{campaña}_{año}.xlsx')
-        path_cambios = os.path.join(ruta_salida, f'Cambios_realizados_en_la_base_C{campaña}_{año}.xlsx')
-        path_calculo_comprando = os.path.join(ruta_salida, f'Calculo_Comprando_{campaña}_{año}.xlsx')
+        path_rotacion = os.path.join(ruta_salida, f'{fecha_hoy} Rotacion_calculada_C{campaña}_{año}.xlsx')
+        path_base_descuentos = os.path.join(ruta_salida, f'{fecha_hoy} Base_Descuentos_Especiales_1era_Etapa_C{campaña}_{año}.xlsx')
+        path_cambios = os.path.join(ruta_salida, f'{fecha_hoy} Cambios_realizados_en_la_base_C{campaña}_{año}.xlsx')
+        path_calculo_comprando = os.path.join(ruta_salida, f'{fecha_hoy} Calculo_Comprando_{campaña}_{año}.xlsx')
         
         df_rotacion.to_excel(path_rotacion, index=False, engine='openpyxl')
         df_costos_especiales.to_excel(path_base_descuentos, index=False, engine='openpyxl')

@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import logging
+from datetime import datetime
 from typing import Dict
 import os
 from costeando.utilidades.validaciones import validar_archivo_excel
@@ -77,7 +78,9 @@ def procesar_valorizacion_dyc_puro(
         
         df_combinadas_valorizadas.drop_duplicates(subset = 'Codigo', keep = 'first', inplace = True)
         
-        path_guardado = os.path.join(carpeta_guardado, "Valorizacion DyC.xlsx")
+        fecha_hoy = datetime.now().strftime("%Y-%m-%d")
+
+        path_guardado = os.path.join(carpeta_guardado, f"{fecha_hoy} Valorizacion DyC C{campana}_{anio}.xlsx")
         
         if os.path.exists(path_guardado):
             os.remove(path_guardado)

@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import logging
 from typing import Dict
+from datetime import datetime
+
 from costeando.utilidades.validaciones import validar_archivo_excel
 
 logger = logging.getLogger(__name__)
@@ -152,12 +154,16 @@ def procesar_compras_puro(ruta_compras: str, dolar: float, carpeta_guardado: str
         df_depuradas['ULTCOS'] = (df_depuradas['Prc.Unitario'] * df_depuradas['Tasa Moneda']).round(2)
         df_depuradas['Var'] = ((df_depuradas['ULTCOS'] / df_depuradas['Costo Estand']) - 1).replace({np.inf: 'NUEVO'})
 
+
         df_depuradas.drop(columns=['Verificacion'], inplace=True, errors='ignore')
         df_depuradas.sort_values(by=['Producto', 'Fch Emision', 'ULTCOS'], ascending=[True, False, False], inplace=True)
         df_depuradas["OBSERVACIONES COSTOS"] = ""
         df_depuradas["RESPUESTA COMPRAS"] = ""
         logger.debug(f"Cantidad de códigos finales es: {len(df_depuradas)}")
-        path_guardado = f"{carpeta_guardado}/Compras depuradas.xlsx"
+        
+        fecha_hoy = datetime.now().strftime("%Y-%m-%d")
+
+        path_guardado = f"{carpeta_guardado}/{fecha_hoy} Compras depuradas.xlsx"
         df_depuradas.to_excel(path_guardado, index=False)
         logger.info(f'Archivo "Compras depuradas" guardado en: {path_guardado}')
         return {"compras_depuradas": path_guardado}

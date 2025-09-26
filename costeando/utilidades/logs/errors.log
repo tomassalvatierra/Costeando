@@ -515,3 +515,21 @@ Traceback (most recent call last):
   File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 95, in procesar_listado_gral_puro
     raise ValueError(error_msg)
 ValueError: Ninguna de las columnas 'Costo Estandard' o 'COSTO LISTA 517' existe en el listado.
+2025-09-26 14:53:43 - costeando.modulos.procesamiento_leader_list - ERROR - Error durante el procesamiento de Leader List.
+Traceback (most recent call last):
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_leader_list.py", line 164, in procesar_leader_list_puro
+    df_leader_list.to_excel(path_leader_list, index=False, engine="openpyxl")
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 2252, in to_excel
+    formatter.write(
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\formats\excel.py", line 934, in write
+    writer = ExcelWriter(  # type: ignore[abstract]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\excel\_openpyxl.py", line 60, in __init__
+    super().__init__(
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\excel\_base.py", line 1219, in __init__
+    self._handles = get_handle(
+                    ^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\common.py", line 868, in get_handle
+    handle = open(handle, ioargs.mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\tsalvatierra\\Desktop\\PRUEBAS\\PRUEBAS COMPLETAS\\2025-09-26 Leader List procesado.xlsx'

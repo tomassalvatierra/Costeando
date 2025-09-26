@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import logging
+from datetime import datetime
 from typing import Optional, Tuple, Dict
 from costeando.utilidades.validaciones import validar_archivo_excel
 
@@ -146,9 +147,11 @@ def procesar_segundo_produciendo(
         
         df_importador = crear_importador(df_produciendo, año_campaña, fecha_inicio, fecha_final, campaña_año)
         
-        path_importador = f'{carpeta_guardado}/Importador C{campaña} {año}.xlsx'
-        path_produciendo = f'{carpeta_guardado}/Calculo de Produciendo {año} C{campaña} 2da Etapa.xlsx'
-        path_especiales = f'{carpeta_guardado}/Descuentos Especiales - Base de Datos C{campaña} {año}.xlsx'
+        fecha_hoy = datetime.now().strftime("%Y-%m-%d")
+
+        path_importador = f'{carpeta_guardado}/{fecha_hoy} Importador C{campaña} {año} 2da Etapa.xlsx'
+        path_produciendo = f'{carpeta_guardado}/{fecha_hoy} Calculo de Produciendo {año} C{campaña} 2da Etapa.xlsx'
+        path_especiales = f'{carpeta_guardado}/{fecha_hoy} Descuentos Especiales - Base de Datos C{campaña} {año} 2da Etapa.xlsx'
         
         df_importador.to_excel(path_importador, sheet_name='Importador', index=False)
         df_produciendo.to_excel(path_produciendo, sheet_name='Calculo Comprando', index=False)

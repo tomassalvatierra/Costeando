@@ -2,6 +2,7 @@ import pandas as pd
 import logging
 from typing import Dict
 import os
+from datetime import datetime
 from costeando.utilidades.validaciones import validar_archivo_excel
 from costeando.utilidades.configuracion_logging import configurar_logging
 
@@ -26,7 +27,8 @@ def asignacion_campanas(campana: str, anio: str):
         campana_anterior = str(int(campana) - 1).zfill(2)
         anio_anterior = anio
     ultimo_digito_anio_anterior = anio_anterior[-1]
-    anio_campana = ultimo_digito_anio_anterior + campana
+    ultimo_digito_anio = anio[-1]
+    anio_campana = ultimo_digito_anio + campana
     anio_campana_anterior = ultimo_digito_anio_anterior + campana_anterior
     return campana_anterior, anio_campana_anterior, anio_campana
 
@@ -116,8 +118,15 @@ def procesar_leader_list_puro(
         df_leader_list = df_leader_list.assign(**nuevas_columnas_data)
 
         logger.debug("Realizando merges de información...")
-        df_leader_list = pd.merge(df_leader_list,df_costo_anterior[["Codigo", "COSTO LISTA " + anio_campana_anterior,"DESCUENTO ESPECIAL","APLICA DDE CA:"]], how = "left", on="Codigo")
-        df_leader_list = pd.merge(df_leader_list,df_costo_anterior[["Codigo", "TIPO-DESCUENTO"]], how = "left", on="Codigo")
+        df_leader_list = pd.merge(df_leader_list,df_costo_anterior[["Codigo", "COSTO LISTA " + anio_campana_anterior]], how = "left", on="Codigo")
+        
+        if "DESCUENTO ESPECIAL" in df_costo_anterior.columns:
+            df_leader_list = pd.merge(df_leader_list,df_costo_anterior[["Codigo","DESCUENTO ESPECIAL","APLICA DDE CA:"]], how = "left", on="Codigo")
+            df_leader_list = pd.merge(df_leader_list,df_costo_anterior[["Codigo", "TIPO-DESCUENTO"]], how = "left", on="Codigo")
+            df_leader_list.rename(columns = {"DESCUENTO ESPECIAL": "DESCUENTO ESPECIAL (N-1)"}, inplace=True)
+            df_leader_list.rename(columns = {"TIPO-DESCUENTO": "TIPO-DESCUENTO (N-1)"}, inplace=True)
+        
+       
         df_leader_list = pd.merge(df_leader_list,df_maestro[["Codigo", "¿Atiende Ne?","Estado"]], how = "left")
         df_leader_list = pd.merge(df_leader_list,df_dobles[["Codigo", "COD MADRE"]], how = "left")
         df_leader_list = pd.merge(df_leader_list,df_combinadas_agrupadas[["Codigo", "COD COMB"]], how = "left")
@@ -128,8 +137,7 @@ def procesar_leader_list_puro(
         df_leader_list['UNIDADES REALES ESTIMADAS']=df_leader_list['UNID_EST']*2
         df_leader_list['STOCK VS UNID_TOTALES ESTIM']=df_leader_list['Stock Actual'] - df_leader_list['UNIDADES REALES ESTIMADAS']
         
-        df_leader_list.rename(columns = {"DESCUENTO ESPECIAL": "DESCUENTO ESPECIAL (N-1)"}, inplace=True)
-        df_leader_list.rename(columns = {"TIPO-DESCUENTO": "TIPO-DESCUENTO (N-1)"}, inplace=True)
+
         
         df_leader_list.loc[df_leader_list["COD MADRE"].notnull(), "TIPO COSTO"] = "CÓDIGO DOBLE"
         df_leader_list.loc[df_leader_list["COD COMB"].notnull(), "TIPO COSTO"] = "CÓDIGO COMBINADA"
@@ -146,9 +154,11 @@ def procesar_leader_list_puro(
         ]
         
         df_leader_list = df_leader_list.reindex(columns = columnas_finales)
-        
-        path_leader_list = os.path.join(carpeta_guardado, "Leader List procesado.xlsx")
-        path_combinadas_agrupadas = os.path.join(carpeta_guardado, "Combinadas agrupadas.xlsx")
+        fecha_hoy = datetime.now().strftime("%Y-%m-%d")
+
+
+        path_leader_list = os.path.join(carpeta_guardado, f"{fecha_hoy} Leader List procesado C{campana}_{anio}.xlsx")
+        path_combinadas_agrupadas = os.path.join(carpeta_guardado, f"{fecha_hoy} Combinadas agrupadas C{campana}_{anio}.xlsx")
 
         logger.info(f"Guardando Leader List procesado en: {path_leader_list}")
         df_leader_list.to_excel(path_leader_list, index=False, engine="openpyxl")

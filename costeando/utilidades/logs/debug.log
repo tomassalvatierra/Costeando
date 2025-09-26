@@ -1544,3 +1544,111 @@ Traceback (most recent call last):
   File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_listado_gral.py", line 95, in procesar_listado_gral_puro
     raise ValueError(error_msg)
 ValueError: Ninguna de las columnas 'Costo Estandard' o 'COSTO LISTA 517' existe en el listado.
+2025-09-26 14:32:23 - costeando.modulos.procesamiento_leader_list - INFO - Iniciando procesamiento puro de Leader List
+2025-09-26 14:32:23 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: leader list (Z:\Costos\Compartido\515 c15-2025\LEADER LIST 515\LL RECIBIDOS 515\18-06-25 Leader List C15 2025 actualizada todas las unid.negocio (DENU).xlsx)
+2025-09-26 14:32:23 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Listado anterior (Z:\Costos\Compartido\514 c14-2025\LISTA 514\10-06-25 LISTA 514 C14-2025 consulta_lista_de_precios_112153 (Planilla de Trabajo).xlsx)
+2025-09-26 14:32:23 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Maestro (Z:\Costos\Compartido\515 c15-2025\MAESTRO 515\18-06-25 MAESTRO 515 PARA DEPURAR EL LEADER LIST productos_130158.xlsx)
+2025-09-26 14:32:23 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Dobles (Z:\Costos\Compartido\515 c15-2025\DOBLES Y COMB 515\17-06-25 DOBLES 515 A LA FECHA (ANDRE).xlsx)
+2025-09-26 14:32:23 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Combinadas (Z:\Costos\Compartido\515 c15-2025\DOBLES Y COMB 515\18-06-25 COMBINADAS 515 A LA FECHA (ANDRE).xlsx)
+2025-09-26 14:32:23 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Stock (Z:\Costos\Compartido\515 c15-2025\COSTOS ESPECIALES 515\INFO. C ESPECIALES\09-06-2025 stock_actual_valorizado_por_producto_C10 2025.xlsx)
+2025-09-26 14:32:23 - costeando.modulos.procesamiento_leader_list - INFO - Leyendo archivos Excel de entrada...
+2025-09-26 14:32:47 - costeando.modulos.procesamiento_leader_list - INFO - Archivos Excel leídos correctamente.
+2025-09-26 14:32:47 - costeando.modulos.procesamiento_leader_list - DEBUG - Procesando combinadas agrupadas...
+2025-09-26 14:32:47 - costeando.modulos.procesamiento_leader_list - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Listado de Costos N-1.
+2025-09-26 14:32:47 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Maestro.
+2025-09-26 14:32:47 - costeando.modulos.procesamiento_leader_list - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Stock.
+2025-09-26 14:32:47 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Leader List.
+2025-09-26 14:32:47 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Dobles.
+2025-09-26 14:32:47 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Combinadas agrupadas.
+2025-09-26 14:32:47 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Combinadas.
+2025-09-26 14:32:47 - costeando.modulos.procesamiento_leader_list - DEBUG - Realizando merges de información...
+2025-09-26 14:32:47 - costeando.modulos.procesamiento_leader_list - INFO - Guardando Leader List procesado en: C:\Users\tsalvatierra\Desktop\PRUEBAS\PRUEBAS COMPLETAS\2025-09-26 Leader List procesado.xlsx
+2025-09-26 14:32:47 - costeando.modulos.procesamiento_leader_list - INFO - Guardando Combinadas agrupadas en: C:\Users\tsalvatierra\Desktop\PRUEBAS\PRUEBAS COMPLETAS\2025-09-26 Combinadas agrupadas.xlsx
+2025-09-26 14:32:47 - costeando.modulos.procesamiento_leader_list - INFO - Archivos guardados correctamente en: C:\Users\tsalvatierra\Desktop\PRUEBAS\PRUEBAS COMPLETAS
+2025-09-26 14:47:55 - costeando.modulos.procesamiento_leader_list - INFO - Iniciando procesamiento puro de Leader List
+2025-09-26 14:47:55 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: leader list (Z:\Costos\Compartido\515 c15-2025\LEADER LIST 515\LL RECIBIDOS 515\18-06-25 Leader List C15 2025 actualizada todas las unid.negocio (DENU).xlsx)
+2025-09-26 14:47:55 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Listado anterior (Z:\Costos\Compartido\514 c14-2025\LISTA 514\10-06-25 LISTA 514 C14-2025 consulta_lista_de_precios_112153 (Planilla de Trabajo).xlsx)
+2025-09-26 14:47:55 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Maestro (Z:\Costos\Compartido\515 c15-2025\MAESTRO 515\18-06-25 MAESTRO 515 PARA DEPURAR EL LEADER LIST productos_130158.xlsx)
+2025-09-26 14:47:55 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Dobles (Z:\Costos\Compartido\515 c15-2025\DOBLES Y COMB 515\17-06-25 DOBLES 515 A LA FECHA (ANDRE).xlsx)
+2025-09-26 14:47:55 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Combinadas (Z:\Costos\Compartido\515 c15-2025\DOBLES Y COMB 515\18-06-25 COMBINADAS 515 A LA FECHA (ANDRE).xlsx)
+2025-09-26 14:47:55 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Stock (Z:\Costos\Compartido\515 c15-2025\COSTOS ESPECIALES 515\INFO. C ESPECIALES\09-06-2025 stock_actual_valorizado_por_producto_C10 2025.xlsx)
+2025-09-26 14:47:55 - costeando.modulos.procesamiento_leader_list - INFO - Leyendo archivos Excel de entrada...
+2025-09-26 14:48:17 - costeando.modulos.procesamiento_leader_list - INFO - Archivos Excel leídos correctamente.
+2025-09-26 14:48:17 - costeando.modulos.procesamiento_leader_list - DEBUG - Procesando combinadas agrupadas...
+2025-09-26 14:48:17 - costeando.modulos.procesamiento_leader_list - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Listado de Costos N-1.
+2025-09-26 14:48:17 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Maestro.
+2025-09-26 14:48:17 - costeando.modulos.procesamiento_leader_list - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Stock.
+2025-09-26 14:48:17 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Leader List.
+2025-09-26 14:48:17 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Dobles.
+2025-09-26 14:48:17 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Combinadas agrupadas.
+2025-09-26 14:48:17 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Combinadas.
+2025-09-26 14:48:17 - costeando.modulos.procesamiento_leader_list - DEBUG - Realizando merges de información...
+2025-09-26 14:48:18 - costeando.modulos.procesamiento_leader_list - INFO - Guardando Leader List procesado en: C:\Users\tsalvatierra\Desktop\PRUEBAS\PRUEBAS COMPLETAS\2025-09-26 Leader List procesado.xlsx
+2025-09-26 14:48:18 - costeando.modulos.procesamiento_leader_list - INFO - Guardando Combinadas agrupadas en: C:\Users\tsalvatierra\Desktop\PRUEBAS\PRUEBAS COMPLETAS\2025-09-26 Combinadas agrupadas.xlsx
+2025-09-26 14:48:18 - costeando.modulos.procesamiento_leader_list - INFO - Archivos guardados correctamente en: C:\Users\tsalvatierra\Desktop\PRUEBAS\PRUEBAS COMPLETAS
+2025-09-26 14:53:21 - costeando.modulos.procesamiento_leader_list - INFO - Iniciando procesamiento puro de Leader List
+2025-09-26 14:53:21 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: leader list (Z:\Costos\Compartido\515 c15-2025\LEADER LIST 515\LL RECIBIDOS 515\18-06-25 Leader List C15 2025 actualizada todas las unid.negocio (DENU).xlsx)
+2025-09-26 14:53:21 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Listado anterior (Z:\Costos\Compartido\514 c14-2025\LISTA 514\10-06-25 LISTA 514 C14-2025 consulta_lista_de_precios_112153 (Planilla de Trabajo).xlsx)
+2025-09-26 14:53:21 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Maestro (Z:\Costos\Compartido\515 c15-2025\MAESTRO 515\18-06-25 MAESTRO 515 PARA DEPURAR EL LEADER LIST productos_130158.xlsx)
+2025-09-26 14:53:21 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Dobles (Z:\Costos\Compartido\515 c15-2025\DOBLES Y COMB 515\17-06-25 DOBLES 515 A LA FECHA (ANDRE).xlsx)
+2025-09-26 14:53:21 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Combinadas (Z:\Costos\Compartido\515 c15-2025\DOBLES Y COMB 515\18-06-25 COMBINADAS 515 A LA FECHA (ANDRE).xlsx)
+2025-09-26 14:53:22 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Stock (Z:\Costos\Compartido\515 c15-2025\COSTOS ESPECIALES 515\INFO. C ESPECIALES\09-06-2025 stock_actual_valorizado_por_producto_C10 2025.xlsx)
+2025-09-26 14:53:22 - costeando.modulos.procesamiento_leader_list - INFO - Leyendo archivos Excel de entrada...
+2025-09-26 14:53:43 - costeando.modulos.procesamiento_leader_list - INFO - Archivos Excel leídos correctamente.
+2025-09-26 14:53:43 - costeando.modulos.procesamiento_leader_list - DEBUG - Procesando combinadas agrupadas...
+2025-09-26 14:53:43 - costeando.modulos.procesamiento_leader_list - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Listado de Costos N-1.
+2025-09-26 14:53:43 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Maestro.
+2025-09-26 14:53:43 - costeando.modulos.procesamiento_leader_list - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Stock.
+2025-09-26 14:53:43 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Leader List.
+2025-09-26 14:53:43 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Dobles.
+2025-09-26 14:53:43 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Combinadas agrupadas.
+2025-09-26 14:53:43 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Combinadas.
+2025-09-26 14:53:43 - costeando.modulos.procesamiento_leader_list - DEBUG - Realizando merges de información...
+2025-09-26 14:53:43 - costeando.modulos.procesamiento_leader_list - INFO - Guardando Leader List procesado en: C:\Users\tsalvatierra\Desktop\PRUEBAS\PRUEBAS COMPLETAS\2025-09-26 Leader List procesado.xlsx
+2025-09-26 14:53:43 - costeando.modulos.procesamiento_leader_list - ERROR - Error durante el procesamiento de Leader List.
+Traceback (most recent call last):
+  File "C:\Costeando\Costeando1.1\costeando\modulos\procesamiento_leader_list.py", line 164, in procesar_leader_list_puro
+    df_leader_list.to_excel(path_leader_list, index=False, engine="openpyxl")
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 2252, in to_excel
+    formatter.write(
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\formats\excel.py", line 934, in write
+    writer = ExcelWriter(  # type: ignore[abstract]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\excel\_openpyxl.py", line 60, in __init__
+    super().__init__(
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\excel\_base.py", line 1219, in __init__
+    self._handles = get_handle(
+                    ^^^^^^^^^^^
+  File "C:\Users\tsalvatierra\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\common.py", line 868, in get_handle
+    handle = open(handle, ioargs.mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\tsalvatierra\\Desktop\\PRUEBAS\\PRUEBAS COMPLETAS\\2025-09-26 Leader List procesado.xlsx'
+2025-09-26 14:53:55 - costeando.modulos.procesamiento_leader_list - INFO - Iniciando procesamiento puro de Leader List
+2025-09-26 14:53:55 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: leader list (Z:\Costos\Compartido\515 c15-2025\LEADER LIST 515\LL RECIBIDOS 515\18-06-25 Leader List C15 2025 actualizada todas las unid.negocio (DENU).xlsx)
+2025-09-26 14:53:55 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Listado anterior (Z:\Costos\Compartido\514 c14-2025\LISTA 514\10-06-25 LISTA 514 C14-2025 consulta_lista_de_precios_112153 (Planilla de Trabajo).xlsx)
+2025-09-26 14:53:55 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Maestro (Z:\Costos\Compartido\515 c15-2025\MAESTRO 515\18-06-25 MAESTRO 515 PARA DEPURAR EL LEADER LIST productos_130158.xlsx)
+2025-09-26 14:53:55 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Dobles (Z:\Costos\Compartido\515 c15-2025\DOBLES Y COMB 515\17-06-25 DOBLES 515 A LA FECHA (ANDRE).xlsx)
+2025-09-26 14:53:55 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Combinadas (Z:\Costos\Compartido\515 c15-2025\DOBLES Y COMB 515\18-06-25 COMBINADAS 515 A LA FECHA (ANDRE).xlsx)
+2025-09-26 14:53:55 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Stock (Z:\Costos\Compartido\515 c15-2025\COSTOS ESPECIALES 515\INFO. C ESPECIALES\09-06-2025 stock_actual_valorizado_por_producto_C10 2025.xlsx)
+2025-09-26 14:53:56 - costeando.modulos.procesamiento_leader_list - INFO - Leyendo archivos Excel de entrada...
+2025-09-26 14:54:14 - costeando.modulos.procesamiento_leader_list - INFO - Iniciando procesamiento puro de Leader List
+2025-09-26 14:54:14 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: leader list (Z:\Costos\Compartido\515 c15-2025\LEADER LIST 515\LL RECIBIDOS 515\18-06-25 Leader List C15 2025 actualizada todas las unid.negocio (DENU).xlsx)
+2025-09-26 14:54:14 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Listado anterior (Z:\Costos\Compartido\514 c14-2025\LISTA 514\10-06-25 LISTA 514 C14-2025 consulta_lista_de_precios_112153 (Planilla de Trabajo).xlsx)
+2025-09-26 14:54:14 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Maestro (Z:\Costos\Compartido\515 c15-2025\MAESTRO 515\18-06-25 MAESTRO 515 PARA DEPURAR EL LEADER LIST productos_130158.xlsx)
+2025-09-26 14:54:14 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Dobles (Z:\Costos\Compartido\515 c15-2025\DOBLES Y COMB 515\17-06-25 DOBLES 515 A LA FECHA (ANDRE).xlsx)
+2025-09-26 14:54:14 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Combinadas (Z:\Costos\Compartido\515 c15-2025\DOBLES Y COMB 515\18-06-25 COMBINADAS 515 A LA FECHA (ANDRE).xlsx)
+2025-09-26 14:54:14 - costeando.modulos.procesamiento_leader_list - DEBUG - Validando archivo: Stock (Z:\Costos\Compartido\515 c15-2025\COSTOS ESPECIALES 515\INFO. C ESPECIALES\09-06-2025 stock_actual_valorizado_por_producto_C10 2025.xlsx)
+2025-09-26 14:54:14 - costeando.modulos.procesamiento_leader_list - INFO - Leyendo archivos Excel de entrada...
+2025-09-26 14:54:38 - costeando.modulos.procesamiento_leader_list - INFO - Archivos Excel leídos correctamente.
+2025-09-26 14:54:38 - costeando.modulos.procesamiento_leader_list - DEBUG - Procesando combinadas agrupadas...
+2025-09-26 14:54:38 - costeando.modulos.procesamiento_leader_list - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Listado de Costos N-1.
+2025-09-26 14:54:38 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Maestro.
+2025-09-26 14:54:38 - costeando.modulos.procesamiento_leader_list - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Stock.
+2025-09-26 14:54:38 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Leader List.
+2025-09-26 14:54:38 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Dobles.
+2025-09-26 14:54:38 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Combinadas agrupadas.
+2025-09-26 14:54:38 - costeando.modulos.procesamiento_leader_list - DEBUG - No se encontró la columna 'Producto' en Combinadas.
+2025-09-26 14:54:38 - costeando.modulos.procesamiento_leader_list - DEBUG - Realizando merges de información...
+2025-09-26 14:54:38 - costeando.modulos.procesamiento_leader_list - INFO - Guardando Leader List procesado en: C:\Users\tsalvatierra\Desktop\PRUEBAS\PRUEBAS COMPLETAS\2025-09-26 Leader List procesado.xlsx
+2025-09-26 14:54:39 - costeando.modulos.procesamiento_leader_list - INFO - Guardando Combinadas agrupadas en: C:\Users\tsalvatierra\Desktop\PRUEBAS\PRUEBAS COMPLETAS\2025-09-26 Combinadas agrupadas.xlsx
+2025-09-26 14:54:39 - costeando.modulos.procesamiento_leader_list - INFO - Archivos guardados correctamente en: C:\Users\tsalvatierra\Desktop\PRUEBAS\PRUEBAS COMPLETAS

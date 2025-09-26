@@ -1,8 +1,9 @@
 import pandas as pd
-import numpy as np
 import logging
 import os
 from typing import Dict
+from datetime import datetime
+
 from costeando.utilidades.validaciones import validar_archivo_excel, validar_columnas, validar_duplicados
 
 logger = logging.getLogger(__name__)
@@ -33,13 +34,14 @@ def procesar_actualizacion_fchs_puro(
         logger.debug(f"Filas cargadas: estructuras({len(df_estructuras)}), compras({len(df_compras)}), ordenes_apuntadas({len(df_ordenes_apuntadas)}), maestro({len(df_maestro)})")
     
         # 2. Preprocesamiento
-        df_estructuras["COD_NIVEL0"] = df_estructuras["COD_NIVEL0"].astype(str)
-        df_estructuras["CODIGO_PLANO"] = df_estructuras["CODIGO_PLANO"].astype(str)
-        df_compras["Producto"] = df_compras["Producto"].astype(str)
-        df_ordenes_apuntadas["Producto"] = df_ordenes_apuntadas["Producto"].astype(str)
-        df_maestro["Codigo"] = df_maestro["Codigo"].astype(str)
+        df_estructuras["COD_NIVEL0"] = df_estructuras["COD_NIVEL0"].astype(str).str.strip()
+        df_estructuras["CODIGO_PLANO"] = df_estructuras["CODIGO_PLANO"].astype(str).str.strip()
+        df_compras["Producto"] = df_compras["Producto"].astype(str).str.strip()
+        df_ordenes_apuntadas["Producto"] = df_ordenes_apuntadas["Producto"].astype(str).str.strip()
+        df_maestro["Codigo"] = df_maestro["Codigo"].astype(str).str.strip()
         df_maestro.rename(columns={'Codigo': 'Producto'}, inplace=True)
         
+        fecha_hoy = datetime.now().strftime("%Y-%m-%d")
         
         # 3. Fechas servicios
         condicion_servicios = df_compras['Producto'].notna() & df_compras['Producto'].str.startswith('X')
@@ -104,7 +106,7 @@ def procesar_actualizacion_fchs_puro(
         # Validar duplicados en claves principales
         validar_duplicados(df_concatenado, ["Producto", "FORMATO"], "concatenado final")
         
-        path_guardado = os.path.join(carpeta_guardado, "Compilado de fchs ult compra.xlsx")
+        path_guardado = os.path.join(carpeta_guardado, f"{fecha_hoy} Compilado de fchs ult compra.xlsx")
         
         if os.path.exists(path_guardado):
             os.remove(path_guardado)

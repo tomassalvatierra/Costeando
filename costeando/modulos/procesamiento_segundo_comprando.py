@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import logging
 from typing import Optional, Tuple, Dict
+from datetime import datetime
+
 from costeando.utilidades.validaciones import validar_archivo_excel
 
 logger = logging.getLogger(__name__)
@@ -139,11 +141,13 @@ def procesar_segundo_comprando(
         df_importador['Costo 1er Importador'] = df_importador['Costo 1er Importador'].round(2).astype(str)
         
         df_importador = df_importador.reset_index(drop=True)
-        
+
+        fecha_hoy = datetime.now().strftime("%Y-%m-%d")
+
         # Guardar archivos
-        path_comprando = f'{carpeta_guardado}/Calculo de Comprando {año} C{campaña} 2da Etapa.xlsx'
-        path_especiales = f'{carpeta_guardado}/Descuentos Especiales - Base de Datos - 2da Etapa C{campaña} {año}.xlsx'
-        path_importador = f'{carpeta_guardado}/Importador C{campaña} {año}.xlsx'
+        path_comprando = f'{carpeta_guardado}/{fecha_hoy} Calculo de Comprando {año} C{campaña} 2da Etapa.xlsx'
+        path_especiales = f'{carpeta_guardado}/{fecha_hoy} Descuentos Especiales - Base de Datos - 2da Etapa C{campaña} {año}.xlsx'
+        path_importador = f'{carpeta_guardado}/{fecha_hoy} Importador C{campaña} {año}.xlsx'
         
         df_calculo_comprando.to_excel(path_comprando, sheet_name='Calculo Comprando', index=False)
         df_costos_especiales.to_excel(path_especiales, sheet_name='Descuentos Proce', index=False)
