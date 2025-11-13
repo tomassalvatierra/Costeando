@@ -149,7 +149,7 @@ validar_columnas(df, ["Col1", "Col2"], "nombre lógico")
 
 ## 8. Empaquetado y Distribución
 
-- **Script `setup.bat`:** Automatiza el empaquetado con PyInstaller.
+- **Script `setup.bat`:** Automatiza el empaquetado con PyInstaller. Trabaja en un entorno virtual.
 - **Opciones recomendadas:**
   - `--onefile` para un solo ejecutable.
   - `--windowed` para aplicaciones GUI.
@@ -201,7 +201,7 @@ pyinstaller --noconfirm --onefile --windowed --add-data "configuracion_logging.p
 
 ---
 
-**Este fue el primer proyecto que realize como desarrollador, aprendi, acerte y me equivoque, seguramente si sos un dev esperimentado vas a encontrar millones de errores, y agradeceria mucho que me dieras un feedback. Siempre el fin fue empezar e ir mejorando.**
+**Este fue el primer proyecto que realize como desarrollador, acerte, me equivoque y aprendi muchisimo, seguramente si sos un dev esperimentado vas a encontrar millones de errores, y agradeceria mucho que me dieras un feedback. Siempre el fin fue empezar e ir mejorando.**
 
-**"Adelanten a su yo de ayer. Mantenerse igual, es lo mismo que retroceder." Endeavor.**
+**"Adelanten a su yo de ayer. Mantenerse igual, es lo mismo que retroceder." Enji Todoroki.**
 

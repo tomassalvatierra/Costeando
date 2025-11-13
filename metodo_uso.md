@@ -5,7 +5,7 @@ Hola, bienvenido al archivo README del proyecto "Costeando".
 Diseñador y desarrollador: Tomás Lahuel Salvatierra.
 Colaborador: Vanesa Mansilla.
 
-Esta es la primera versión de un software específico para el área de Costos de la empresa GIGOT COSMETICOS. Con este servicio podremos procesar las etapas de, LEADER LIST, COMPRAS, COMPRANDO, PRODUCIENDO, PROYECTADOS y la VALORIZACION DE DOBLES Y COMBINADAS, son parte de un proceso mayor que ha sido fraccionado. Queda pendiente una conexión a una base de datos y mejoras, pero será un buen punto de partida.
+Esta es la primera versión de un software específico para el área de Costos de la empresa. Con este servicio podremos procesar las etapas de, LEADER LIST, COMPRAS, COMPRANDO, PRODUCIENDO, PROYECTADOS y la VALORIZACION DE DOBLES Y COMBINADAS, son parte de un proceso mayor que ha sido fraccionado. Queda pendiente una conexión a una base de datos y mejoras, pero será un buen punto de partida.
 Para este proyecto se utilizó el lenguaje de programación Python, las librerías Pandas, Numpy fueron las seleccionadas para el procesamiento de datos, Tkinter para la interfaz gráfica y Logging para el seguimiento de errores y registros de acciones. 
 
 En este texto comentare las funcionalidades y como utilizar el programa. 
@@ -128,7 +128,7 @@ Una vez finalizado el guardado del archivo aparecerá un cartel de aviso, presio
 
 # PROCESO PRODUCIENDO PRIMERA ETAPA
 
-Objetivo: ¿procesara solo los códigos que pertenezcan a la categoría “Atiende Ne?" igual a "Produciendo"(productos producidos y acondicionados y envasados por gigot), actualizara los costos dependiendo de si llevan o no carga fabril, asignara descuentos previamente existentes, y prepara el archivo para poder asignar nuevos descuentos y el cálculo final de los costos. El proceso retornara 3 archivos, la base de descuentos modificada, los cambios que se realizaron en la base de descuentos, y los produciendo primera etapa.
+Objetivo: ¿procesara solo los códigos que pertenezcan a la categoría “Atiende Ne?" igual a "Produciendo"(productos producidos y acondicionados y envasados por la empresa), actualizara los costos dependiendo de si llevan o no carga fabril, asignara descuentos previamente existentes, y prepara el archivo para poder asignar nuevos descuentos y el cálculo final de los costos. El proceso retornara 3 archivos, la base de descuentos modificada, los cambios que se realizaron en la base de descuentos, y los produciendo primera etapa.
 
 Solicitará los siguientes archivos.
     

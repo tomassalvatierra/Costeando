@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 import os
 from datetime import datetime
 import logging
@@ -90,15 +89,15 @@ def calcular_obsolescencia(fecha, row):
         return 75
 
 def calcular_costo_sin_descuento(row, df):
-    if pd.isna(row["Lleva CF?"]):
+    if pd.isna(row["LLEVA CF"]):
         if (row["Grupo"] == 1 or row["Grupo"] == 5) and (row["Tipo"] == "PA" or row["Tipo"] == "PC"):
             lleva_cf = "Si"
-            df.at[row.name, 'Lleva CF?'] = 'Si'
+            df.at[row.name, 'LLEVA CF'] = 'Si'
         else:
             lleva_cf = "No"
-            df.at[row.name, 'Lleva CF?'] = 'No'
+            df.at[row.name, 'LLEVA CF'] = 'No'
     else:
-        lleva_cf = row["Lleva CF?"]
+        lleva_cf = row["LLEVA CF"]
     if lleva_cf == "Si":
         return round(row["Costo Producción"] / 0.84, 2)
     else:
@@ -166,7 +165,7 @@ def procesar_primer_produciendo(
                (df_produciendo["¿Atiende Ne?"] == "Comprando")
         
         df_produciendo = df_produciendo[~eliminaciones]
-        columnas_a_agregar = ['Lleva CF?', 'Revision de tipo',"Stock Actual", "Clasificacion"]
+        columnas_a_agregar = ['LLEVA CF', 'Revision de tipo',"Stock Actual", "Clasificacion"]
         df_para_agregar_col = [df_produciendo_anterior, df_produciendo_anterior, df_stock, df_rotacion]
         
         for column, data_frame in zip(columnas_a_agregar, df_para_agregar_col):

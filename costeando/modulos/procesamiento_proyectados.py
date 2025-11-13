@@ -93,8 +93,8 @@ def procesar_proyectados_puro(
         
         fecha_hoy = datetime.now().strftime("%Y-%m-%d")
 
-        path_proyectado = os.path.join(carpeta_guardado, f"{fecha_hoy} Costos Proyectados C{camp}_{anio_inicial}.xlsx")
-        path_proyectado_comercial = os.path.join(carpeta_guardado, f"{fecha_hoy} Costos Proyectados C{camp}_{anio_inicial} PARA COMERCIAL.xlsx")
+        path_proyectado = os.path.join(carpeta_guardado, f"{fecha_hoy} Costos Proyectados C{camp_inicial}_{anio_inicial}.xlsx")
+        path_proyectado_comercial = os.path.join(carpeta_guardado, f"{fecha_hoy} Costos Proyectados C{camp_inicial}_{anio_inicial} PARA COMERCIAL.xlsx")
         df_listado_proyectado.to_excel(path_proyectado, index=False)
         df_listado_proyectado_comercial.to_excel(path_proyectado_comercial, index=False)
         logger.info(f"Archivos guardados en: {carpeta_guardado}")
