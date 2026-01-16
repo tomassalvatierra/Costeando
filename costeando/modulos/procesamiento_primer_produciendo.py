@@ -4,6 +4,7 @@ from datetime import datetime
 import logging
 from costeando.utilidades.func_faltante_cotizacion import asignar_faltantes_cotizacion
 from costeando.utilidades.validaciones import validar_archivo_excel
+from costeando.utilidades.validaciones import validar_columnas
 
 logger = logging.getLogger(__name__)
 
@@ -145,6 +146,7 @@ def procesar_primer_produciendo(
         lista_dfs = [estandarizar_columna_producto(df, nombre) for df, nombre in lista_dfs]
         
         df_produciendo_anterior, df_maestro_produciendo, df_stock, df_descuentos_especiales, df_rotacion = lista_dfs
+        validar_columnas(df_stock, ['Codigo','Stock Actual'], 'Stock')
         
         df_maestro_produciendo.rename(columns={"Costo Estand": "Costo Producción"}, inplace=True)
 

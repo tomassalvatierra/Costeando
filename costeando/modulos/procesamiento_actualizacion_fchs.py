@@ -94,6 +94,8 @@ def procesar_actualizacion_fchs_puro(
         # 7. Unificar y exportar
         df_concatenado = pd.concat([df_fch_gral, df_fch_servicios, df_fch_161,df_fchs_ordenes], ignore_index=True)
         df_concatenado = pd.merge(df_concatenado, df_maestro[['Producto', 'Descripcion']], how='left')
+        df_concatenado = df_concatenado.drop_duplicates()
+        
         df_concatenado['Fch Emision'] = pd.to_datetime(df_concatenado['Fch Emision'], errors='coerce')
         df_concatenado['FORMATO'] = df_concatenado['Fch Emision'].dt.strftime('%Y%m%d')
   
