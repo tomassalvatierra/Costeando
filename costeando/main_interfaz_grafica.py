@@ -1,133 +1,137 @@
-import tkinter as tk
-from tkinter import messagebox, ttk
-import threading
+import customtkinter as ctk
+from tkinter import messagebox
 import logging
 
 from costeando.utilidades.configuracion_logging import configurar_logging
 
-# Imports de las ventanas individuales
-from costeando.gui.compras_window import ComprasWindow
+# --- IMPORTS DE TUS MÓDULOS ---
 from costeando.gui.leader_list_window import LeaderListWindow
+from costeando.gui.compras_window import ComprasWindow
 from costeando.gui.valorizacion_dyc_window import ValorizacionDYCWindow
-from costeando.gui.proyectados_window import ProyectadosWindow
 from costeando.gui.primer_comprando_window import PrimerComprandoWindow
 from costeando.gui.segundo_comprando_window import SegundoComprandoWindow
 from costeando.gui.primer_produciendo_window import PrimerProduciendoWindow
 from costeando.gui.segundo_produciendo_window import SegundoProduciendoWindow
+from costeando.gui.proyectados_window import ProyectadosWindow
 from costeando.gui.actualizacion_fchs_window import ActualizacionFCHSWindow
 from costeando.gui.listado_gral_window import ListadoGralWindow
 
 configurar_logging()
 logger = logging.getLogger(__name__)
 
-class ProcesadorCostosApp(tk.Tk):
+# Configuración Global de Tema
+ctk.set_appearance_mode("Dark")  # "System" (estándar), "Dark", "Light"
+ctk.set_default_color_theme("blue")  # "blue" (estándar), "green", "dark-blue"
 
+class ProcesadorCostosApp(ctk.CTk):
     def __init__(self):
         super().__init__()
-        self.title("Costeando")
-        self.geometry("+200+200")  # Tamaño y posición de la ventana
 
-        estilo = ttk.Style()
-        estilo.theme_use("vista")  
+        self.title("Costeando - Sistema de Gestión")
+        self.geometry("1200x720")
 
-        # Variable para almacenar la selección del usuario
-        self.opcion_var = tk.IntVar(value=0)
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_rowconfigure(0, weight=1)
 
-        # Diccionario de ventanas
-        self.ventanas = {
-            1: LeaderListWindow,
-            2: ComprasWindow,
-            3: ValorizacionDYCWindow,
-            4: PrimerComprandoWindow,
-            5: SegundoComprandoWindow,
-            6: PrimerProduciendoWindow,
-            7: SegundoProduciendoWindow,
-            8: ProyectadosWindow,
-            9: ActualizacionFCHSWindow,
-            10: ListadoGralWindow}
+        self.frame_actual = None # Aquí guardaremos la pantalla que se está viendo
 
-        # Crear la UI
-        self.crear_interfaz()
+        self.vistas = {
+            "Leader List": LeaderListWindow,
+            "Compras": ComprasWindow,
+            "Actualización Fechas": ActualizacionFCHSWindow,
+            "Primer Comprando": PrimerComprandoWindow,
+            "Segundo Comprando": SegundoComprandoWindow,
+            "Primer Produciendo": PrimerProduciendoWindow,
+            "Segundo Produciendo": SegundoProduciendoWindow,
+            "Proyectados": ProyectadosWindow,
+            "Listado General": ListadoGralWindow,
+            "Valorización DyC": ValorizacionDYCWindow
+        }
+
+        self.crear_sidebar()
+        self.crear_area_principal()
+
+    def crear_sidebar(self):
+        self.sidebar_frame = ctk.CTkFrame(self, width=220, corner_radius=0)
+        self.sidebar_frame.grid(row=0, column=0, sticky="nsew")
+        self.sidebar_frame.grid_rowconfigure(11, weight=1) # Empujar botón salir al fondo
+
+        self.logo_label = ctk.CTkLabel(
+            self.sidebar_frame, 
+            text="COSTEANDO", 
+            font=ctk.CTkFont(size=24, weight="bold")
+        )
+        self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
+
+        nombres_botones = list(self.vistas.keys())
         
-    def crear_interfaz(self):
+        for i, nombre in enumerate(nombres_botones, start=1):
+            btn = ctk.CTkButton(
+                self.sidebar_frame,
+                text=nombre,
+                command=lambda n=nombre: self.seleccionar_modulo(n),
+                fg_color="transparent",
+                text_color=("gray10", "#DCE4EE"), # Color texto (Light, Dark)
+                hover_color=("gray70", "gray30"),
+                anchor="w",
+                height=40
+            )
+            btn.grid(row=i, column=0, sticky="ew", padx=10, pady=2)
+
+        self.btn_salir = ctk.CTkButton(
+            self.sidebar_frame,
+            text="Salir",
+            command=self.cerrar_aplicacion,
+            fg_color="#c0392b",
+            hover_color="#922b21",
+            height=40
+        )
+        self.btn_salir.grid(row=12, column=0, padx=20, pady=20, sticky="ew")
+
+    def crear_area_principal(self):
+        self.main_container = ctk.CTkFrame(self, corner_radius=10, fg_color="transparent")
+        self.main_container.grid(row=0, column=1, sticky="nsew", padx=20, pady=20)
         
-        ttk.Label(self, text="Seleccione un proceso y presione 'Ejecutar': ", font=("Arial",9, "bold")).pack(pady=10,padx=10)
+        self.lbl_bienvenida = ctk.CTkLabel(
+            self.main_container, 
+            text="Seleccione un módulo del menú lateral para comenzar.",
+            font=ctk.CTkFont(size=18),
+            text_color="gray50"
+        )
+        self.lbl_bienvenida.place(relx=0.5, rely=0.5, anchor="center")
 
-        frame_procesos = ttk.Frame(self)
-        frame_procesos.pack(pady=5)
+    def seleccionar_modulo(self, nombre_modulo):
+        #Lógica para cambiar de pantalla
         
-        opciones = [
-            ("Leader List", 1),
-            ("Compras", 2),
-            ("Valorización DyC", 3),
-            ("Primer Comprando", 4),
-            ("Segundo Comprando", 5),
-            ("Primer Produciendo", 6),
-            ("Segundo Produciendo", 7),
-            ("Proyectados", 8),
-            ("Actualización de Fechas", 9),
-            ("Completar Listado General", 10)]
-
-        for text, value in opciones:
-            ttk.Radiobutton(frame_procesos, text=text, variable=self.opcion_var, value=value).pack(anchor="w", padx=5, pady=2)
-
-        frame_botones = ttk.Frame(self)
-        frame_botones.pack(pady=10)
-
-        ttk.Button(frame_botones, text="Ejecutar", command=self.ejecutar_proceso_seleccionado).pack(side="left", padx=5)
-        ttk.Button(frame_botones, text="Salir", command=self.cerrar_ventana).pack(side="right", padx=5)
-
-        self.protocol("WM_DELETE_WINDOW", self.cerrar_ventana)
-    
-    def ejecutar_proceso_seleccionado(self):
-        if hasattr(self, 'proceso_en_ejecucion') and self.proceso_en_ejecucion.is_alive():
-            messagebox.showwarning("Advertencia", "Ya hay un proceso en ejecución.")
-            return
-    
-        seleccion = self.opcion_var.get()
+        if self.frame_actual is not None:
+            self.frame_actual.destroy()
         
+        # Ocultar mensaje de bienvenida si existe
+        if hasattr(self, 'lbl_bienvenida') and self.lbl_bienvenida.winfo_exists():
+            self.lbl_bienvenida.destroy()
 
-        if seleccion == 0:
-            messagebox.showerror("Advertencia", "Por favor, seleccione un proceso antes de ejecutar.")
-            return
+        # Instanciar nueva pantalla
+        ClaseModulo = self.vistas.get(nombre_modulo)
         
-        logger.debug(f"Proceso seleccionado por el usuario: {seleccion} - {self.ventanas[seleccion].__name__}")
+        if ClaseModulo:
+            try:
+                logger.info(f"Cargando módulo: {nombre_modulo}")
+                
+                # Instanciamos la clase pasándole el contenedor principal como 'master'
+                self.frame_actual = ClaseModulo(self.main_container)
+                
+                # Hacemos que ocupe todo el espacio disponible
+                self.frame_actual.pack(fill="both", expand=True)
+                
+            except Exception as e:
+                logger.error(f"Error cargando {nombre_modulo}: {e}", exc_info=True)
+                messagebox.showerror("Error", f"No se pudo cargar el módulo {nombre_modulo}.\n\nDetalle: {e}")
 
-        ventana = self.ventanas.get(seleccion)
-        if ventana:
-            self.proceso_en_ejecucion = threading.Thread(target=self.ejecutar_en_hilo, args=(ventana,), daemon=True)
-            self.proceso_en_ejecucion.start()
-    
-    def ejecutar_en_hilo(self, ventana):
-        
-        """Ejecuta la ventana en un hilo separado con manejo de errores"""
-        nombre_ventana = ventana.__name__.replace("Window", "").replace("_", " ").title()
-        try:
-            logger.info(f"Iniciando ventana: {nombre_ventana}")
-            ventana_clase = ventana(master=self)
-            logger.info(f"Ventana {nombre_ventana} iniciada exitosamente")
-          
-        except Exception as e:
-            logger.error(f"Error en ventana {nombre_ventana}: {str(e)}", exc_info=True)
-            self.after(0, lambda: messagebox.showerror(
-                "Error", 
-                f"Error en la ventana {nombre_ventana}: {str(e)}"
-            ))
-       
-    def cerrar_ventana(self):
-        logger.info("Solicitud para cerrar la ventana")
-        if hasattr(self, 'proceso_en_ejecucion') and self.proceso_en_ejecucion.is_alive():
-            logger.warning("Intento de cierre con proceso en ejecución")
-            
-            if not messagebox.askyesno("Advertencia", "Hay un proceso en ejecución. ¿Seguro que quieres salir?"):
-                logger.info("Cierre cancelado por el usuario")
-                return
-        if messagebox.askyesno("Salir", "¿Seguro que quieres salir?"):
-            logger.info("Aplicación cerrada por el usuario")
+    def cerrar_aplicacion(self):
+        # Aquí podrías agregar chequeos si hay hilos corriendo (opcional)
+        if messagebox.askyesno("Salir", "¿Desea cerrar la aplicación?"):
             self.destroy()
 
-
-# Ejecutar la aplicación
 if __name__ == "__main__":
     app = ProcesadorCostosApp()
     app.mainloop()

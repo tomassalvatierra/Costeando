@@ -29,7 +29,7 @@ call %VENV_NAME%\Scripts\activate.bat
 REM --- 4. Instalar Dependencias DENTRO del Venv ---
 echo Instalando/verificando dependencias en el venv...
 REM (Asegurate de poner aqui TODAS las bibliotecas que usa tu script)
-pip install pyinstaller pandas numpy platformdirs openpyxl
+pip install pyinstaller pandas numpy platformdirs openpyxl customtkinter
 
 REM --- 5. Limpiar y Empaquetar ---
 echo Limpiando carpetas anteriores (build/dist)...

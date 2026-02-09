@@ -1,19 +1,18 @@
+import customtkinter as ctk
 import tkinter as tk
-from tkinter import ttk, filedialog, messagebox
+from tkinter import filedialog, messagebox
 import threading
 import logging
-# Importar la función de lógica pura
+
 from costeando.modulos.procesamiento_primer_comprando import procesar_primer_comprando
 
 logger = logging.getLogger(__name__)
 
-class PrimerComprandoWindow(tk.Toplevel):
-    def __init__(self, master=None):
+class PrimerComprandoWindow(ctk.CTkFrame):
+    def __init__(self, master):
         super().__init__(master)
-        self.title('Primer Comprando')
-        self.geometry("+600+200")
         
-        # Variables
+        # --- Variables de Archivo ---
         self.ruta_maestro = tk.StringVar()
         self.ruta_compras = tk.StringVar()
         self.ruta_stock = tk.StringVar()
@@ -22,137 +21,192 @@ class PrimerComprandoWindow(tk.Toplevel):
         self.ruta_calculo_comprando_ant = tk.StringVar()
         self.ruta_ficha = tk.StringVar()
         
+        # --- Variables de Parámetros ---
+        self.campana_var = tk.StringVar()
+        self.anio_var = tk.StringVar()
+        self.mdo_var = tk.StringVar()
+        self.indice_a_var = tk.StringVar()
+        self.indice_b_var = tk.StringVar()
+
+        # Configuración del Grid
+        self.grid_columnconfigure(1, weight=1)
+
         # Crear interfaz
         self.crear_interfaz()
-        
+
     def crear_interfaz(self):
-        # Instrucciones
-        ttk.Label(self, text=
-                  "Procesamiento de Primer Comprando\n"
-                  "- Maestro: el archivo original de TOTVS. Convierta antes la columna 'Codigo' a numero y quitele los espacios.\n"
-                  "- Compras: archivo 'Compras y Cotizaciones revisadas'.\n"
-                  "- Stock: informe especifico 'Stock Actual Valorizado por Producto'. Convierta antes la columna 'Codigo' o 'Producto' a numero.\n"
-                  "- Base Descuentos: la base de descuentos mas actualizada.\n"
-                  "- Lista: lista de costos anterior a la campaña a procesar(n-1), debe existir la columna 'COSTOS LISTA ACC',siendo CC la campaña n-1.\n"
-                  "- Comprando: archivo Comprando anterior(n-1), debe existir la columna 'Costo sin Descuento CXX', siendo XX la campaña n-1."
-                  ).grid(row=0, column=0, columnspan=4, padx=10, pady=(10, 5), sticky='w')
+        # --- TÍTULO ---
+        lbl_titulo = ctk.CTkLabel(
+            self, 
+            text="Procesamiento Primer Comprando", 
+            font=("Roboto", 24, "bold")
+        )
+        lbl_titulo.grid(row=0, column=0, columnspan=3, padx=20, pady=(20, 10), sticky="w")
+
+        # --- INSTRUCCIONES ---
+        instrucciones = (
+            "• Maestro: Original TOTVS (Código numérico).\n"
+            "• Compras: Archivo 'Compras y Cotizaciones revisadas'.\n"
+            "• Stock: 'Stock Actual Valorizado' (Código numérico).\n"
+            "• Lista (N-1): Debe tener 'COSTOS LISTA ACC'.\n"
+            "• Comprando (N-1): Debe tener 'Costo sin Descuento CXX'."
+        )
+        lbl_desc = ctk.CTkLabel(
+            self, 
+            text=instrucciones,
+            justify="left",
+            text_color="gray70",
+            font=("Roboto", 12)
+        )
+        lbl_desc.grid(row=1, column=0, columnspan=3, padx=20, pady=(0, 20), sticky="w")
+
+        # --- SELECTORES DE ARCHIVOS ---
+        # Lista de configuración para generar filas automáticamente
+        archivos_config = [
+            ("Seleccionar Maestro", self.ruta_maestro),
+            ("Seleccionar Compras", self.ruta_compras),
+            ("Seleccionar Stock", self.ruta_stock),
+            ("Seleccionar Base Descuentos", self.ruta_dto_especiales),
+            ("Seleccionar Lista N-1", self.ruta_listado),
+            ("Seleccionar Comprando N-1", self.ruta_calculo_comprando_ant),
+            ("Seleccionar Ficha", self.ruta_ficha)
+        ]
+
+        base_row = 2
+        for i, (texto, variable) in enumerate(archivos_config):
+            self.crear_fila_selector(base_row + i, texto, variable)
+
+        # --- PARÁMETROS NUMÉRICOS ---
+        last_row = base_row + len(archivos_config)
         
-        # Selección de archivos
-        ttk.Button(self, text='Seleccionar Maestro', command=lambda: self.seleccionar_archivo(self.ruta_maestro, "Seleccionar archivo Maestro"), width=25).grid(row=1, column=0, padx=10, pady=2)
-        ttk.Entry(self, textvariable=self.ruta_maestro, width=50).grid(row=1, column=1, padx=10, pady=2, sticky='w')
+        # Frame contenedor para organizar los inputs numéricos
+        frame_params = ctk.CTkFrame(self, fg_color="transparent")
+        frame_params.grid(row=last_row, column=0, columnspan=3, padx=20, pady=20, sticky="ew")
 
-        ttk.Button(self, text='Seleccionar Compras', command=lambda: self.seleccionar_archivo(self.ruta_compras, "Seleccionar archivo Compras"), width=25).grid(row=2, column=0, padx=10, pady=2)
-        ttk.Entry(self, textvariable=self.ruta_compras, width=50).grid(row=2, column=1, padx=10, pady=2, sticky='w')
+        # Fila 1 de Parámetros: Campaña y Año
+        self.crear_input_param(frame_params, "Campaña (CC):", self.campana_var, 0, 0)
+        self.crear_input_param(frame_params, "Año (AAAA):", self.anio_var, 0, 1)
+        self.crear_input_param(frame_params, "Mano Obra:", self.mdo_var, 0, 2)
 
-        ttk.Button(self, text='Seleccionar Stock', command=lambda: self.seleccionar_archivo(self.ruta_stock, "Seleccionar archivo Stock"), width=25).grid(row=3, column=0, padx=10, pady=2)
-        ttk.Entry(self, textvariable=self.ruta_stock, width=50).grid(row=3, column=1, padx=10, pady=2, sticky='w')
+        # Fila 2 de Parámetros: Índices
+        self.crear_input_param(frame_params, "Índice A:", self.indice_a_var, 1, 0)
+        self.crear_input_param(frame_params, "Índice B:", self.indice_b_var, 1, 1)
 
-        ttk.Button(self, text='Seleccionar Base Descuentos', command=lambda: self.seleccionar_archivo(self.ruta_dto_especiales, "Seleccionar archivo Base Dtos Especiales"), width=25).grid(row=4, column=0, padx=10, pady=2)
-        ttk.Entry(self, textvariable=self.ruta_dto_especiales, width=50).grid(row=4, column=1, padx=10, pady=2, sticky='w')
-
-        ttk.Button(self, text='Seleccionar Lista N-1', command=lambda: self.seleccionar_archivo(self.ruta_listado, "Seleccionar archivo Listado de Costos Anterior"), width=25).grid(row=5, column=0, padx=10, pady=2)
-        ttk.Entry(self, textvariable=self.ruta_listado, width=50).grid(row=5, column=1, padx=10, pady=2, sticky='w')
-
-        ttk.Button(self, text='Seleccionar Comprando N-1', command=lambda: self.seleccionar_archivo(self.ruta_calculo_comprando_ant, "Seleccionar archivo Comprando anterior"), width=25).grid(row=6, column=0, padx=10, pady=2)
-        ttk.Entry(self, textvariable=self.ruta_calculo_comprando_ant, width=50).grid(row=6, column=1, padx=10, pady=2, sticky='w')
-
-        ttk.Button(self, text='Seleccionar Ficha', command=lambda: self.seleccionar_archivo(self.ruta_ficha, "Seleccionar archivo Ficha"), width=25).grid(row=7, column=0, padx=10, pady=2)
-        ttk.Entry(self, textvariable=self.ruta_ficha, width=50).grid(row=7, column=1, padx=10, pady=2, sticky='w')
-
-        # Campos de entrada
-        ttk.Label(self, text='Campaña a procesar (CC):').grid(row=1, column=2, sticky='w')
-        self.entry_campaña = ttk.Entry(self)
-        self.entry_campaña.grid(row=1, column=3)
-
-        ttk.Label(self, text='Año (AAAA):').grid(row=2, column=2)
-        self.entry_año = ttk.Entry(self)
-        self.entry_año.grid(row=2, column=3)
-
-        ttk.Label(self, text='Mano de Obra:').grid(row=3, column=2)
-        self.entry_mano_de_obra = ttk.Entry(self)
-        self.entry_mano_de_obra.grid(row=3, column=3, padx=10, pady=2)
-
-        ttk.Label(self, text='Índice A:').grid(row=4, column=2, padx=10, pady=2)
-        self.entry_indice_a = ttk.Entry(self)
-        self.entry_indice_a.grid(row=4, column=3)
-
-        ttk.Label(self, text='Índice B:').grid(row=5, column=2, padx=10, pady=2)
-        self.entry_indice_b = ttk.Entry(self)
-        self.entry_indice_b.grid(row=5, column=3, padx=10, pady=2)
-
-        # Barra de progreso
-        self.progress_bar = ttk.Progressbar(self, mode='indeterminate')
-        self.progress_bar.grid(row=8, column=0, columnspan=4, padx=10, pady=(5, 10), sticky='ew')
+        # --- BARRA DE PROGRESO ---
+        self.progress_bar = ctk.CTkProgressBar(self, mode='indeterminate')
+        self.progress_bar.grid(row=last_row + 1, column=0, columnspan=3, padx=20, pady=(10, 10), sticky='ew')
+        self.progress_bar.set(0)
         self.progress_bar.grid_remove()
 
-        # Botones
-        frame_botones = ttk.Frame(self)
-        frame_botones.grid(row=7, column=2, columnspan=2, sticky='e', padx=10, pady=5)
+        # --- BOTÓN PROCESAR ---
+        self.btn_procesar = ctk.CTkButton(
+            self, 
+            text='INICIAR PROCESO', 
+            command=self.ejecutar_hilo,
+            height=45,
+            font=("Roboto", 14, "bold"),
+            fg_color="#1f6aa5",
+            hover_color="#144870"
+        )
+        self.btn_procesar.grid(row=last_row + 2, column=0, columnspan=3, padx=20, pady=(0, 20), sticky="ew")
 
-        ttk.Button(frame_botones, text='Procesar', command=self.ejecutar_hilo).pack(side='left', padx=(0, 5))
-        ttk.Button(frame_botones, text='Cancelar', command=self.destroy).pack(side='left')
+    def crear_fila_selector(self, row, texto_boton, variable):
+        """Helper para crear filas de selección de archivos"""
+        btn = ctk.CTkButton(
+            self, 
+            text=texto_boton, 
+            command=lambda: self.seleccionar_archivo(variable, texto_boton),
+            width=220,
+            fg_color="transparent",
+            border_width=2,
+            text_color=("gray10", "#DCE4EE")
+        )
+        btn.grid(row=row, column=0, padx=(20, 10), pady=4, sticky="w")
+
+        entry = ctk.CTkEntry(self, textvariable=variable, placeholder_text="Seleccione archivo...")
+        entry.grid(row=row, column=1, columnspan=2, padx=(0, 20), pady=4, sticky="ew")
+
+    def crear_input_param(self, parent, label_text, variable, row, col):
+        """Helper para inputs pequeños (Campaña, Indices, etc)"""
+        frame = ctk.CTkFrame(parent, fg_color="transparent")
+        frame.grid(row=row, column=col, padx=10, pady=5, sticky="w")
         
+        ctk.CTkLabel(frame, text=label_text, font=("Roboto", 12)).pack(anchor="w")
+        ctk.CTkEntry(frame, textvariable=variable, width=100).pack()
+
     def seleccionar_archivo(self, variable, titulo):
         archivo = filedialog.askopenfilename(title=titulo, filetypes=[("Archivos Excel", "*.xlsx")])
         if archivo:
             variable.set(archivo)
-            
+
     def mostrar_progreso(self):
         self.progress_bar.grid()
-        self.progress_bar.start(10)
-        
+        self.progress_bar.start()
+        self.btn_procesar.configure(state="disabled", text="Procesando...")
+
     def ocultar_progreso(self):
         self.progress_bar.stop()
         self.progress_bar.grid_remove()
-        
+        self.btn_procesar.configure(state="normal", text="INICIAR PROCESO")
+
     def ejecutar_hilo(self):
+        # Validación UI rápida
+        if not all([self.campana_var.get(), self.anio_var.get(), self.mdo_var.get(), 
+                    self.indice_a_var.get(), self.indice_b_var.get()]):
+             messagebox.showerror("Error", "Debe completar todos los parámetros numéricos.")
+             return
+        
         self.mostrar_progreso()
-        threading.Thread(target=self.procesar_con_progreso).start()
-          
+        threading.Thread(target=self.procesar_con_progreso, daemon=True).start()
+
     def procesar_con_progreso(self):
         try:
             self.procesar_primer_comprando()
         except Exception as e:
-            logger.error(f"Error en el procesamiento de primer comprando: {str(e)}", exc_info=True)
-            messagebox.showerror("Error", f"Ha ocurrido un error: {str(e)}")
-            self.ocultar_progreso()
-            
+            logger.error(f"Error en primer comprando: {str(e)}", exc_info=True)
+            self.after(0, lambda: messagebox.showerror("Error", f"Ha ocurrido un error: {str(e)}"))
+            self.after(0, self.ocultar_progreso)
+
     def procesar_primer_comprando(self):
-        archivos_requeridos = [
-            self.ruta_maestro.get(),
-            self.ruta_compras.get(),
-            self.ruta_stock.get(),
-            self.ruta_dto_especiales.get(),
-            self.ruta_listado.get(),
-            self.ruta_calculo_comprando_ant.get(),
-            self.ruta_ficha.get()
+        # 1. Obtener Datos
+        archivos = [
+            self.ruta_maestro.get(), self.ruta_compras.get(), self.ruta_stock.get(),
+            self.ruta_dto_especiales.get(), self.ruta_listado.get(),
+            self.ruta_calculo_comprando_ant.get(), self.ruta_ficha.get()
         ]
-        if not all(archivos_requeridos):
-            messagebox.showerror("Error", "Debe seleccionar todos los archivos requeridos.")
-            self.ocultar_progreso()
+
+        if not all(archivos):
+            self.after(0, lambda: messagebox.showerror("Error", "Debe seleccionar todos los archivos requeridos."))
+            self.after(0, self.ocultar_progreso)
             return
-        campaña = self.entry_campaña.get()
-        año = self.entry_año.get()
-        mano_de_obra = self.entry_mano_de_obra.get()
-        indice_a = self.entry_indice_a.get()
-        indice_b = self.entry_indice_b.get()
-        if not all([campaña, año, mano_de_obra, indice_a, indice_b]):
-            messagebox.showerror("Error", "Debe completar todos los campos requeridos.")
-            self.ocultar_progreso()
-            return
-        # Pedir carpeta de salida
-        ruta_salida = filedialog.askdirectory(title="Seleccionar carpeta de salida")
-        if not ruta_salida:
-            messagebox.showinfo("Cancelado", "El proceso ha sido cancelado por el usuario.")
-            self.ocultar_progreso()
-            return
+
+        # 2. Convertir y Validar Parámetros
         try:
-            resultado=procesar_primer_comprando(
+            campaña = self.campana_var.get()
+            año = self.anio_var.get()
+            # Convertimos comas a puntos por si acaso
+            mano_de_obra = float(self.mdo_var.get().replace(",", "."))
+            indice_a = float(self.indice_a_var.get().replace(",", "."))
+            indice_b = float(self.indice_b_var.get().replace(",", "."))
+        except ValueError:
+            self.after(0, lambda: messagebox.showerror("Error", "Mano de Obra e Índices deben ser numéricos."))
+            self.after(0, self.ocultar_progreso)
+            return
+
+        # 3. Carpeta Salida
+        carpeta_guardado = filedialog.askdirectory(title="Seleccionar carpeta de salida")
+        if not carpeta_guardado:
+            self.after(0, self.ocultar_progreso)
+            return
+
+        try:
+            # 4. Procesar
+            procesar_primer_comprando(
                 campaña=campaña,
                 año=año,
-                indice_a=float(indice_a),
-                indice_b=float(indice_b),
-                mano_de_obra=float(mano_de_obra),
+                indice_a=indice_a,
+                indice_b=indice_b,
+                mano_de_obra=mano_de_obra,
                 ruta_maestro=self.ruta_maestro.get(),
                 ruta_compras=self.ruta_compras.get(),
                 ruta_stock=self.ruta_stock.get(),
@@ -160,16 +214,13 @@ class PrimerComprandoWindow(tk.Toplevel):
                 ruta_listado=self.ruta_listado.get(),
                 ruta_calculo_comprando_ant=self.ruta_calculo_comprando_ant.get(),
                 ruta_ficha=self.ruta_ficha.get(),
-                ruta_salida=ruta_salida
+                ruta_salida=carpeta_guardado
             )
-            self.ocultar_progreso()
-            messagebox.showinfo("Éxito", "El procesamiento ha finalizado con éxito.")
-            self.destroy()  # Cerrar la ventana después de un proceso exitoso
+            
+            self.after(0, self.ocultar_progreso)
+            self.after(0, lambda: messagebox.showinfo("Éxito", "El procesamiento ha finalizado con éxito."))
+            
         except Exception as e:
-            logger.error(f"Error en el procesamiento de primer comprando: {str(e)}", exc_info=True)
-            messagebox.showerror("Error", f"Ocurrió un error durante el procesamiento:\n{e}")
-            self.ocultar_progreso()
-
-    def destroy(self):
-        self.ocultar_progreso()
-        super().destroy() 
+            logger.error(f"Error lógica primer comprando: {str(e)}", exc_info=True)
+            self.after(0, lambda: messagebox.showerror("Error", f"Ocurrió un error:\n{e}"))
+            self.after(0, self.ocultar_progreso)
