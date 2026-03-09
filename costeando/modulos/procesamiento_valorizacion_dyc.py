@@ -80,7 +80,7 @@ def procesar_valorizacion_dyc_puro(
         
         fecha_hoy = datetime.now().strftime("%Y-%m-%d")
 
-        path_guardado = os.path.join(carpeta_guardado, f"{fecha_hoy} Valorizacion DyC C{campana}_{anio}.xlsx")
+        path_guardado = os.path.join(carpeta_guardado, f"{fecha_hoy} Valorizacion DyC C{campana}-{anio}.xlsx")
         
         if os.path.exists(path_guardado):
             os.remove(path_guardado)

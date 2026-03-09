@@ -4,27 +4,23 @@ from tkinter import filedialog, messagebox
 import threading
 import logging
 
-# Importamos la lógica de negocio original
 from costeando.modulos.procesamiento_compras import procesar_compras_puro
 
 logger = logging.getLogger(__name__)
 
-class ComprasWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
+class ComprasWindow(ctk.CTkFrame): 
     def __init__(self, master):
         super().__init__(master)
         
-        # Variables
         self.ruta_compras = tk.StringVar()
-        self.dolar_var = tk.StringVar() # Usamos StringVar para facilitar el control
+        self.dolar_var = tk.StringVar() 
         
         # Configuración del Grid
         self.grid_columnconfigure(1, weight=1)
 
-        # Crear interfaz
         self.crear_interfaz()
 
     def crear_interfaz(self):
-        # --- TÍTULO ---
         lbl_titulo = ctk.CTkLabel(
             self, 
             text="Depurador de Compras", 
@@ -32,8 +28,6 @@ class ComprasWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         )
         lbl_titulo.grid(row=0, column=0, columnspan=3, padx=20, pady=(30, 10), sticky="w")
 
-        # --- INSTRUCCIONES ---
-        # Unimos las instrucciones en un texto claro
         instrucciones = (
             "• Compras: Archivo de pedidos. Convierta la columna 'Código' a número y quite espacios.\n"
             "• Dólar: Utilice el PUNTO (.) como separador decimal (Ej: 1050.50)."
@@ -47,11 +41,8 @@ class ComprasWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         )
         lbl_desc.grid(row=1, column=0, columnspan=3, padx=20, pady=(0, 20), sticky="w")
 
-        # --- SELECCIÓN DE ARCHIVO ---
         self.crear_fila_selector(2, "Seleccionar Compras", self.ruta_compras)
 
-        # --- CAMPO DÓLAR ---
-        # Lo ponemos en un frame aparte para alinearlo bien
         frame_dolar = ctk.CTkFrame(self, fg_color="transparent")
         frame_dolar.grid(row=3, column=0, columnspan=3, padx=20, pady=10, sticky="ew")
 
@@ -66,13 +57,11 @@ class ComprasWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         )
         self.entry_dolar.pack(side="left")
 
-        # --- BARRA DE PROGRESO ---
         self.progress_bar = ctk.CTkProgressBar(self, mode='indeterminate')
         self.progress_bar.grid(row=4, column=0, columnspan=3, padx=20, pady=(30, 10), sticky='ew')
         self.progress_bar.set(0)
         self.progress_bar.grid_remove()
 
-        # --- BOTÓN PROCESAR ---
         self.btn_procesar = ctk.CTkButton(
             self, 
             text='INICIAR PROCESO', 
@@ -85,7 +74,6 @@ class ComprasWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.btn_procesar.grid(row=5, column=0, columnspan=3, padx=20, pady=(10, 20), sticky="ew")
 
     def crear_fila_selector(self, row, texto_boton, variable):
-        """Helper para la fila de archivo (mismo estilo que otros módulos)"""
         btn = ctk.CTkButton(
             self, 
             text=texto_boton, 
@@ -135,7 +123,6 @@ class ComprasWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
             self.after(0, self.ocultar_progreso)
 
     def procesar_compras(self):
-        # 1. Validar Valor Dolar
         try:
             # Reemplazamos coma por punto por si el usuario se equivocó
             valor_raw = self.dolar_var.get().replace(",", ".")
@@ -151,12 +138,10 @@ class ComprasWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         carpeta_guardado = filedialog.askdirectory(title='Selecciona la carpeta para guardar los resultados')
         
         if not carpeta_guardado:
-            # Cancelado
             self.after(0, self.ocultar_progreso)
             return
 
         try:
-            # 3. Lógica de negocio
             procesar_compras_puro(
                 ruta_compras=compras,
                 dolar=dolar,

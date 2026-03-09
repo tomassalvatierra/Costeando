@@ -1,7 +1,6 @@
 import traceback
 from costeando.modulos.procesamiento_valorizacion_dyc import procesar_valorizacion_dyc_puro
 
-# === EDITA AQUÍ LOS PATHS DE TUS ARCHIVOS ===
 paths = {
     'ruta_listado': r'Z:\Costos\Compartido\515 c15-2025\LISTA 515\25-06-25 LISTA 515 C15-2025 consulta_lista_de_precios_140815(Planilla trabajo).xlsx',
     'ruta_combinadas': r'Z:\Costos\Compartido\515 c15-2025\DOBLES Y COMB 515\18-06-25 COMBINADAS 515 A LA FECHA (ANDRE).xlsx',
@@ -10,7 +9,6 @@ paths = {
     'anio': '2025',   # Ejemplo: '2024'
     'carpeta_guardado': r'C:\Users\tsalvatierra\Desktop\PRUEBAS\PRUEBAS COMPLETAS'
 }
-# ===========================================
 
 if __name__ == '__main__':
     try:

@@ -145,12 +145,12 @@ def procesar_segundo_comprando(
         fecha_hoy = datetime.now().strftime("%Y-%m-%d")
 
         # Guardar archivos
-        path_comprando = f'{carpeta_guardado}/{fecha_hoy} Calculo de Comprando {año} C{campaña} 2da Etapa.xlsx'
-        path_especiales = f'{carpeta_guardado}/{fecha_hoy} Descuentos Especiales - Base de Datos - 2da Etapa C{campaña} {año}.xlsx'
-        path_importador = f'{carpeta_guardado}/{fecha_hoy} Importador C{campaña} {año}.xlsx'
+        path_comprando = f'{carpeta_guardado}/{fecha_hoy} Calculo Comprando-Segunda etapa C{campaña}-{año} .xlsx'
+        path_especiales = f'{carpeta_guardado}/{fecha_hoy} BASE DTOS-Segunda etapa comprando C{campaña}-{año}.xlsx'
+        path_importador = f'{carpeta_guardado}/{fecha_hoy} Importador Comprando C{campaña}-{año}.xlsx'
         
-        df_calculo_comprando.to_excel(path_comprando, sheet_name='Calculo Comprando', index=False)
-        df_costos_especiales.to_excel(path_especiales, sheet_name='Descuentos Proce', index=False)
+        df_calculo_comprando.to_excel(path_comprando, sheet_name='Calculo Comprando 2da', index=False)
+        df_costos_especiales.to_excel(path_especiales, sheet_name='Base 2do Comprando', index=False)
         df_importador.to_excel(path_importador, sheet_name='Importador', index=False)
         
         logger.info(f"Archivos guardados en: {carpeta_guardado}")

@@ -193,7 +193,7 @@ def procesar_listado_gral_puro(
 
         fecha_hoy = datetime.now().strftime("%Y-%m-%d")
 
-        path_listado = os.path.join(carpeta_guardado, f"{fecha_hoy} Listado General Completo C{campania}_{anio}.xlsx")
+        path_listado = os.path.join(carpeta_guardado, f"{fecha_hoy} Listado General Completo C{campania}-{anio}.xlsx")
         logger.info(f"Guardando Listado gral procesado en: {path_listado}")
         df_listado_general.to_excel(path_listado, index=False, engine="openpyxl")
 

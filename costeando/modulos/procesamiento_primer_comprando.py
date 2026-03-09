@@ -253,9 +253,19 @@ def calcular_variacion(df, numerador, denominador, nueva_columna, reemplazo_inf=
     return df
 
 def procesar_primer_comprando(
-    campaña, año, indice_a, indice_b, mano_de_obra,
-    ruta_maestro, ruta_compras, ruta_stock, ruta_dto_especiales,
-    ruta_listado, ruta_calculo_comprando_ant, ruta_ficha, ruta_salida
+    campaña, 
+    año, 
+    indice_a, 
+    indice_b,
+    mano_de_obra,
+    ruta_maestro,
+    ruta_compras,
+    ruta_stock,
+    ruta_dto_especiales,
+    ruta_listado, 
+    ruta_calculo_comprando_ant,
+    ruta_ficha, 
+    ruta_salida
 ):
     try:
         logger.info("Iniciando procesamiento puro de Primer Comprando")
@@ -397,10 +407,10 @@ def procesar_primer_comprando(
         if not os.path.exists(ruta_salida):
             os.makedirs(ruta_salida)
         
-        path_rotacion = os.path.join(ruta_salida, f'{fecha_hoy} Rotacion_calculada_C{campaña}_{año}.xlsx')
-        path_base_descuentos = os.path.join(ruta_salida, f'{fecha_hoy} Base_Descuentos_Especiales_1era_Etapa_C{campaña}_{año}.xlsx')
-        path_cambios = os.path.join(ruta_salida, f'{fecha_hoy} Cambios_realizados_en_la_base_C{campaña}_{año}.xlsx')
-        path_calculo_comprando = os.path.join(ruta_salida, f'{fecha_hoy} Calculo_Comprando_{campaña}_{año}.xlsx')
+        path_rotacion = os.path.join(ruta_salida, f'{fecha_hoy} Rotacion calculada C{campaña}-{año}.xlsx')
+        path_base_descuentos = os.path.join(ruta_salida, f'{fecha_hoy} BASE DTOS-Primera etapa comprando C{campaña}-{año}.xlsx')
+        path_cambios = os.path.join(ruta_salida, f'{fecha_hoy} Cambios realizados en la base C{campaña}-{año}.xlsx')
+        path_calculo_comprando = os.path.join(ruta_salida, f'{fecha_hoy} Calculo Comprando-Primera etapa C{campaña}-{año}.xlsx')
         
         df_rotacion.to_excel(path_rotacion, index=False, engine='openpyxl')
         df_costos_especiales.to_excel(path_base_descuentos, index=False, engine='openpyxl')

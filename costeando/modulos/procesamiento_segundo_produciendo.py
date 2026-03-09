@@ -149,13 +149,13 @@ def procesar_segundo_produciendo(
         
         fecha_hoy = datetime.now().strftime("%Y-%m-%d")
 
-        path_importador = f'{carpeta_guardado}/{fecha_hoy} Importador C{campaña} {año} 2da Etapa.xlsx'
-        path_produciendo = f'{carpeta_guardado}/{fecha_hoy} Calculo de Produciendo {año} C{campaña} 2da Etapa.xlsx'
-        path_especiales = f'{carpeta_guardado}/{fecha_hoy} Descuentos Especiales - Base de Datos C{campaña} {año} 2da Etapa.xlsx'
+        path_importador = f'{carpeta_guardado}/{fecha_hoy} Importador Produciendo C{campaña}-{año}.xlsx'
+        path_produciendo = f'{carpeta_guardado}/{fecha_hoy} Calculo Produciendo-Segunda etapa C{campaña}-{año}.xlsx'
+        path_especiales = f'{carpeta_guardado}/{fecha_hoy} BASE DTOS-Segunda etapa produciendo C{campaña}-{año}.xlsx'
         
         df_importador.to_excel(path_importador, sheet_name='Importador', index=False)
-        df_produciendo.to_excel(path_produciendo, sheet_name='Calculo Comprando', index=False)
-        df_base_especiales.to_excel(path_especiales, sheet_name='Base de Descuentos', index=False)
+        df_produciendo.to_excel(path_produciendo, sheet_name='Calculo Produciendo 2da', index=False)
+        df_base_especiales.to_excel(path_especiales, sheet_name='Base 2do Produciendo', index=False)
         
         logger.info(f"Archivos guardados exitosamente, en la ruta: {carpeta_guardado}")
         return {

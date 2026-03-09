@@ -15,6 +15,7 @@ def procesar_actualizacion_fchs_puro(
     ruta_ordenes_apuntadas: str,
     carpeta_guardado: str
 ) -> Dict[str, str]:
+    
     try:
         logger.info("Iniciando procesamiento puro de Actualización FCHS")
         # Validar archivos de entrada
@@ -104,10 +105,12 @@ def procesar_actualizacion_fchs_puro(
         # Validar columnas clave tras la carga
         validar_columnas(df_concatenado, ["Producto", "FORMATO","Fch Emision"], "Compilado de fchs")
 
-        
         # Validar duplicados en claves principales
-        validar_duplicados(df_concatenado, ["Producto", "FORMATO"], "concatenado final")
-        
+        if validar_duplicados(df_concatenado, ["Producto", "FORMATO"], "concatenado final") is True:
+            logging.info(f"El df concatenado final tuvo duplicados, se procede a eliminarlos.")
+            df_concatenado.sort_values(by=["Codigo","Fch Apunte"], ascending=[True,False], inplace=True)
+            df_concatenado=df_concatenado.drop_duplicates(subset='Producto', keep='first')
+
         path_guardado = os.path.join(carpeta_guardado, f"{fecha_hoy} Compilado de fchs ult compra.xlsx")
         
         if os.path.exists(path_guardado):

@@ -157,8 +157,8 @@ def procesar_leader_list_puro(
         fecha_hoy = datetime.now().strftime("%Y-%m-%d")
 
 
-        path_leader_list = os.path.join(carpeta_guardado, f"{fecha_hoy} Leader List procesado C{campana}_{anio}.xlsx")
-        path_combinadas_agrupadas = os.path.join(carpeta_guardado, f"{fecha_hoy} Combinadas agrupadas C{campana}_{anio}.xlsx")
+        path_leader_list = os.path.join(carpeta_guardado, f"{fecha_hoy} Leader List procesado C{campana}-{anio}.xlsx")
+        path_combinadas_agrupadas = os.path.join(carpeta_guardado, f"{fecha_hoy} Combinadas agrupadas C{campana}-{anio}.xlsx")
 
         logger.info(f"Guardando Leader List procesado en: {path_leader_list}")
         df_leader_list.to_excel(path_leader_list, index=False, engine="openpyxl")

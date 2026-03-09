@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 # Configuración Global de Tema
 ctk.set_appearance_mode("Dark")  # "System" (estándar), "Dark", "Light"
-ctk.set_default_color_theme("blue")  # "blue" (estándar), "green", "dark-blue"
+ctk.set_default_color_theme("green")  # "blue" (estándar), "green", "dark-blue"
 
 class ProcesadorCostosApp(ctk.CTk):
     def __init__(self):

@@ -38,7 +38,7 @@ if exist dist rmdir /s /q dist
 
 echo.
 echo === Iniciando PyInstaller DENTRO del entorno virtual ===
-pyinstaller --noconfirm --onefile --windowed %SCRIPT%
+pyinstaller --noconfirm --onefile --windowed --name Costeando %SCRIPT%
 echo === PyInstaller finalizado ===
 
 echo.

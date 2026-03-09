@@ -223,9 +223,9 @@ def procesar_primer_produciendo(
             os.makedirs(ruta_salida)
         fecha_hoy = datetime.now().strftime("%Y-%m-%d")
 
-        path_produciendo = os.path.join(ruta_salida, f'{fecha_hoy} Produciendo-Primera Etapa C{campaña_actual}_{año_actual}.xlsx')
-        path_base_descuentos = os.path.join(ruta_salida, f'{fecha_hoy} Base Descuentos Especiales-Primera Etapa C{campaña_actual}_{año_actual}.xlsx')
-        path_cambios = os.path.join(ruta_salida, f'{fecha_hoy} Cambios realizado en la base-Primera Etapa C{campaña_actual}_{año_actual}.xlsx')
+        path_produciendo = os.path.join(ruta_salida, f'{fecha_hoy} Calculo Produciendo-Primera etapa C{campaña_actual}-{año_actual}.xlsx')
+        path_base_descuentos = os.path.join(ruta_salida, f'{fecha_hoy} BASE DTOS-Primer etapa produciendo C{campaña_actual}-{año_actual}.xlsx')
+        path_cambios = os.path.join(ruta_salida, f'{fecha_hoy} Cambios realizado en la base-Primera Etapa C{campaña_actual}-{año_actual}.xlsx')
         df_produciendo.to_excel(path_produciendo, index=False, engine='openpyxl')
         df_descuentos_especiales.to_excel(path_base_descuentos, index=False, engine='openpyxl')
         df_cambios.to_excel(path_cambios, index=False, engine='openpyxl')

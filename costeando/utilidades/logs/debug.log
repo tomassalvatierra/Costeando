@@ -1652,3 +1652,122 @@ PermissionError: [Errno 13] Permission denied: 'C:\\Users\\tsalvatierra\\Desktop
 2025-09-26 14:54:38 - costeando.modulos.procesamiento_leader_list - INFO - Guardando Leader List procesado en: C:\Users\tsalvatierra\Desktop\PRUEBAS\PRUEBAS COMPLETAS\2025-09-26 Leader List procesado.xlsx
 2025-09-26 14:54:39 - costeando.modulos.procesamiento_leader_list - INFO - Guardando Combinadas agrupadas en: C:\Users\tsalvatierra\Desktop\PRUEBAS\PRUEBAS COMPLETAS\2025-09-26 Combinadas agrupadas.xlsx
 2025-09-26 14:54:39 - costeando.modulos.procesamiento_leader_list - INFO - Archivos guardados correctamente en: C:\Users\tsalvatierra\Desktop\PRUEBAS\PRUEBAS COMPLETAS
+2026-02-25 13:14:25 - __main__ - INFO - Cargando módulo: Leader List
+2026-02-25 13:14:26 - __main__ - INFO - Cargando módulo: Actualización Fechas
+2026-02-25 13:14:26 - __main__ - INFO - Cargando módulo: Primer Comprando
+2026-02-25 13:14:27 - __main__ - INFO - Cargando módulo: Segundo Comprando
+2026-02-25 13:14:27 - __main__ - INFO - Cargando módulo: Primer Produciendo
+2026-02-25 13:14:27 - __main__ - INFO - Cargando módulo: Segundo Produciendo
+2026-02-25 13:14:28 - __main__ - INFO - Cargando módulo: Proyectados
+2026-02-25 13:14:28 - __main__ - INFO - Cargando módulo: Valorización DyC
+2026-02-25 13:14:28 - __main__ - INFO - Cargando módulo: Listado General
+2026-02-25 13:34:24 - __main__ - INFO - Cargando módulo: Leader List
+2026-02-25 13:34:25 - __main__ - INFO - Cargando módulo: Compras
+2026-02-25 13:34:26 - __main__ - INFO - Cargando módulo: Actualización Fechas
+2026-02-25 13:34:26 - __main__ - INFO - Cargando módulo: Primer Comprando
+2026-02-25 13:34:27 - __main__ - INFO - Cargando módulo: Segundo Comprando
+2026-02-25 13:34:27 - __main__ - INFO - Cargando módulo: Primer Produciendo
+2026-02-25 13:34:27 - __main__ - INFO - Cargando módulo: Segundo Produciendo
+2026-02-25 13:34:28 - __main__ - INFO - Cargando módulo: Proyectados
+2026-02-25 13:34:28 - __main__ - INFO - Cargando módulo: Listado General
+2026-02-25 13:34:28 - __main__ - INFO - Cargando módulo: Valorización DyC
+2026-02-25 13:34:29 - __main__ - INFO - Cargando módulo: Listado General
+2026-02-25 13:34:30 - __main__ - INFO - Cargando módulo: Proyectados
+2026-02-25 13:34:30 - __main__ - INFO - Cargando módulo: Segundo Produciendo
+2026-02-25 13:34:31 - __main__ - INFO - Cargando módulo: Primer Produciendo
+2026-02-25 13:34:31 - __main__ - INFO - Cargando módulo: Segundo Comprando
+2026-02-25 13:34:31 - __main__ - INFO - Cargando módulo: Primer Comprando
+2026-02-25 13:34:31 - __main__ - INFO - Cargando módulo: Compras
+2026-02-25 13:34:32 - __main__ - INFO - Cargando módulo: Leader List
+2026-02-25 13:34:32 - __main__ - INFO - Cargando módulo: Leader List
+2026-02-25 13:34:32 - __main__ - INFO - Cargando módulo: Compras
+2026-02-25 13:36:05 - __main__ - INFO - Cargando módulo: Leader List
+2026-02-25 13:36:14 - __main__ - INFO - Cargando módulo: Actualización Fechas
+2026-02-25 13:36:14 - __main__ - INFO - Cargando módulo: Segundo Comprando
+2026-02-25 13:36:47 - __main__ - INFO - Cargando módulo: Valorización DyC
+2026-02-25 13:36:47 - __main__ - INFO - Cargando módulo: Listado General
+2026-02-25 13:36:48 - __main__ - INFO - Cargando módulo: Proyectados
+2026-02-25 13:36:49 - __main__ - INFO - Cargando módulo: Segundo Produciendo
+2026-02-25 13:36:49 - __main__ - INFO - Cargando módulo: Primer Produciendo
+2026-02-25 13:36:49 - __main__ - INFO - Cargando módulo: Segundo Comprando
+2026-02-25 13:36:50 - __main__ - INFO - Cargando módulo: Actualización Fechas
+2026-02-25 13:36:50 - __main__ - INFO - Cargando módulo: Compras
+2026-02-25 13:36:50 - __main__ - INFO - Cargando módulo: Leader List
+2026-02-25 13:37:15 - __main__ - INFO - Cargando módulo: Leader List
+2026-02-25 13:37:16 - __main__ - INFO - Cargando módulo: Compras
+2026-02-25 13:37:18 - __main__ - INFO - Cargando módulo: Compras
+2026-02-25 13:37:18 - __main__ - INFO - Cargando módulo: Actualización Fechas
+2026-02-25 13:37:19 - __main__ - INFO - Cargando módulo: Primer Comprando
+2026-02-25 13:37:19 - __main__ - INFO - Cargando módulo: Segundo Comprando
+2026-02-25 13:37:20 - __main__ - INFO - Cargando módulo: Primer Produciendo
+2026-02-25 13:37:20 - __main__ - INFO - Cargando módulo: Segundo Produciendo
+2026-02-25 13:37:20 - __main__ - INFO - Cargando módulo: Proyectados
+2026-02-25 13:37:21 - __main__ - INFO - Cargando módulo: Listado General
+2026-02-25 13:37:21 - __main__ - INFO - Cargando módulo: Valorización DyC
+2026-02-25 13:44:45 - __main__ - INFO - Cargando módulo: Leader List
+2026-02-25 13:44:45 - __main__ - INFO - Cargando módulo: Compras
+2026-02-25 13:44:46 - __main__ - INFO - Cargando módulo: Actualización Fechas
+2026-02-25 13:44:48 - __main__ - INFO - Cargando módulo: Segundo Produciendo
+2026-02-25 13:44:49 - __main__ - INFO - Cargando módulo: Proyectados
+2026-02-25 13:44:49 - __main__ - INFO - Cargando módulo: Primer Produciendo
+2026-02-25 13:44:50 - __main__ - INFO - Cargando módulo: Segundo Comprando
+2026-02-25 13:44:53 - __main__ - INFO - Cargando módulo: Leader List
+2026-02-25 13:44:53 - __main__ - INFO - Cargando módulo: Compras
+2026-02-25 13:47:16 - __main__ - INFO - Cargando módulo: Segundo Comprando
+2026-02-25 14:40:14 - __main__ - INFO - Cargando módulo: Leader List
+2026-02-25 14:40:18 - __main__ - INFO - Cargando módulo: Listado General
+2026-02-25 14:40:20 - __main__ - INFO - Cargando módulo: Valorización DyC
+2026-02-25 14:40:37 - __main__ - INFO - Cargando módulo: Leader List
+2026-02-25 14:41:12 - __main__ - INFO - Cargando módulo: Primer Produciendo
+2026-02-25 14:42:49 - costeando.modulos.procesamiento_primer_produciendo - INFO - Iniciando procesamiento puro de Primer Produciendo
+2026-02-25 14:42:49 - costeando.modulos.procesamiento_primer_produciendo - DEBUG - Archivos de entrada validados correctamente para Primer Produciendo.
+2026-02-25 14:43:09 - costeando.modulos.procesamiento_primer_produciendo - DEBUG - No se encontró la columna 'Producto' en Produciendo anterior.
+2026-02-25 14:43:09 - costeando.modulos.procesamiento_primer_produciendo - DEBUG - No se encontró la columna 'Producto' en Maestro produciendo.
+2026-02-25 14:43:09 - costeando.modulos.procesamiento_primer_produciendo - DEBUG - Columna 'Producto' renombrada a 'Codigo' en Stock.
+2026-02-25 14:43:09 - costeando.modulos.procesamiento_primer_produciendo - DEBUG - No se encontró la columna 'Producto' en Base descuentos especiales.
+2026-02-25 14:43:09 - costeando.modulos.procesamiento_primer_produciendo - DEBUG - No se encontró la columna 'Producto' en Rotacion.
+2026-02-25 14:43:10 - costeando.modulos.procesamiento_primer_produciendo - INFO - Actualizando estado vencido
+2026-02-25 14:43:41 - costeando.modulos.procesamiento_primer_produciendo - INFO - Procesamiento de Primer Produciendo finalizado correctamente. Archivos guardados en: C:/Users/tsalvatierra/Desktop/PRUEBAS/Nueva carpeta
+2026-02-25 14:45:31 - __main__ - INFO - Cargando módulo: Actualización Fechas
+2026-02-25 14:45:32 - __main__ - INFO - Cargando módulo: Compras
+2026-02-25 14:45:32 - __main__ - INFO - Cargando módulo: Leader List
+2026-02-25 14:45:33 - __main__ - INFO - Cargando módulo: Actualización Fechas
+2026-02-25 14:45:33 - __main__ - INFO - Cargando módulo: Primer Comprando
+2026-02-25 14:45:34 - __main__ - INFO - Cargando módulo: Segundo Comprando
+2026-02-25 14:45:34 - __main__ - INFO - Cargando módulo: Primer Produciendo
+2026-02-25 14:45:35 - __main__ - INFO - Cargando módulo: Segundo Produciendo
+2026-02-25 14:45:35 - __main__ - INFO - Cargando módulo: Proyectados
+2026-02-25 14:45:35 - __main__ - INFO - Cargando módulo: Listado General
+2026-02-25 14:45:36 - __main__ - INFO - Cargando módulo: Valorización DyC
+2026-02-25 14:45:41 - __main__ - INFO - Cargando módulo: Leader List
+2026-02-25 14:45:45 - __main__ - INFO - Cargando módulo: Leader List
+2026-02-25 14:45:45 - __main__ - INFO - Cargando módulo: Compras
+2026-02-25 14:45:46 - __main__ - INFO - Cargando módulo: Actualización Fechas
+2026-02-25 14:45:47 - __main__ - INFO - Cargando módulo: Primer Comprando
+2026-02-25 14:45:47 - __main__ - INFO - Cargando módulo: Segundo Comprando
+2026-02-25 14:45:48 - __main__ - INFO - Cargando módulo: Segundo Comprando
+2026-02-25 14:45:48 - __main__ - INFO - Cargando módulo: Primer Produciendo
+2026-02-25 14:45:49 - __main__ - INFO - Cargando módulo: Segundo Produciendo
+2026-02-25 14:45:50 - __main__ - INFO - Cargando módulo: Actualización Fechas
+2026-02-25 14:45:51 - __main__ - INFO - Cargando módulo: Compras
+2026-02-25 14:45:51 - __main__ - INFO - Cargando módulo: Leader List
+2026-02-25 14:45:53 - __main__ - INFO - Cargando módulo: Compras
+2026-02-25 14:45:54 - __main__ - INFO - Cargando módulo: Actualización Fechas
+2026-02-25 14:45:54 - __main__ - INFO - Cargando módulo: Primer Comprando
+2026-02-25 14:45:55 - __main__ - INFO - Cargando módulo: Segundo Comprando
+2026-02-25 14:45:56 - __main__ - INFO - Cargando módulo: Primer Produciendo
+2026-02-25 14:45:56 - __main__ - INFO - Cargando módulo: Segundo Produciendo
+2026-02-25 14:45:57 - __main__ - INFO - Cargando módulo: Proyectados
+2026-02-25 14:45:58 - __main__ - INFO - Cargando módulo: Listado General
+2026-02-25 14:46:00 - __main__ - INFO - Cargando módulo: Valorización DyC
+2026-02-25 14:47:54 - __main__ - INFO - Cargando módulo: Leader List
+2026-02-25 14:47:55 - __main__ - INFO - Cargando módulo: Compras
+2026-02-25 14:47:55 - __main__ - INFO - Cargando módulo: Actualización Fechas
+2026-02-25 14:47:56 - __main__ - INFO - Cargando módulo: Primer Comprando
+2026-02-25 14:47:56 - __main__ - INFO - Cargando módulo: Segundo Comprando
+2026-02-25 14:47:57 - __main__ - INFO - Cargando módulo: Primer Produciendo
+2026-02-25 14:47:57 - __main__ - INFO - Cargando módulo: Segundo Produciendo
+2026-02-25 14:47:58 - __main__ - INFO - Cargando módulo: Proyectados
+2026-02-25 14:47:59 - __main__ - INFO - Cargando módulo: Listado General
+2026-02-25 14:48:00 - __main__ - INFO - Cargando módulo: Valorización DyC
+2026-02-25 14:48:02 - __main__ - INFO - Cargando módulo: Listado General

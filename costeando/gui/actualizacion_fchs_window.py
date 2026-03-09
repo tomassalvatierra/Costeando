@@ -4,29 +4,24 @@ from tkinter import filedialog, messagebox
 import threading
 import logging
 
-# Importamos la lógica de negocio original
 from costeando.modulos.procesamiento_actualizacion_fchs import procesar_actualizacion_fchs_puro
 
 logger = logging.getLogger(__name__)
 
-class ActualizacionFCHSWindow(ctk.CTkFrame): # <-- Cambio a Frame
+class ActualizacionFCHSWindow(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
         
-        # Variables (tk.StringVar funciona perfecto con CustomTkinter)
         self.ruta_estructuras = tk.StringVar()
         self.ruta_compras = tk.StringVar()
         self.ruta_maestro = tk.StringVar()
         self.ruta_ordenes_apuntadas = tk.StringVar()
         
-        # Configuración del Grid para que el contenido se expanda bien
         self.grid_columnconfigure(1, weight=1)
 
-        # Crear interfaz visual
         self.crear_interfaz()
 
     def crear_interfaz(self):
-        # --- TÍTULO ---
         lbl_titulo = ctk.CTkLabel(
             self, 
             text="Actualización de Fechas", 
@@ -34,7 +29,6 @@ class ActualizacionFCHSWindow(ctk.CTkFrame): # <-- Cambio a Frame
         )
         lbl_titulo.grid(row=0, column=0, columnspan=3, padx=20, pady=(30, 10), sticky="w")
 
-        # --- DESCRIPCIÓN / INSTRUCCIONES ---
         lbl_desc = ctk.CTkLabel(
             self, 
             text=("Estructuras: Archivo original por nivel (TOTVS).\n"
@@ -47,19 +41,16 @@ class ActualizacionFCHSWindow(ctk.CTkFrame): # <-- Cambio a Frame
         )
         lbl_desc.grid(row=1, column=0, columnspan=3, padx=20, pady=(0, 20), sticky="w")
 
-        # --- SELECTORES DE ARCHIVOS (Usando Helper) ---
         self.crear_fila_selector(2, "Seleccionar Estructuras", self.ruta_estructuras)
         self.crear_fila_selector(3, "Seleccionar Maestro", self.ruta_maestro)
         self.crear_fila_selector(4, "Seleccionar Compras", self.ruta_compras)
         self.crear_fila_selector(5, "Seleccionar Ord. Apuntadas", self.ruta_ordenes_apuntadas)
 
-        # --- BARRA DE PROGRESO ---
         self.progress_bar = ctk.CTkProgressBar(self, mode='indeterminate')
         self.progress_bar.grid(row=6, column=0, columnspan=3, padx=20, pady=(30, 10), sticky='ew')
         self.progress_bar.set(0)
         self.progress_bar.grid_remove() # Oculto por defecto
 
-        # --- BOTÓN DE PROCESAR ---
         self.btn_procesar = ctk.CTkButton(
             self, 
             text='INICIAR PROCESO', 
@@ -132,9 +123,7 @@ class ActualizacionFCHSWindow(ctk.CTkFrame): # <-- Cambio a Frame
             self.after(0, self.ocultar_progreso)
             return
 
-        # 2. Pedir carpeta de salida (Nota: askdirectory suele bloquear el hilo, cuidado aquí)
-        # Idealmente esto iría en el hilo principal antes de lanzar el thread, pero lo dejamos
-        # aquí manteniendo tu lógica original.
+        # 2. Pedir carpeta de salida (Nota: askdirectory suele bloquear el hilo)
         carpeta_guardado = filedialog.askdirectory(title="Seleccionar carpeta de guardado")
         
         if not carpeta_guardado:
@@ -155,9 +144,7 @@ class ActualizacionFCHSWindow(ctk.CTkFrame): # <-- Cambio a Frame
             # 4. Finalización exitosa
             self.after(0, self.ocultar_progreso)
             self.after(0, lambda: messagebox.showinfo("Éxito", "El procesamiento ha finalizado con éxito."))
-            
-            # Nota: Eliminamos self.destroy() porque ahora es un panel fijo.
-            # Podrías agregar un self.limpiar_inputs() si quisieras vaciar los campos.
+
 
         except Exception as e:
             logger.error(f"Error en el procesamiento: {str(e)}", exc_info=True)

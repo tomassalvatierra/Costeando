@@ -1,7 +1,6 @@
 import traceback
 from costeando.modulos.procesamiento_primer_produciendo import procesar_primer_produciendo
 
-# === EDITA AQUÍ LOS PATHS DE TUS ARCHIVOS ===
 paths = {
     'campana_actual': '15',
     'anio_actual': '2025',
@@ -13,7 +12,6 @@ paths = {
     'ruta_estructuras': r'Z:\Costos\Compartido\515 c15-2025\ESTRUCTURAS 515\24-06-25 sccybbl0 Reporte Estructuras por Nivel 515 - Costo Producción-.xlsx',
     'ruta_salida': r'C:\Users\tsalvatierra\Desktop\PRUEBAS\PRUEBAS COMPLETAS'
 }
-# ===========================================
 
 if __name__ == '__main__':
     try:

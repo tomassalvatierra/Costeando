@@ -19,4 +19,4 @@ def validar_no_nulos(df: pd.DataFrame, columnas: list, nombre_df: str = "DataFra
 
 def validar_duplicados(df: pd.DataFrame, columnas: list, nombre_df: str = "DataFrame"):
     if df.duplicated(subset=columnas).any():
-        raise ValueError(f"Hay duplicados en las columnas {columnas} de {nombre_df}") 
+        return True

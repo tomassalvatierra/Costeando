@@ -1,7 +1,6 @@
 import traceback
 from costeando.modulos.procesamiento_primer_comprando import procesar_primer_comprando
 
-# === EDITA AQUÍ LOS PATHS DE TUS ARCHIVOS ===
 paths = {
     'campana': '17',
     'anio': '2025',
@@ -17,7 +16,6 @@ paths = {
     'ruta_ficha': r'Z:\Públicos\Ficha RMS\Historicos\202509\ficha_rms_20250605_14.xlsx',
     'ruta_salida': r'C:\Users\tsalvatierra\Desktop'
 }
-# ===========================================
 
 if __name__ == '__main__':
     try:

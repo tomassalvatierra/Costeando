@@ -1,7 +1,6 @@
 import traceback
 from costeando.modulos.procesamiento_segundo_produciendo import procesar_segundo_produciendo
 
-# === EDITA AQUÍ LOS PATHS DE TUS ARCHIVOS ===
 paths = {
     'ruta_produciendo': r'Z:\Costos\Compartido\515 c15-2025\CALCULO COSTOS 515\Produciendo Etapas 515\Produciendo Primer Etapa 515\24-06-2025 Produciendo primera etapa 515.xlsx',
     'ruta_base_especiales': r'Z:\Costos\Compartido\515 c15-2025\BASE DTOS ESPECIALES 515\515 AL INICIO - Descuentos Especiales - Base de Datos C14 2025-Segunda Etapa Produciendo.xlsx',
@@ -12,7 +11,6 @@ paths = {
     'fecha_compras_final': '31/12/2025',
     'carpeta_guardado': r'C:\Users\tsalvatierra\Desktop\PRUEBAS\PRUEBAS COMPLETAS'
 }
-# ===========================================
 
 if __name__ == '__main__':
     try:

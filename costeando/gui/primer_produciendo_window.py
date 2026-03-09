@@ -35,7 +35,7 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         # --- TÍTULO ---
         lbl_titulo = ctk.CTkLabel(
             self, 
-            text="Procesamiento Primer Produciendo", 
+            text="Primer Produciendo", 
             font=("Roboto", 24, "bold")
         )
         lbl_titulo.grid(row=0, column=0, columnspan=3, padx=20, pady=(20, 10), sticky="w")

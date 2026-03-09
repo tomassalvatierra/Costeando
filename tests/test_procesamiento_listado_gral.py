@@ -1,7 +1,6 @@
 import traceback
 from costeando.modulos.procesamiento_listado_gral import procesar_listado_gral_puro
 
-# === EDITA AQUÍ LOS PATHS DE TUS ARCHIVOS ===
 paths = {
 
     'ruta_produciendo': r'Z:/Costos/Compartido/517 c17-2025/CALCULO COSTOS 517/07-08-2025 CALCULO PRODUCIENDO 517.xlsx',
@@ -16,8 +15,6 @@ paths = {
     'anio': r'2025',
     'carpeta_guardado':r'Z:\Costos\Compartido\517 c17-2025\LISTA 517',
 }
-# ===========================================
-
 if __name__ == '__main__':
     try:
         resultados = procesar_listado_gral_puro(
