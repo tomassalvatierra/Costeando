@@ -1,5 +1,8 @@
 import os
+import logging
 import pandas as pd
+
+logger = logging.getLogger(__name__)
 
 def validar_archivo_excel(path: str, nombre: str = "archivo"):
     if not path or not os.path.isfile(path):
@@ -7,16 +10,33 @@ def validar_archivo_excel(path: str, nombre: str = "archivo"):
     if not path.lower().endswith(('.xlsx', '.xls')):
         raise ValueError(f"El {nombre} no es un archivo Excel válido: {path}")
 
+
 def validar_columnas(df: pd.DataFrame, columnas_obligatorias: list, nombre_df: str = "DataFrame"):
     faltantes = [col for col in columnas_obligatorias if col not in df.columns]
     if faltantes:
         raise ValueError(f"Faltan columnas en {nombre_df}: {faltantes}")
+
 
 def validar_no_nulos(df: pd.DataFrame, columnas: list, nombre_df: str = "DataFrame"):
     for col in columnas:
         if col in df.columns and df[col].isnull().any():
             raise ValueError(f"Hay valores nulos en la columna '{col}' de {nombre_df}")
 
+
 def validar_duplicados(df: pd.DataFrame, columnas: list, nombre_df: str = "DataFrame"):
     if df.duplicated(subset=columnas).any():
         return True
+
+
+def estandarizar_columna_producto(df: pd.DataFrame, nombre_df: str) -> pd.DataFrame:
+    """
+    Renombra la columna 'Producto' a 'Codigo' si existe, y normaliza su contenido.
+    Si ya existe 'Codigo', solo normaliza. Registra el cambio en el log.
+    """
+    if 'Producto' in df.columns:
+        df = df.rename(columns={'Producto': 'Codigo'})
+        logger.debug(f"Columna 'Producto' renombrada a 'Codigo' en {nombre_df}.")
+    else:
+        logger.debug(f"No se encontró la columna 'Producto' en {nombre_df}.")
+    df['Codigo'] = df['Codigo'].astype(str).str.strip()
+    return df
