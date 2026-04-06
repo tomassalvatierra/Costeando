@@ -21,11 +21,11 @@ def incorporar_nuevos_dtos(df_especiales, df_importador, df_productos):
     return pd.concat([df_especiales, df_importador], ignore_index=True), df_productos
 
 
-def crear_importador(df, año_campaña, fecha_compras_inicio, fecha_compras_final, campaña_año):
+def crear_importador(df, aAo_campaAa, fecha_compras_inicio, fecha_compras_final, campaAa_aAo):
     df_importador = df[["Codigo","Costo 2do Importador"]].copy()
     df_importador["Columna3"] = "27251293061"
-    df_importador["Columna4"] = año_campaña
-    df_importador["Columna5"] = campaña_año
+    df_importador["Columna4"] = aAo_campaAa
+    df_importador["Columna5"] = campaAa_aAo
     df_importador["Columna6"] = fecha_compras_inicio
     df_importador["Columna7"] = fecha_compras_final
     df_importador[["Columna8","Columna9"]] = "001"
@@ -37,16 +37,16 @@ def crear_importador(df, año_campaña, fecha_compras_inicio, fecha_compras_fina
 
 def procesar_segundo_produciendo(
     ruta_produciendo, ruta_base_especiales, ruta_importador_descuentos,
-    campaña, año, fecha_compras_inicio, fecha_compras_final, carpeta_guardado
+    campaAa, aAo, fecha_compras_inicio, fecha_compras_final, carpeta_guardado
 ):
     try:
         logger.info("Iniciando procesamiento puro de segundo produciendo")
-        campaña = campaña.zfill(2)
-        año_campaña = año[-1] + campaña
-        campaña_año = f"CAMP-{campaña}/{str(int(año) % 100)}"
+        campaAa = campaAa.zfill(2)
+        aAo_campaAa = aAo[-1] + campaAa
+        campaAa_aAo = f"CAMP-{campaAa}/{str(int(aAo) % 100)}"
         fecha_inicio = pd.to_datetime(fecha_compras_inicio, format="%d/%m/%Y")
         fecha_final = pd.to_datetime(fecha_compras_final, format="%d/%m/%Y")
-        desde_desc_especiales = f"{año}/{campaña.zfill(2)}"
+        desde_desc_especiales = f"{aAo}/{campaAa.zfill(2)}"
         validar_archivo_excel(ruta_produciendo, "Produciendo")
         validar_archivo_excel(ruta_base_especiales, "Base especiales")
         df_produciendo = pd.read_excel(ruta_produciendo, engine="openpyxl")
@@ -79,9 +79,9 @@ def procesar_segundo_produciendo(
         nuevos_descuentos["VENCIDO"] = "No"
         nuevos_descuentos["NOTAS"] = "Descuento ajustado porque superaba 75%"
         nuevos_descuentos = pd.merge(nuevos_descuentos, df_produciendo[["Codigo","Descripcion"]], how="left")
-        nuevos_descuentos = pd.merge(nuevos_descuentos, df_produciendo[["Codigo","¿Atiende Ne?"]], how="left")
+        nuevos_descuentos = pd.merge(nuevos_descuentos, df_produciendo[["Codigo","AAtiende Ne?"]], how="left")
         nuevos_descuentos = pd.merge(nuevos_descuentos, df_base_especiales[["Codigo","TIPO-DESCUENTO"]], how="left")
-        nuevos_descuentos = nuevos_descuentos.rename(columns={"¿Atiende Ne?": "ATIENDE NE?"})
+        nuevos_descuentos = nuevos_descuentos.rename(columns={"AAtiende Ne?": "ATIENDE NE?"})
         nuevos_descuentos.drop_duplicates(inplace=True)
         df_base_especiales = pd.concat([df_base_especiales, nuevos_descuentos], ignore_index=True)
         df_produciendo["% sumatoria descuentos"] = (
@@ -89,7 +89,7 @@ def procesar_segundo_produciendo(
             df_produciendo["DESCUENTO ESPECIAL"].fillna(0) +
             df_produciendo["ROYALTY"].fillna(0)).round(2)
         df_produciendo.loc[df_produciendo["DESCUENTO ESPECIAL"] == 0, "APLICA DDE CA:"] = np.nan
-        costo_importador = round(df_produciendo["Costo sin Descuento C"+campaña] * (1 - (df_produciendo["% sumatoria descuentos"]/100)), 2)
+        costo_importador = round(df_produciendo["Costo sin Descuento C"+campaAa] * (1 - (df_produciendo["% sumatoria descuentos"]/100)), 2)
         df_produciendo = df_produciendo.assign(costo_p_importador=costo_importador.values)
         df_produciendo.rename(columns={"costo_p_importador": "Costo 2do Importador"}, inplace=True)
         df_produciendo["Costo 2do Importador"].fillna(0, inplace=True)
@@ -97,11 +97,11 @@ def procesar_segundo_produciendo(
         df_produciendo["DESCUENTO ESPECIAL"] = df_produciendo["DESCUENTO ESPECIAL"].round(2)
         if "COMPONENTE FALTANTE" in df_produciendo.columns:
             df_produciendo.loc[df_produciendo["COMPONENTE FALTANTE"].notna(), "Costo 2do Importador"] = 0
-        df_importador = crear_importador(df_produciendo, año_campaña, fecha_inicio, fecha_final, campaña_año)
+        df_importador = crear_importador(df_produciendo, aAo_campaAa, fecha_inicio, fecha_final, campaAa_aAo)
         fecha_hoy = datetime.now().strftime("%Y-%m-%d")
-        path_importador = f"{carpeta_guardado}/{fecha_hoy} Importador Produciendo C{campaña}-{año}.xlsx"
-        path_produciendo = f"{carpeta_guardado}/{fecha_hoy} Calculo Produciendo-Segunda etapa C{campaña}-{año}.xlsx"
-        path_especiales = f"{carpeta_guardado}/{fecha_hoy} BASE DTOS-Segunda etapa produciendo C{campaña}-{año}.xlsx"
+        path_importador = f"{carpeta_guardado}/{fecha_hoy} Importador Produciendo C{campaAa}-{aAo}.xlsx"
+        path_produciendo = f"{carpeta_guardado}/{fecha_hoy} Calculo Produciendo-Segunda etapa C{campaAa}-{aAo}.xlsx"
+        path_especiales = f"{carpeta_guardado}/{fecha_hoy} BASE DTOS-Segunda etapa produciendo C{campaAa}-{aAo}.xlsx"
         df_importador.to_excel(path_importador, sheet_name="Importador", index=False)
         df_produciendo.to_excel(path_produciendo, sheet_name="Calculo Produciendo 2da", index=False)
         df_base_especiales.to_excel(path_especiales, sheet_name="Base 2do Produciendo", index=False)

@@ -45,7 +45,7 @@ def procesar_leader_list_puro(
     carpeta_guardado: str
 ) -> Dict[str, str]:
     """
-    Procesa el módulo Leader List y guarda los archivos generados en la carpeta indicada.
+    Procesa el mAdulo Leader List y guarda los archivos generados en la carpeta indicada.
     Devuelve un diccionario con los paths de los archivos generados.
     """
     logger.info("Iniciando procesamiento puro de Leader List")
@@ -73,7 +73,7 @@ def procesar_leader_list_puro(
         df_dobles = pd.read_excel(ruta_dobles, engine="openpyxl")
         df_combinadas = pd.read_excel(ruta_combinadas, engine="openpyxl")
         df_stock = pd.read_excel(ruta_stock, engine="openpyxl")
-        logger.info("Archivos Excel leídos correctamente.")
+        logger.info("Archivos Excel leAdos correctamente.")
     except Exception:
         logger.exception("Error leyendo archivos Excel de entrada.")
         raise
@@ -111,7 +111,7 @@ def procesar_leader_list_puro(
         nuevas_columnas_data = {col: [None] * len(df_leader_list) for col in columnas_a_incluir}
         df_leader_list = df_leader_list.assign(**nuevas_columnas_data)
 
-        logger.debug("Realizando merges de información...")
+        logger.debug("Realizando merges de informaciAn...")
         df_leader_list = pd.merge(
             df_leader_list,
             df_costo_anterior[["Codigo", "COSTO LISTA " + anio_campana_anterior]],
@@ -135,7 +135,7 @@ def procesar_leader_list_puro(
             }, inplace=True)
 
         df_leader_list = pd.merge(
-            df_leader_list, df_maestro[["Codigo", "¿Atiende Ne?", "Estado"]], how="left"
+            df_leader_list, df_maestro[["Codigo", "Atiende Ne?", "Estado"]], how="left"
         )
         df_leader_list = pd.merge(
             df_leader_list, df_dobles[["Codigo", "COD MADRE"]], how="left"
@@ -152,13 +152,13 @@ def procesar_leader_list_puro(
             df_leader_list['Stock Actual'] - df_leader_list['UNIDADES REALES ESTIMADAS']
         )
 
-        df_leader_list.loc[df_leader_list["COD MADRE"].notnull(), "TIPO COSTO"] = "CÓDIGO DOBLE"
-        df_leader_list.loc[df_leader_list["COD COMB"].notnull(), "TIPO COSTO"] = "CÓDIGO COMBINADA"
+        df_leader_list.loc[df_leader_list["COD MADRE"].notnull(), "TIPO COSTO"] = "CODIGO DOBLE"
+        df_leader_list.loc[df_leader_list["COD COMB"].notnull(), "TIPO COSTO"] = "CODIGO COMBINADA"
         df_leader_list.drop_duplicates(subset="Codigo", keep="first", inplace=True)
 
         columnas_finales = [
             "CAMP", "ANO", "Codigo", "COD MADRE", "COD COMB", "DESCRIP",
-            "COSTO LISTA " + anio_campana, "TIPO COSTO", "¿Atiende Ne?",
+            "COSTO LISTA " + anio_campana, "TIPO COSTO", "Atiende Ne?",
             "DIVISION", "UXP", "TIPO_OF", "LEYEOFE", "PR_OFERTA", "PR_NORMAL",
             "MAR_EST", "COSTO_EST", "TIPO_EST", "FACT_EST", "PAGINA",
             "CATEGORIA", "LEYENDA", "SEGMENTO", "LEY_SEG", "SUB_LINEA", "LEYESUBL",

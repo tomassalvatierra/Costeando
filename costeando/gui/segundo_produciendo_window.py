@@ -4,8 +4,9 @@ from tkinter import filedialog, messagebox
 import threading
 import logging
 
-# Lógica de negocio original
+# LA'AAgica de negocio original
 from costeando.modulos.procesamiento_segundo_produciendo import procesar_segundo_produciendo
+from costeando.utilidades.manejo_errores_gui import mostrar_error_legible
 
 logger = logging.getLogger(__name__)
 
@@ -21,17 +22,17 @@ class SegundoProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         # --- Variables de Texto ---
         self.fecha_inicio_var = tk.StringVar()
         self.fecha_fin_var = tk.StringVar()
-        self.campana_var = tk.StringVar()
+        self.campania_var = tk.StringVar()
         self.anio_var = tk.StringVar()
 
-        # Configuración del Grid
+        # ConfiguraciA'AAn del Grid
         self.grid_columnconfigure(1, weight=1)
 
         # Crear interfaz
         self.crear_interfaz()
 
     def crear_interfaz(self):
-        # --- TÍTULO ---
+        # --- TA'AATULO ---
         lbl_titulo = ctk.CTkLabel(
             self, 
             text="Segundo Produciendo", 
@@ -41,10 +42,10 @@ class SegundoProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
 
         # --- INSTRUCCIONES ---
         instrucciones = (
-            "• Produciendo: Archivo resultante de la primera etapa.\n"
-            "• Base Descuentos: La más actualizada.\n"
-            "• Importador Dtos: Opcional, si desea agregar descuentos.\n"
-            "• Fechas: Formato dd/mm/aaaa."
+            "AAAasAAA Produciendo: Archivo resultante de la primera etapa.\n"
+            "AAAasAAA Base Descuentos: La mA'AAs actualizada.\n"
+            "AAAasAAA Importador Dtos: Opcional, si desea agregar descuentos.\n"
+            "AAAasAAA Fechas: Formato dd/mm/aaaa."
         )
         lbl_desc = ctk.CTkLabel(
             self, 
@@ -66,7 +67,7 @@ class SegundoProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         for i, (texto, variable) in enumerate(archivos_config):
             self.crear_fila_selector(base_row + i, texto, variable)
 
-        # --- PARÁMETROS (FECHAS Y CAMPAÑA) ---
+        # --- PARA'AAMETROS (FECHAS Y CAMPAA'AaEA) ---
         last_row = base_row + len(archivos_config)
         
         frame_params = ctk.CTkFrame(self, fg_color="transparent")
@@ -76,9 +77,9 @@ class SegundoProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.crear_input_param(frame_params, "Inicio (dd/mm/aaaa):", self.fecha_inicio_var, 0, 0, "Ej: 01/05/2024")
         self.crear_input_param(frame_params, "Fin (dd/mm/aaaa):", self.fecha_fin_var, 0, 1, "Ej: 31/05/2024")
 
-        # Fila 2: Campaña y Año
-        self.crear_input_param(frame_params, "Campaña (CC):", self.campana_var, 1, 0, "Ej: 05")
-        self.crear_input_param(frame_params, "Año (AAAA):", self.anio_var, 1, 1, "Ej: 2024")
+        # Fila 2: CampaA'Ana y AA'Ano
+        self.crear_input_param(frame_params, "CampaA'Ana (CC):", self.campania_var, 1, 0, "Ej: 05")
+        self.crear_input_param(frame_params, "AA'Ano (AAAA):", self.anio_var, 1, 1, "Ej: 2024")
 
         # --- BARRA DE PROGRESO ---
         self.progress_bar = ctk.CTkProgressBar(self, mode='indeterminate')
@@ -86,7 +87,7 @@ class SegundoProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.progress_bar.set(0)
         self.progress_bar.grid_remove()
 
-        # --- BOTÓN PROCESAR ---
+        # --- BOTA'AaA"N PROCESAR ---
         self.btn_procesar = ctk.CTkButton(
             self, 
             text='INICIAR PROCESO', 
@@ -99,7 +100,7 @@ class SegundoProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.btn_procesar.grid(row=last_row + 2, column=0, columnspan=3, padx=20, pady=(0, 20), sticky="ew")
 
     def crear_fila_selector(self, row, texto_boton, variable):
-        """Helper para crear filas de selección"""
+        """Helper para crear filas de selecciA'AAn"""
         btn = ctk.CTkButton(
             self, 
             text=texto_boton, 
@@ -115,7 +116,7 @@ class SegundoProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         entry.grid(row=row, column=1, columnspan=2, padx=(0, 20), pady=4, sticky="ew")
 
     def crear_input_param(self, parent, label_text, variable, row, col, placeholder=""):
-        """Helper para inputs pequeños"""
+        """Helper para inputs pequeA'Anos"""
         frame = ctk.CTkFrame(parent, fg_color="transparent")
         frame.grid(row=row, column=col, padx=10, pady=8, sticky="w")
         
@@ -138,10 +139,10 @@ class SegundoProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.btn_procesar.configure(state="normal", text="INICIAR PROCESO")
 
     def ejecutar_hilo(self):
-        # Validación UI
+        # ValidaciA'AAn UI
         if not all([self.fecha_inicio_var.get(), self.fecha_fin_var.get(), 
-                    self.campana_var.get(), self.anio_var.get()]):
-             messagebox.showerror("Error", "Debe completar todas las fechas y datos de campaña.")
+                    self.campania_var.get(), self.anio_var.get()]):
+             messagebox.showerror("Error", "Debe completar todas las fechas y datos de campaA'Ana.")
              return
         
         self.mostrar_progreso()
@@ -152,7 +153,7 @@ class SegundoProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
             self.procesar_segundo_produciendo()
         except Exception as e:
             logger.error(f"Error en segundo produciendo: {str(e)}", exc_info=True)
-            self.after(0, lambda: messagebox.showerror("Error", f"Ha ocurrido un error: {str(e)}"))
+            self.after(0, lambda: mostrar_error_legible(e))
             self.after(0, self.ocultar_progreso)
 
     def procesar_segundo_produciendo(self):
@@ -179,17 +180,17 @@ class SegundoProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
                 ruta_produciendo=produciendo,
                 ruta_base_especiales=base,
                 ruta_importador_descuentos=importador if importador else None,
-                campaña=self.campana_var.get(),
-                año=self.anio_var.get(),
+                campania=self.campania_var.get(),
+                anio=self.anio_var.get(),
                 fecha_compras_inicio=self.fecha_inicio_var.get(),
                 fecha_compras_final=self.fecha_fin_var.get(),
                 carpeta_guardado=carpeta_guardado
             )
             
             self.after(0, self.ocultar_progreso)
-            self.after(0, lambda: messagebox.showinfo("Éxito", "El procesamiento ha finalizado con éxito."))
+            self.after(0, lambda: messagebox.showinfo("A'AaAxito", "El procesamiento ha finalizado con A'AAxito."))
             
         except Exception as e:
-            logger.error(f"Error lógica segundo produciendo: {str(e)}", exc_info=True)
-            self.after(0, lambda: messagebox.showerror("Error", f"Ocurrió un error:\n{e}"))
+            logger.error(f"Error lA'AAgica segundo produciendo: {str(e)}", exc_info=True)
+            self.after(0, lambda: mostrar_error_legible(e))
             self.after(0, self.ocultar_progreso)

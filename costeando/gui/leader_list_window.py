@@ -4,8 +4,9 @@ from tkinter import filedialog, messagebox
 import threading
 import logging
 
-# Lógica de negocio original
+# Logica de negocio original
 from costeando.modulos.procesamiento_leader_list import procesar_leader_list_puro
+from costeando.utilidades.manejo_errores_gui import mostrar_error_legible
 
 logger = logging.getLogger(__name__)
 
@@ -21,18 +22,18 @@ class LeaderListWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.ruta_combinadas = tk.StringVar()
         self.ruta_stock = tk.StringVar()
         
-        # Variables para Campaña y Año (usamos StringVar para fácil acceso)
-        self.campana_var = tk.StringVar()
+        # Variables para Campania y anio (usamos StringVar para facil acceso)
+        self.campania_var = tk.StringVar()
         self.anio_var = tk.StringVar()
 
-        # Configuración del Grid
+        # Configuracion del Grid
         self.grid_columnconfigure(1, weight=1)
 
         # Crear interfaz
         self.crear_interfaz()
 
     def crear_interfaz(self):
-        # --- TÍTULO ---
+        # --- TITULO ---
         lbl_titulo = ctk.CTkLabel(
             self, 
             text="Leader List", 
@@ -42,9 +43,9 @@ class LeaderListWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
 
         # --- INSTRUCCIONES ---
         instrucciones = (
-            "• Maestro: Archivo original TOTVS (Columna 'Código' numérica, sin espacios).\n"
-            "• Listado Costos: Debe tener columna 'COSTO LISTA ACC' (N-1).\n"
-            "• Resto de archivos: Originales sin modificar."
+            "Maestro: Archivo original TOTVS.\n"
+            "Listado Costos: Debe tener columna 'COSTO LISTA ACC' (N-1).\n"
+            "Resto de archivos: Originales sin modificar."
         )
         lbl_desc = ctk.CTkLabel(
             self, 
@@ -56,7 +57,7 @@ class LeaderListWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         lbl_desc.grid(row=1, column=0, columnspan=3, padx=20, pady=(0, 20), sticky="w")
 
         # --- SELECTORES DE ARCHIVOS ---
-        # Usamos un índice base para facilitar el orden
+        # Usamos un indice base para facilitar el orden
         base_row = 2
         self.crear_fila_selector(base_row, "Seleccionar Leader List", self.ruta_leader_list)
         self.crear_fila_selector(base_row + 1, "Seleccionar Maestro", self.ruta_maestro)
@@ -65,30 +66,30 @@ class LeaderListWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.crear_fila_selector(base_row + 4, "Seleccionar Lista N-1", self.ruta_listado_anterior)
         self.crear_fila_selector(base_row + 5, "Seleccionar Stock", self.ruta_stock)
 
-        # --- DATOS DE FECHA (CAMPAÑA / AÑO) ---
+        # --- DATOS DE FECHA (CAMPAAA / AAO) ---
         row_datos = base_row + 6
         frame_datos = ctk.CTkFrame(self, fg_color="transparent")
         frame_datos.grid(row=row_datos, column=0, columnspan=3, padx=20, pady=20, sticky="ew")
 
-        # Campaña
-        ctk.CTkLabel(frame_datos, text="Campaña (CC):").pack(side="left", padx=(0, 10))
-        self.entry_campaña = ctk.CTkEntry(
+        # CampaAa
+        ctk.CTkLabel(frame_datos, text="CampaAa (CC):").pack(side="left", padx=(0, 10))
+        self.entry_campania = ctk.CTkEntry(
             frame_datos, 
-            textvariable=self.campana_var,
+            textvariable=self.campania_var,
             width=80, 
             placeholder_text="Ej: 05"
         )
-        self.entry_campaña.pack(side="left", padx=(0, 30))
+        self.entry_campania.pack(side="left", padx=(0, 30))
 
-        # Año
-        ctk.CTkLabel(frame_datos, text="Año (AAAA):").pack(side="left", padx=(0, 10))
-        self.entry_año = ctk.CTkEntry(
+        # AAo
+        ctk.CTkLabel(frame_datos, text="AAo (AAAA):").pack(side="left", padx=(0, 10))
+        self.entry_anio = ctk.CTkEntry(
             frame_datos, 
             textvariable=self.anio_var,
             width=80, 
             placeholder_text="Ej: 2024"
         )
-        self.entry_año.pack(side="left")
+        self.entry_anio.pack(side="left")
 
         # --- BARRA DE PROGRESO ---
         self.progress_bar = ctk.CTkProgressBar(self, mode='indeterminate')
@@ -96,7 +97,7 @@ class LeaderListWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.progress_bar.set(0)
         self.progress_bar.grid_remove()
 
-        # --- BOTÓN PROCESAR ---
+        # --- BOTON PROCESAR ---
         self.btn_procesar = ctk.CTkButton(
             self, 
             text='INICIAR PROCESO', 
@@ -109,7 +110,7 @@ class LeaderListWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.btn_procesar.grid(row=row_datos + 2, column=0, columnspan=3, padx=20, pady=(10, 20), sticky="ew")
 
     def crear_fila_selector(self, row, texto_boton, variable):
-        """Helper estandarizado para selección de archivos"""
+        """Helper estandarizado para seleccion de archivos"""
         btn = ctk.CTkButton(
             self, 
             text=texto_boton, 
@@ -133,20 +134,20 @@ class LeaderListWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.progress_bar.grid()
         self.progress_bar.start()
         self.btn_procesar.configure(state="disabled", text="Procesando...")
-        self.entry_campaña.configure(state="disabled")
-        self.entry_año.configure(state="disabled")
+        self.entry_campania.configure(state="disabled")
+        self.entry_anio.configure(state="disabled")
 
     def ocultar_progreso(self):
         self.progress_bar.stop()
         self.progress_bar.grid_remove()
         self.btn_procesar.configure(state="normal", text="INICIAR PROCESO")
-        self.entry_campaña.configure(state="normal")
-        self.entry_año.configure(state="normal")
+        self.entry_campania.configure(state="normal")
+        self.entry_anio.configure(state="normal")
 
     def ejecutar_hilo(self):
-        # Validación inicial UI
-        if not self.campana_var.get() or not self.anio_var.get():
-             messagebox.showerror("Error", "Debe completar Campaña y Año.")
+        # Validacion inicial UI
+        if not self.campania_var.get() or not self.anio_var.get():
+             messagebox.showerror("Error", "Debe completar CampaAa y AAo.")
              return
         
         self.mostrar_progreso()
@@ -157,13 +158,13 @@ class LeaderListWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
             self.procesar_leader_list()
         except Exception as e:
             logger.error(f"Error en leader list: {str(e)}", exc_info=True)
-            self.after(0, lambda: messagebox.showerror("Error", f"Ha ocurrido un error: {str(e)}"))
+            self.after(0, lambda: mostrar_error_legible(e))
             self.after(0, self.ocultar_progreso)
 
     def procesar_leader_list(self):
         # 1. Obtener y Limpiar datos
-        campaña = self.campana_var.get().zfill(2) # Asegura 2 dígitos
-        año = self.anio_var.get()
+        campania = self.campania_var.get().zfill(2) # Asegura 2 dA'AAgitos
+        anio= self.anio_var.get()
         
         leader_list = self.ruta_leader_list.get()
         listado = self.ruta_listado_anterior.get()
@@ -173,13 +174,13 @@ class LeaderListWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         stock = self.ruta_stock.get()
 
         # 2. Validaciones
-        if not campaña.isdigit() or len(campaña) != 2:
-            self.after(0, lambda: messagebox.showerror("Error", "Campaña debe ser 2 dígitos (Ej: 05)."))
+        if not campania.isdigit() or len(campania) != 2:
+            self.after(0, lambda: messagebox.showerror("Error", "CampaAa debe ser 2 digitos (Ej: 05)."))
             self.after(0, self.ocultar_progreso)
             return
 
-        if not año.isdigit() or len(año) != 4:
-            self.after(0, lambda: messagebox.showerror("Error", "Año debe ser 4 dígitos (Ej: 2024)."))
+        if not anio.isdigit() or len(anio) != 4:
+            self.after(0, lambda: messagebox.showerror("Error", "AAo debe ser 4 digitos (Ej: 2024)."))
             self.after(0, self.ocultar_progreso)
             return
 
@@ -203,15 +204,15 @@ class LeaderListWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
                 ruta_dobles=dobles,
                 ruta_combinadas=combinadas,
                 ruta_stock=stock,
-                campana=campaña,
-                anio=año,
+                campania=campania,
+                anio=anio,
                 carpeta_guardado=carpeta_guardado
             )
             
             self.after(0, self.ocultar_progreso)
-            self.after(0, lambda: messagebox.showinfo("Éxito", "El procesamiento ha finalizado con éxito."))
+            self.after(0, lambda: messagebox.showinfo("Exito", "El procesamiento ha finalizado con exito."))
             
         except Exception as e:
-            logger.error(f"Error lógica leader list: {str(e)}", exc_info=True)
-            self.after(0, lambda: messagebox.showerror("Error", f"Ocurrió un error:\n{e}"))
+            logger.error(f"Error logica leader list: {str(e)}", exc_info=True)
+            self.after(0, lambda: mostrar_error_legible(e))
             self.after(0, self.ocultar_progreso)

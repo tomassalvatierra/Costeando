@@ -5,10 +5,10 @@ from platformdirs import user_log_dir
 import logging.config
 
 def configurar_logging():
-    """Configura el sistema de logging para la aplicación"""
+    """Configura el sistema de logging para la aplicaciAn"""
     is_compiled = getattr(sys, 'frozen', False)
     
-    # Configuración base común
+    # ConfiguraciAn base comAn
     logging_config = {
         'version': 1,
         'disable_existing_loggers': False,
@@ -47,9 +47,9 @@ def configurar_logging():
         }
     }
     
-    # Configuración específica por entorno
+    # ConfiguraciAn especAfica por entorno
     if is_compiled:
-        # Modo distribución/producción
+        # Modo distribuciAn/producciAn
         log_dir = Path(user_log_dir("ProcesadorCostos"))
         app_log = log_dir / 'procesador_costos.log'
         error_log = log_dir / 'procesador_costos_errors.log'
@@ -71,7 +71,7 @@ def configurar_logging():
         })
         logging_config['handlers']['error_file_handler']['filename'] = str(error_log)
         
-        # Añadir consola solo en desarrollo
+        # AAadir consola solo en desarrollo
         logging_config['handlers']['console'] = {
             'class': 'logging.StreamHandler',
             'level': 'INFO',
@@ -84,12 +84,12 @@ def configurar_logging():
     try:
         log_dir.mkdir(parents=True, exist_ok=True)
     except Exception as e:
-        # Fallback básico si falla la creación del directorio
+        # Fallback bAsico si falla la creaciAn del directorio
         logging.basicConfig(level=logging.INFO)
         logging.error(f"No se pudo crear directorio de logs: {str(e)}")
         return
     
-    # Aplicar configuración
+    # Aplicar configuraciAn
     try:
         logging.config.dictConfig(logging_config)
     except Exception as e:

@@ -9,7 +9,7 @@ paths = {
     'ruta_stock': r'Z:\Costos\Compartido\515 c15-2025\COSTOS ESPECIALES 515\INFO. C ESPECIALES\09-06-2025 stock_actual_valorizado_por_producto_C10 2025.xlsx',
     'ruta_descuentos_especiales': r'Z:\Costos\Compartido\515 c15-2025\BASE DTOS ESPECIALES 515\515 AL INICIO - Descuentos Especiales - Base de Datos C14 2025-Segunda Etapa Produciendo.xlsx',
     'ruta_rotacion': r'Z:\Costos\Compartido\515 c15-2025\CALCULO COSTOS 515\Comprando Etapas 515\Comprando Primer Etapa 515\Rotacion calculada C15 2025.xlsx',
-    'ruta_estructuras': r'Z:\Costos\Compartido\515 c15-2025\ESTRUCTURAS 515\24-06-25 sccybbl0 Reporte Estructuras por Nivel 515 - Costo Producción-.xlsx',
+    'ruta_estructuras': r'Z:\Costos\Compartido\515 c15-2025\ESTRUCTURAS 515\24-06-25 sccybbl0 Reporte Estructuras por Nivel 515 - Costo ProducciAn-.xlsx',
     'ruta_salida': r'C:\Users\tsalvatierra\Desktop\PRUEBAS\PRUEBAS COMPLETAS'
 }
 
@@ -30,6 +30,6 @@ if __name__ == '__main__':
         for nombre, path in resultados.items():
             print(f"{nombre}: {path}")
     except Exception as e:
-        print('\n¡Error durante el procesamiento!')
+        print('\nAError durante el procesamiento!')
         print(str(e))
         print(traceback.format_exc()) 

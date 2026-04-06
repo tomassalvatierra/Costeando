@@ -13,7 +13,7 @@ paths = {
     'ruta_dto_especiales': r'Z:\Costos\Compartido\516 C16-2025\CALCULO COSTOS 516\Produciendo Etapas 516\Segunda Etapa Produciendo 516\Descuentos Especiales - Base de Datos C16 2025.xlsx',
     'ruta_listado': r'Z:\Costos\Compartido\516 C16-2025\LISTA 516\16-07-25 LISTA 516 C16-2025 consulta_lista_de_precios_122323 (Planilla de trabajo).xlsx',
     'ruta_calculo_comprando_ant': r'Z:\Costos\Compartido\516 C16-2025\CALCULO COSTOS 516\15-07-25 CALCULO COMPRANDO 516.xlsx',
-    'ruta_ficha': r'Z:\Públicos\Ficha RMS\Historicos\202509\ficha_rms_20250605_14.xlsx',
+    'ruta_ficha': r'Z:\PAblicos\Ficha RMS\Historicos\202509\ficha_rms_20250605_14.xlsx',
     'ruta_salida': r'C:\Users\tsalvatierra\Desktop'
 }
 
@@ -38,6 +38,6 @@ if __name__ == '__main__':
         for nombre, path in resultados.items():
             print(f"{nombre}: {path}")
     except Exception as e:
-        print('\n¡Error durante el procesamiento!')
+        print('\nAError durante el procesamiento!')
         print(str(e))
         print(traceback.format_exc()) 

@@ -114,9 +114,9 @@ def procesar_listado_gral_puro(
         )
         df_listado_general.rename(columns={"Tipo Orden": "TIPO ULT COMPRA"}, inplace=True)
 
-        logger.debug("Realizando merge costo de producción y CARGA FABRIL")
+        logger.debug("Realizando merge costo de producciAn y CARGA FABRIL")
         df_listado_general = pd.merge(
-            df_listado_general, df_produciendo[["Codigo", "Costo Producción"]], how="left", on="Codigo"
+            df_listado_general, df_produciendo[["Codigo", "Costo ProducciAn"]], how="left", on="Codigo"
         )
 
         cols = [
@@ -160,7 +160,7 @@ def procesar_listado_gral_puro(
 
         logger.debug("Inicia fase de calculos")
         df_listado_general["MANO DE OBRA TOTAL"] = (
-            df_listado_general["Costo Producción"] - df_listado_general["COSTO PRIMO (MATERIALES)"]
+            df_listado_general["Costo ProducciAn"] - df_listado_general["COSTO PRIMO (MATERIALES)"]
         ).round(2)
         df_listado_general["Costo sin Descuento C" + campania] = (
             df_listado_general["COSTO LISTA " + anio[-1] + campania] /
@@ -168,7 +168,7 @@ def procesar_listado_gral_puro(
         ).round(2)
         df_listado_general["CARGA FABRIL"] = (
             df_listado_general["Costo sin Descuento C" + campania] -
-            df_listado_general["Costo Producción"]
+            df_listado_general["Costo ProducciAn"]
         ).round(1)
         df_listado_general["DESCUENTO APLICADO $"] = (
             df_listado_general["COSTO LISTA " + anio[-1] + campania] -
@@ -182,7 +182,7 @@ def procesar_listado_gral_puro(
 
         df_listado_general.loc[
             df_listado_general["COSTO LISTA " + anio[-1] + campania] == 0,
-            ["COSTO PRIMO (MATERIALES)", "MANO DE OBRA TOTAL", "Costo Producción", "CARGA FABRIL"]
+            ["COSTO PRIMO (MATERIALES)", "MANO DE OBRA TOTAL", "Costo ProducciAn", "CARGA FABRIL"]
         ] = 0
 
         df_listado_general["MANO DE OBRA TOTAL"] = df_listado_general["MANO DE OBRA TOTAL"].fillna(0)
@@ -192,10 +192,10 @@ def procesar_listado_gral_puro(
 
         columnas_ordenadas = [
             "Periodo", "Codigo", "COD MADRE", "COD COMB", "Descripcion",
-            "COSTO PRIMO (MATERIALES)", "MANO DE OBRA TOTAL", "Costo Producción",
+            "COSTO PRIMO (MATERIALES)", "MANO DE OBRA TOTAL", "Costo ProducciAn",
             "CARGA FABRIL", "Costo sin Descuento C" + campania,
             "% Sumatoria de Descuentos", "COSTO LISTA " + anio[-1] + campania,
-            "TIPO DE COSTO", "ADI N°", "Ult. Compra", "TIPO ULT COMPRA",
+            "TIPO DE COSTO", "ADI NA", "Ult. Compra", "TIPO ULT COMPRA",
             "MOD 0806 SEGUNDOS MO ELAB. X KILO", "MOD 0807 SEGUNDOS MO ENV. X UNIDAD",
             "MOD 0808 SEGUNDOS MO ACOND.X UNIDAD",
             "% de obsolescencia", "ROYALTY", "DESCUENTO ESPECIAL", "APLICA DDE CA:",

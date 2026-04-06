@@ -2,7 +2,7 @@ import traceback
 from costeando.modulos.procesamiento_actualizacion_fchs import procesar_actualizacion_fchs_puro
 
 paths = {
-    'ruta_estructuras': r'Z:\Costos\Compartido\515 c15-2025\ESTRUCTURAS 515\24-06-25 sccybbl0 Reporte Estructuras por Nivel 515 - Costo Producción-.xlsx',
+    'ruta_estructuras': r'Z:\Costos\Compartido\515 c15-2025\ESTRUCTURAS 515\24-06-25 sccybbl0 Reporte Estructuras por Nivel 515 - Costo ProducciAn-.xlsx',
     'ruta_compras': r'Z:\Costos\Compartido\515 c15-2025\PEDIDOS DE COMPRA 515\18-06-25 Compras y cotizaciones 515.xlsx',
     'ruta_maestro': r'Z:\Costos\Compartido\515 c15-2025\MAESTRO 515\18-06-25 MAESTRO 515 PARA DEPURAR EL LEADER LIST productos_130158.xlsx',
     'ruta_ordenes_apuntadas': r'Z:\Costos\Compartido\515 c15-2025\FECHA ULT.COMPRA 515\19-06-25 Ordenes Apuntadas 515 dde 02-06 al dia 11 am - ordenes_apuntadas_105737.xlsx',
@@ -22,6 +22,6 @@ if __name__ == '__main__':
         for nombre, path in resultados.items():
             print(f"{nombre}: {path}")
     except Exception as e:
-        print('\n¡Error durante el procesamiento!')
+        print('\nAError durante el procesamiento!')
         print(str(e))
         print(traceback.format_exc()) 

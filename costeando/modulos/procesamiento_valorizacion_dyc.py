@@ -21,11 +21,11 @@ def procesar_valorizacion_dyc_puro(
     carpeta_guardado: str
 ) -> Dict[str, str]:
     """
-    Procesa el módulo Valorización DYC y guarda el archivo generado en la carpeta indicada.
+    Procesa el mAdulo ValorizaciAn DYC y guarda el archivo generado en la carpeta indicada.
     Devuelve un diccionario con el path del archivo generado.
     """
     try:
-        logger.info("Iniciando procesamiento puro de Valorización DYC")
+        logger.info("Iniciando procesamiento puro de ValorizaciAn DYC")
         # Validar archivos de entrada
         validar_archivo_excel(ruta_listado, "listado")
         validar_archivo_excel(ruta_combinadas, "combinadas")
@@ -92,5 +92,5 @@ def procesar_valorizacion_dyc_puro(
         return {"valorizacion_dyc": path_guardado}
     
     except Exception as e:
-        logger.error(f"Error en el procesamiento de Valorización DYC: {e}", exc_info=True)
+        logger.error(f"Error en el procesamiento de ValorizaciAn DYC: {e}", exc_info=True)
         raise 

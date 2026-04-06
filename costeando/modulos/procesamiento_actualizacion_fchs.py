@@ -17,7 +17,7 @@ def procesar_actualizacion_fchs_puro(
 ) -> Dict[str, str]:
     
     try:
-        logger.info("Iniciando procesamiento puro de Actualización FCHS")
+        logger.info("Iniciando procesamiento puro de ActualizaciAn FCHS")
         # Validar archivos de entrada
         validar_archivo_excel(ruta_estructuras, "estructuras")
         validar_archivo_excel(ruta_compras, "compras")
@@ -119,5 +119,5 @@ def procesar_actualizacion_fchs_puro(
         logger.info(f'Archivo guardado en: {path_guardado}')
         return {"actualizacion_fchs": path_guardado}
     except Exception as e:
-        logger.error(f"Error en el procesamiento de Actualización FCHS: {e}", exc_info=True)
+        logger.error(f"Error en el procesamiento de ActualizaciAn FCHS: {e}", exc_info=True)
         raise 

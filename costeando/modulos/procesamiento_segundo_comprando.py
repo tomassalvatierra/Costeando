@@ -25,14 +25,14 @@ def incorporar_nuevos_dtos(df_especiales, df_importador, df_productos):
 
 def procesar_segundo_comprando(
     ruta_comprando, ruta_costos_especiales, ruta_importador_descuentos,
-    campaña, año, fecha_compras_inicio, fecha_compras_final, carpeta_guardado
+    campaAa, aAo, fecha_compras_inicio, fecha_compras_final, carpeta_guardado
 ):
     try:
         logger.info("Iniciando procesamiento puro de segundo comprando")
-        campaña = campaña.zfill(2)
-        año_campaña = año[-1] + campaña
-        desde_desc_especiales = f"{año}/{campaña.zfill(2)}"
-        campaña_año = f"CAMP-{campaña}/{str(int(año) % 100)}"
+        campaAa = campaAa.zfill(2)
+        aAo_campaAa = aAo[-1] + campaAa
+        desde_desc_especiales = f"{aAo}/{campaAa.zfill(2)}"
+        campaAa_aAo = f"CAMP-{campaAa}/{str(int(aAo) % 100)}"
         fecha_inicio = pd.to_datetime(fecha_compras_inicio, format="%d/%m/%Y")
         fecha_final = pd.to_datetime(fecha_compras_final, format="%d/%m/%Y")
         validar_archivo_excel(ruta_comprando, "Comprando")
@@ -67,9 +67,9 @@ def procesar_segundo_comprando(
         nuevos_descuentos["VENCIDO"] = "No"
         nuevos_descuentos["NOTAS"] = "Descuento ajustado, el anterior superaba el 75%"
         nuevos_descuentos = pd.merge(nuevos_descuentos, df_calculo_comprando[["Codigo","Descripcion"]], how="left")
-        nuevos_descuentos = pd.merge(nuevos_descuentos, df_calculo_comprando[["Codigo","¿Atiende Ne?"]], how="left")
+        nuevos_descuentos = pd.merge(nuevos_descuentos, df_calculo_comprando[["Codigo","AAtiende Ne?"]], how="left")
         nuevos_descuentos = pd.merge(nuevos_descuentos, df_costos_especiales[["Codigo","TIPO-DESCUENTO"]], how="left")
-        nuevos_descuentos = nuevos_descuentos.rename(columns={"¿Atiende Ne?": "ATIENDE NE?"})
+        nuevos_descuentos = nuevos_descuentos.rename(columns={"AAtiende Ne?": "ATIENDE NE?"})
         nuevos_descuentos.drop_duplicates(inplace=True)
         df_costos_especiales = pd.concat([df_costos_especiales, nuevos_descuentos], ignore_index=True)
         df_calculo_comprando["% sumatoria descuentos"] = (
@@ -79,14 +79,14 @@ def procesar_segundo_comprando(
         df_calculo_comprando.loc[df_calculo_comprando["DESCUENTO ESPECIAL"] == 0, "APLICA DDE CA:"] = np.nan
         df_costos_especiales["DESCUENTO ESPECIAL"] = df_costos_especiales["DESCUENTO ESPECIAL"].round(2)
         df_calculo_comprando["DESCUENTO ESPECIAL"] = df_calculo_comprando["DESCUENTO ESPECIAL"].round(2)
-        costo_importador = round(df_calculo_comprando["Costo sin Descuento C"+campaña] * (1 - (df_calculo_comprando["% sumatoria descuentos"]/100)), 2)
+        costo_importador = round(df_calculo_comprando["Costo sin Descuento C"+campaAa] * (1 - (df_calculo_comprando["% sumatoria descuentos"]/100)), 2)
         df_calculo_comprando = df_calculo_comprando.assign(costo_p_importador=costo_importador.values)
         df_calculo_comprando.rename(columns={"costo_p_importador": "Costo 1er Importador"}, inplace=True)
         df_calculo_comprando["Costo 1er Importador"].fillna(0, inplace=True)
         df_importador = df_calculo_comprando[["Codigo","Costo 1er Importador"]].copy()
         df_importador["Columna3"] = "27251293061"
-        df_importador["Columna4"] = año_campaña
-        df_importador["Columna5"] = campaña_año
+        df_importador["Columna4"] = aAo_campaAa
+        df_importador["Columna5"] = campaAa_aAo
         df_importador["Columna6"] = fecha_inicio
         df_importador["Columna7"] = fecha_final
         df_importador[["Columna8","Columna9"]] = "001"
@@ -95,9 +95,9 @@ def procesar_segundo_comprando(
         df_importador["Costo 1er Importador"] = df_importador["Costo 1er Importador"].round(2).astype(str)
         df_importador = df_importador.reset_index(drop=True)
         fecha_hoy = datetime.now().strftime("%Y-%m-%d")
-        path_comprando = f"{carpeta_guardado}/{fecha_hoy} Calculo Comprando-Segunda etapa C{campaña}-{año} .xlsx"
-        path_especiales = f"{carpeta_guardado}/{fecha_hoy} BASE DTOS-Segunda etapa comprando C{campaña}-{año}.xlsx"
-        path_importador = f"{carpeta_guardado}/{fecha_hoy} Importador Comprando C{campaña}-{año}.xlsx"
+        path_comprando = f"{carpeta_guardado}/{fecha_hoy} Calculo Comprando-Segunda etapa C{campaAa}-{aAo} .xlsx"
+        path_especiales = f"{carpeta_guardado}/{fecha_hoy} BASE DTOS-Segunda etapa comprando C{campaAa}-{aAo}.xlsx"
+        path_importador = f"{carpeta_guardado}/{fecha_hoy} Importador Comprando C{campaAa}-{aAo}.xlsx"
         df_calculo_comprando.to_excel(path_comprando, sheet_name="Calculo Comprando 2da", index=False)
         df_costos_especiales.to_excel(path_especiales, sheet_name="Base 2do Comprando", index=False)
         df_importador.to_excel(path_importador, sheet_name="Importador", index=False)

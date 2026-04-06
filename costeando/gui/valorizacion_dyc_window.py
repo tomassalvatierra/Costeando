@@ -4,119 +4,80 @@ from tkinter import filedialog, messagebox
 import threading
 import logging
 
-# Lógica de negocio original
 from costeando.modulos.procesamiento_valorizacion_dyc import procesar_valorizacion_dyc_puro
+from costeando.utilidades.manejo_errores_gui import mostrar_error_legible
 
 logger = logging.getLogger(__name__)
+
 
 class ValorizacionDYCWindow(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
-        
+        self.ruta_listado = tk.StringVar()
         self.ruta_combinadas = tk.StringVar()
         self.ruta_dobles = tk.StringVar()
-        self.ruta_listado = tk.StringVar()
-        
         self.campana_var = tk.StringVar()
         self.anio_var = tk.StringVar()
-
-        # Configuración del Grid
         self.grid_columnconfigure(1, weight=1)
-
-        # Crear interfaz
         self.crear_interfaz()
 
     def crear_interfaz(self):
-        # --- TÍTULO ---
         lbl_titulo = ctk.CTkLabel(
-            self, 
-            text="Valorización de Dobles y Combinadas", 
-            font=("Roboto", 24, "bold")
+            self,
+            text="Valorizacion de Dobles y Combinadas",
+            font=("Roboto", 24, "bold"),
         )
         lbl_titulo.grid(row=0, column=0, columnspan=3, padx=20, pady=(30, 10), sticky="w")
 
-        # --- INSTRUCCIONES ---
         instrucciones = (
-            "• Lista: Debe tener la columna 'COSTO LISTA CXX'.\n"
-            "• Dobles y Combinadas: Archivos originales."
+            "- Listado: Archivo de costos con columna 'COSTO LISTA'.\n"
+            "- Combinadas y Dobles: Archivos originales para valorizacion."
         )
-        lbl_desc = ctk.CTkLabel(
-            self, 
-            text=instrucciones,
-            justify="left",
-            text_color="gray70",
-            font=("Roboto", 12)
-        )
+        lbl_desc = ctk.CTkLabel(self, text=instrucciones, justify="left", text_color="gray70", font=("Roboto", 12))
         lbl_desc.grid(row=1, column=0, columnspan=3, padx=20, pady=(0, 20), sticky="w")
 
-        # --- SELECTORES DE ARCHIVOS ---
-        archivos_config = [
-            ("Seleccionar Dobles", self.ruta_dobles),
-            ("Seleccionar Combinadas", self.ruta_combinadas),
-            ("Seleccionar Listado", self.ruta_listado)
-        ]
+        self.crear_fila_selector(2, "Seleccionar Listado", self.ruta_listado)
+        self.crear_fila_selector(3, "Seleccionar Combinadas", self.ruta_combinadas)
+        self.crear_fila_selector(4, "Seleccionar Dobles", self.ruta_dobles)
 
-        base_row = 2
-        for i, (texto, variable) in enumerate(archivos_config):
-            self.crear_fila_selector(base_row + i, texto, variable)
-
-        # --- INPUTS DE CAMPAÑA Y AÑO ---
-        last_row = base_row + len(archivos_config)
-        
         frame_datos = ctk.CTkFrame(self, fg_color="transparent")
-        frame_datos.grid(row=last_row, column=0, columnspan=3, padx=20, pady=20, sticky="ew")
+        frame_datos.grid(row=5, column=0, columnspan=3, padx=20, pady=20, sticky="ew")
 
-        # Campaña
-        ctk.CTkLabel(frame_datos, text="Campaña (CC):").pack(side="left", padx=(0, 10))
-        self.entry_campaña = ctk.CTkEntry(
-            frame_datos, 
-            textvariable=self.campana_var,
-            width=80, 
-            placeholder_text="Ej: 05"
-        )
-        self.entry_campaña.pack(side="left", padx=(0, 30))
+        ctk.CTkLabel(frame_datos, text="Campania (CC):").pack(side="left", padx=(0, 10))
+        self.entry_campania = ctk.CTkEntry(frame_datos, textvariable=self.campana_var, width=80, placeholder_text="Ej: 05")
+        self.entry_campania.pack(side="left", padx=(0, 30))
 
-        # Año
-        ctk.CTkLabel(frame_datos, text="Año (AAAA):").pack(side="left", padx=(0, 10))
-        self.entry_año = ctk.CTkEntry(
-            frame_datos, 
-            textvariable=self.anio_var,
-            width=80, 
-            placeholder_text="Ej: 2024"
-        )
-        self.entry_año.pack(side="left")
+        ctk.CTkLabel(frame_datos, text="Anio (AAAA):").pack(side="left", padx=(0, 10))
+        self.entry_anio = ctk.CTkEntry(frame_datos, textvariable=self.anio_var, width=80, placeholder_text="Ej: 2024")
+        self.entry_anio.pack(side="left")
 
-        # --- BARRA DE PROGRESO ---
-        self.progress_bar = ctk.CTkProgressBar(self, mode='indeterminate')
-        self.progress_bar.grid(row=last_row + 1, column=0, columnspan=3, padx=20, pady=(10, 10), sticky='ew')
+        self.progress_bar = ctk.CTkProgressBar(self, mode="indeterminate")
+        self.progress_bar.grid(row=6, column=0, columnspan=3, padx=20, pady=(10, 10), sticky="ew")
         self.progress_bar.set(0)
         self.progress_bar.grid_remove()
 
-        # --- BOTÓN PROCESAR ---
         self.btn_procesar = ctk.CTkButton(
-            self, 
-            text='INICIAR PROCESO', 
+            self,
+            text="INICIAR PROCESO",
             command=self.ejecutar_hilo,
             height=45,
             font=("Roboto", 14, "bold"),
             fg_color="#1f6aa5",
-            hover_color="#144870"
+            hover_color="#144870",
         )
-        self.btn_procesar.grid(row=last_row + 2, column=0, columnspan=3, padx=20, pady=(0, 20), sticky="ew")
+        self.btn_procesar.grid(row=7, column=0, columnspan=3, padx=20, pady=(10, 20), sticky="ew")
 
     def crear_fila_selector(self, row, texto_boton, variable):
-        """Helper para crear filas de selección"""
         btn = ctk.CTkButton(
-            self, 
-            text=texto_boton, 
+            self,
+            text=texto_boton,
             command=lambda: self.seleccionar_archivo(variable, texto_boton),
-            width=200,
+            width=220,
             fg_color="transparent",
             border_width=2,
-            text_color=("gray10", "#DCE4EE")
+            text_color=("gray10", "#DCE4EE"),
         )
         btn.grid(row=row, column=0, padx=(20, 10), pady=8, sticky="w")
-
         entry = ctk.CTkEntry(self, textvariable=variable, placeholder_text="Seleccione archivo...")
         entry.grid(row=row, column=1, columnspan=2, padx=(0, 20), pady=8, sticky="ew")
 
@@ -136,56 +97,49 @@ class ValorizacionDYCWindow(ctk.CTkFrame):
         self.btn_procesar.configure(state="normal", text="INICIAR PROCESO")
 
     def ejecutar_hilo(self):
-        # Validación UI
         if not self.campana_var.get() or not self.anio_var.get():
-             messagebox.showerror("Error", "Campaña y Año son obligatorios.")
-             return
-        
+            messagebox.showerror("Error", "Debe completar campania y anio.")
+            return
         self.mostrar_progreso()
         threading.Thread(target=self.procesar_con_progreso, daemon=True).start()
 
     def procesar_con_progreso(self):
         try:
             self.procesar_datos_dyc()
-        except Exception as e:
-            logger.error(f"Error en valorización DyC: {str(e)}", exc_info=True)
-            self.after(0, lambda: messagebox.showerror("Error", f"Ha ocurrido un error: {str(e)}"))
+        except Exception as error:
+            logger.error("Error en valorizacion DYC: %s", str(error), exc_info=True)
+            self.after(0, lambda: mostrar_error_legible(error))
             self.after(0, self.ocultar_progreso)
 
     def procesar_datos_dyc(self):
-        # 1. Obtener Datos
-        campaña = self.campana_var.get()
-        año = self.anio_var.get()
-        listado = self.ruta_listado.get()
-        combinadas = self.ruta_combinadas.get()
-        dobles = self.ruta_dobles.get()
+        ruta_listado = self.ruta_listado.get()
+        ruta_combinadas = self.ruta_combinadas.get()
+        ruta_dobles = self.ruta_dobles.get()
+        campana = self.campana_var.get().zfill(2)
+        anio = self.anio_var.get()
 
-        if not all([listado, combinadas, dobles]):
-            self.after(0, lambda: messagebox.showerror("Error", "Todos los archivos son obligatorios."))
+        if not all([ruta_listado, ruta_combinadas, ruta_dobles]):
+            self.after(0, lambda: messagebox.showerror("Error", "Debe seleccionar todos los archivos requeridos."))
             self.after(0, self.ocultar_progreso)
             return
 
-        # 2. Carpeta Salida
-        carpeta_guardado = filedialog.askdirectory(title="Seleccionar carpeta de guardado")
+        carpeta_guardado = filedialog.askdirectory(title="Seleccionar carpeta de salida")
         if not carpeta_guardado:
             self.after(0, self.ocultar_progreso)
             return
 
         try:
-            # 3. Procesar
             procesar_valorizacion_dyc_puro(
-                ruta_listado=listado,
-                ruta_combinadas=combinadas,
-                ruta_dobles=dobles,
-                campana=campaña,
-                anio=año,
-                carpeta_guardado=carpeta_guardado
+                ruta_listado=ruta_listado,
+                ruta_combinadas=ruta_combinadas,
+                ruta_dobles=ruta_dobles,
+                campana=campana,
+                anio=anio,
+                carpeta_guardado=carpeta_guardado,
             )
-            
             self.after(0, self.ocultar_progreso)
-            self.after(0, lambda: messagebox.showinfo("Éxito", "El procesamiento ha finalizado con éxito."))
-            
-        except Exception as e:
-            logger.error(f"Error lógica DyC: {str(e)}", exc_info=True)
-            self.after(0, lambda: messagebox.showerror("Error", f"Ocurrió un error:\n{e}"))
+            self.after(0, lambda: messagebox.showinfo("Exito", "El procesamiento finalizo con exito."))
+        except Exception as error:
+            logger.error("Error en logica valorizacion DYC: %s", str(error), exc_info=True)
+            self.after(0, lambda: mostrar_error_legible(error))
             self.after(0, self.ocultar_progreso)

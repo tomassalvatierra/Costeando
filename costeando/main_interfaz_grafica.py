@@ -4,7 +4,7 @@ import logging
 
 from costeando.utilidades.configuracion_logging import configurar_logging
 
-# --- IMPORTS DE TUS MÓDULOS ---
+# --- IMPORTS DE TUS MA"DULOS ---
 from costeando.gui.leader_list_window import LeaderListWindow
 from costeando.gui.compras_window import ComprasWindow
 from costeando.gui.valorizacion_dyc_window import ValorizacionDYCWindow
@@ -19,33 +19,33 @@ from costeando.gui.listado_gral_window import ListadoGralWindow
 configurar_logging()
 logger = logging.getLogger(__name__)
 
-# Configuración Global de Tema
-ctk.set_appearance_mode("Dark")  # "System" (estándar), "Dark", "Light"
-ctk.set_default_color_theme("green")  # "blue" (estándar), "green", "dark-blue"
+# ConfiguraciAn Global de Tema
+ctk.set_appearance_mode("Dark")  # "System" (estAndar), "Dark", "Light"
+ctk.set_default_color_theme("green")  # "blue" (estAndar), "green", "dark-blue"
 
 class ProcesadorCostosApp(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.title("Costeando - Sistema de Gestión")
+        self.title("Costeando - Sistema de GestiAn")
         self.geometry("1200x720")
 
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(0, weight=1)
 
-        self.frame_actual = None # Aquí guardaremos la pantalla que se está viendo
+        self.frame_actual = None # AquA guardaremos la pantalla que se estA viendo
 
         self.vistas = {
             "Leader List": LeaderListWindow,
             "Compras": ComprasWindow,
-            "Actualización Fechas": ActualizacionFCHSWindow,
+            "ActualizaciAn Fechas": ActualizacionFCHSWindow,
             "Primer Comprando": PrimerComprandoWindow,
             "Segundo Comprando": SegundoComprandoWindow,
             "Primer Produciendo": PrimerProduciendoWindow,
             "Segundo Produciendo": SegundoProduciendoWindow,
             "Proyectados": ProyectadosWindow,
             "Listado General": ListadoGralWindow,
-            "Valorización DyC": ValorizacionDYCWindow
+            "ValorizaciAn DyC": ValorizacionDYCWindow
         }
 
         self.crear_sidebar()
@@ -54,7 +54,7 @@ class ProcesadorCostosApp(ctk.CTk):
     def crear_sidebar(self):
         self.sidebar_frame = ctk.CTkFrame(self, width=220, corner_radius=0)
         self.sidebar_frame.grid(row=0, column=0, sticky="nsew")
-        self.sidebar_frame.grid_rowconfigure(11, weight=1) # Empujar botón salir al fondo
+        self.sidebar_frame.grid_rowconfigure(11, weight=1) # Empujar botAn salir al fondo
 
         self.logo_label = ctk.CTkLabel(
             self.sidebar_frame, 
@@ -94,14 +94,14 @@ class ProcesadorCostosApp(ctk.CTk):
         
         self.lbl_bienvenida = ctk.CTkLabel(
             self.main_container, 
-            text="Seleccione un módulo del menú lateral para comenzar.",
+            text="Seleccione un mAdulo del menA lateral para comenzar.",
             font=ctk.CTkFont(size=18),
             text_color="gray50"
         )
         self.lbl_bienvenida.place(relx=0.5, rely=0.5, anchor="center")
 
     def seleccionar_modulo(self, nombre_modulo):
-        #Lógica para cambiar de pantalla
+        #LAgica para cambiar de pantalla
         
         if self.frame_actual is not None:
             self.frame_actual.destroy()
@@ -115,9 +115,9 @@ class ProcesadorCostosApp(ctk.CTk):
         
         if ClaseModulo:
             try:
-                logger.info(f"Cargando módulo: {nombre_modulo}")
+                logger.info(f"Cargando mAdulo: {nombre_modulo}")
                 
-                # Instanciamos la clase pasándole el contenedor principal como 'master'
+                # Instanciamos la clase pasAndole el contenedor principal como 'master'
                 self.frame_actual = ClaseModulo(self.main_container)
                 
                 # Hacemos que ocupe todo el espacio disponible
@@ -125,11 +125,11 @@ class ProcesadorCostosApp(ctk.CTk):
                 
             except Exception as e:
                 logger.error(f"Error cargando {nombre_modulo}: {e}", exc_info=True)
-                messagebox.showerror("Error", f"No se pudo cargar el módulo {nombre_modulo}.\n\nDetalle: {e}")
+                messagebox.showerror("Error", f"No se pudo cargar el mAdulo {nombre_modulo}.\n\nDetalle: {e}")
 
     def cerrar_aplicacion(self):
-        # Aquí podrías agregar chequeos si hay hilos corriendo (opcional)
-        if messagebox.askyesno("Salir", "¿Desea cerrar la aplicación?"):
+        # AquA podrAas agregar chequeos si hay hilos corriendo (opcional)
+        if messagebox.askyesno("Salir", "ADesea cerrar la aplicaciAn?"):
             self.destroy()
 
 if __name__ == "__main__":

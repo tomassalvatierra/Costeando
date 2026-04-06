@@ -5,6 +5,7 @@ import threading
 import logging
 
 from costeando.modulos.procesamiento_actualizacion_fchs import procesar_actualizacion_fchs_puro
+from costeando.utilidades.manejo_errores_gui import mostrar_error_legible
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +25,7 @@ class ActualizacionFCHSWindow(ctk.CTkFrame):
     def crear_interfaz(self):
         lbl_titulo = ctk.CTkLabel(
             self, 
-            text="Actualización de Fechas", 
+            text="Actualizacion de Fechas", 
             font=("Roboto", 24, "bold")
         )
         lbl_titulo.grid(row=0, column=0, columnspan=3, padx=20, pady=(30, 10), sticky="w")
@@ -34,7 +35,7 @@ class ActualizacionFCHSWindow(ctk.CTkFrame):
             text=("Estructuras: Archivo original por nivel (TOTVS).\n"
                   "Maestro: Archivo original TOTVS.\n"
                   "Compras: Archivo de compras y cotizaciones revisadas.\n"
-                  "Órdenes Apuntadas: Archivo original TOTVS."),
+                  "Ordenes Apuntadas: Archivo original TOTVS."),
             justify="left",
             text_color="gray70",
             font=("Roboto", 12)
@@ -63,7 +64,7 @@ class ActualizacionFCHSWindow(ctk.CTkFrame):
         self.btn_procesar.grid(row=7, column=0, columnspan=3, padx=20, pady=(10, 20), sticky="ew")
 
     def crear_fila_selector(self, row, texto_boton, variable):
-        """Helper para generar filas de selección de archivo limpias"""
+        """Helper para generar filas de seleccion de archivo limpias"""
         btn = ctk.CTkButton(
             self, 
             text=texto_boton, 
@@ -105,8 +106,8 @@ class ActualizacionFCHSWindow(ctk.CTkFrame):
         try:
             self.procesar_actualizacion_fechas()
         except Exception as e:
-            logger.error(f"Error en la actualización de fechas: {str(e)}", exc_info=True)
-            self.after(0, lambda: messagebox.showerror("Error", f"Ha ocurrido un error: {str(e)}"))
+            logger.error(f"Error en la actualizacion de fechas: {str(e)}", exc_info=True)
+            self.after(0, lambda: mostrar_error_legible(e))
             self.after(0, self.ocultar_progreso)
 
     def procesar_actualizacion_fechas(self):
@@ -132,7 +133,7 @@ class ActualizacionFCHSWindow(ctk.CTkFrame):
             return
 
         try:
-            # 3. Llamar a la lógica pesada
+            # 3. Llamar a la logica pesada
             procesar_actualizacion_fchs_puro(
                 ruta_estructuras=self.ruta_estructuras.get(),
                 ruta_compras=self.ruta_compras.get(),
@@ -141,12 +142,12 @@ class ActualizacionFCHSWindow(ctk.CTkFrame):
                 carpeta_guardado=carpeta_guardado
             )
             
-            # 4. Finalización exitosa
+            # 4. Finalizacion exitosa
             self.after(0, self.ocultar_progreso)
-            self.after(0, lambda: messagebox.showinfo("Éxito", "El procesamiento ha finalizado con éxito."))
+            self.after(0, lambda: messagebox.showinfo("Aaxito", "El procesamiento ha finalizado con AAxito."))
 
 
         except Exception as e:
             logger.error(f"Error en el procesamiento: {str(e)}", exc_info=True)
-            self.after(0, lambda: messagebox.showerror("Error", f"Ocurrió un error durante el procesamiento:\n{e}"))
+            self.after(0, lambda: mostrar_error_legible(e))
             self.after(0, self.ocultar_progreso)

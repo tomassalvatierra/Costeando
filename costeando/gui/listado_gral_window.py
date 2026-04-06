@@ -4,8 +4,9 @@ from tkinter import filedialog, messagebox
 import threading
 import logging
 
-# Lógica de negocio original
+# Logica de negocio original
 from costeando.modulos.procesamiento_listado_gral import procesar_listado_gral_puro
+from costeando.utilidades.manejo_errores_gui import mostrar_error_legible
 
 logger = logging.getLogger(__name__)
 
@@ -27,14 +28,14 @@ class ListadoGralWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.campana_var = tk.StringVar()
         self.anio_var = tk.StringVar()
 
-        # Configuración del Grid
+        # Configuracion del Grid
         self.grid_columnconfigure(1, weight=1)
 
         # Crear interfaz
         self.crear_interfaz()
 
     def crear_interfaz(self):
-        # --- TÍTULO ---
+        # --- TITULO ---
         lbl_titulo = ctk.CTkLabel(
             self, 
             text="Listado General Completo", 
@@ -44,10 +45,10 @@ class ListadoGralWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
 
         # --- INSTRUCCIONES ---
         instrucciones = (
-            "• Produciendo/Comprando: Archivos de campaña a procesar.\n"
-            "• Costo Primo: Maestro original.\n"
-            "• Mano de Obra: Debe incluir las 3 manos de obra.\n"
-            "• Listado: El archivo a completar."
+            "Produciendo/Comprando: Archivos de campaAa a procesar.\n"
+            "Costo Primo: Maestro original.\n"
+            "Mano de Obra: Debe incluir las 3 manos de obra.\n"
+            "Listado: El archivo a completar."
         )
         lbl_desc = ctk.CTkLabel(
             self, 
@@ -59,7 +60,7 @@ class ListadoGralWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         lbl_desc.grid(row=1, column=0, columnspan=3, padx=20, pady=(0, 20), sticky="w")
 
         # --- SELECTORES DE ARCHIVOS (8 Archivos) ---
-        # Usamos una lista para generar los campos automáticamente y mantener el código limpio
+        # Usamos una lista para generar los campos automaticamente y mantener el codigo limpio
         archivos_config = [
             ("Seleccionar Lista a Completar", self.ruta_listado),
             ("Seleccionar Produciendo", self.ruta_produciendo),
@@ -75,30 +76,30 @@ class ListadoGralWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         for i, (texto, variable) in enumerate(archivos_config):
             self.crear_fila_selector(base_row + i, texto, variable)
 
-        # --- DATOS DE FECHA (CAMPAÑA / AÑO) ---
+        # --- DATOS DE FECHA (CAMPAAA / AAO) ---
         last_row = base_row + len(archivos_config)
         frame_datos = ctk.CTkFrame(self, fg_color="transparent")
         frame_datos.grid(row=last_row, column=0, columnspan=3, padx=20, pady=20, sticky="ew")
 
-        # Campaña
-        ctk.CTkLabel(frame_datos, text="Campaña (CC):").pack(side="left", padx=(0, 10))
-        self.entry_campaña = ctk.CTkEntry(
+        # CampaAa
+        ctk.CTkLabel(frame_datos, text="CampaAa (CC):").pack(side="left", padx=(0, 10))
+        self.entry_campania = ctk.CTkEntry(
             frame_datos, 
             textvariable=self.campana_var,
             width=80, 
             placeholder_text="Ej: 05"
         )
-        self.entry_campaña.pack(side="left", padx=(0, 30))
+        self.entry_campania.pack(side="left", padx=(0, 30))
 
-        # Año
-        ctk.CTkLabel(frame_datos, text="Año (AAAA):").pack(side="left", padx=(0, 10))
-        self.entry_año = ctk.CTkEntry(
+        # AAo
+        ctk.CTkLabel(frame_datos, text="AAo (AAAA):").pack(side="left", padx=(0, 10))
+        self.entry_anio = ctk.CTkEntry(
             frame_datos, 
             textvariable=self.anio_var,
             width=80, 
             placeholder_text="Ej: 2024"
         )
-        self.entry_año.pack(side="left")
+        self.entry_anio.pack(side="left")
 
         # --- BARRA DE PROGRESO ---
         self.progress_bar = ctk.CTkProgressBar(self, mode='indeterminate')
@@ -106,7 +107,7 @@ class ListadoGralWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.progress_bar.set(0)
         self.progress_bar.grid_remove()
 
-        # --- BOTÓN PROCESAR ---
+        # --- BOTON PROCESAR ---
         self.btn_procesar = ctk.CTkButton(
             self, 
             text='INICIAR PROCESO', 
@@ -119,12 +120,12 @@ class ListadoGralWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.btn_procesar.grid(row=last_row + 2, column=0, columnspan=3, padx=20, pady=(0, 20), sticky="ew")
 
     def crear_fila_selector(self, row, texto_boton, variable):
-        """Helper para crear filas de selección"""
+        """Helper para crear filas de seleccion"""
         btn = ctk.CTkButton(
             self, 
             text=texto_boton, 
             command=lambda: self.seleccionar_archivo(variable, texto_boton),
-            width=220, # Un poco más ancho por los nombres largos
+            width=220, # Un poco mas ancho por los nombres largos
             fg_color="transparent",
             border_width=2,
             text_color=("gray10", "#DCE4EE")
@@ -150,9 +151,9 @@ class ListadoGralWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.btn_procesar.configure(state="normal", text="INICIAR PROCESO")
 
     def ejecutar_hilo(self):
-        # Validación básica UI
+        # Validacion basica UI
         if not self.campana_var.get() or not self.anio_var.get():
-             messagebox.showerror("Error", "Debe completar Campaña y Año.")
+             messagebox.showerror("Error", "Debe completar CampaAa y AAo.")
              return
         
         self.mostrar_progreso()
@@ -163,7 +164,7 @@ class ListadoGralWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
             self.procesar_datos_dyc()
         except Exception as e:
             logger.error(f"Error en listado general: {str(e)}", exc_info=True)
-            self.after(0, lambda: messagebox.showerror("Error", f"Ha ocurrido un error: {str(e)}"))
+            self.after(0, lambda: mostrar_error_legible(e))
             self.after(0, self.ocultar_progreso)
 
     def procesar_datos_dyc(self):
@@ -211,9 +212,9 @@ class ListadoGralWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
             )
             
             self.after(0, self.ocultar_progreso)
-            self.after(0, lambda: messagebox.showinfo("Éxito", "El procesamiento ha finalizado con éxito."))
+            self.after(0, lambda: messagebox.showinfo("Exito", "El procesamiento ha finalizado con exito."))
             
         except Exception as e:
-            logger.error(f"Error lógica listado general: {str(e)}", exc_info=True)
-            self.after(0, lambda: messagebox.showerror("Error", f"Ocurrió un error:\n{e}"))
+            logger.error(f"Error logica listado general: {str(e)}", exc_info=True)
+            self.after(0, lambda: mostrar_error_legible(e))
             self.after(0, self.ocultar_progreso)

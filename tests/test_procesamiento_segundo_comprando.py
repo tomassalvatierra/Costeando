@@ -28,6 +28,6 @@ if __name__ == '__main__':
         for nombre, path in resultados.items():
             print(f"{nombre}: {path}")
     except Exception as e:
-        print('\n¡Error durante el procesamiento!')
+        print('\nAError durante el procesamiento!')
         print(str(e))
         print(traceback.format_exc()) 

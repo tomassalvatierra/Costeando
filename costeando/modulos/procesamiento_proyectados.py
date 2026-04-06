@@ -8,7 +8,7 @@ from costeando.utilidades.validaciones import validar_archivo_excel, validar_col
 logger = logging.getLogger(__name__)
 
 def obtener_coeficiente(df_coef_pivot, camp, variable):
-    resultado = 1 + df_coef_pivot[(df_coef_pivot['CAMPAÑA-AÑO'] == camp) & (df_coef_pivot['VARIABLE'] == variable)]['Coeficiente']
+    resultado = 1 + df_coef_pivot[(df_coef_pivot['CAMPAAA-AAO'] == camp) & (df_coef_pivot['VARIABLE'] == variable)]['Coeficiente']
     if not resultado.empty:
         return resultado.values[0]
     else:
@@ -36,7 +36,7 @@ def procesar_proyectados_puro(
     carpeta_guardado: str
 ) -> Dict[str, str]:
     """
-    Procesa el módulo Proyectados y guarda los archivos generados en la carpeta indicada.
+    Procesa el mAdulo Proyectados y guarda los archivos generados en la carpeta indicada.
     Devuelve un diccionario con los paths de los archivos generados.
     """
     try:
@@ -59,7 +59,7 @@ def procesar_proyectados_puro(
         futuras_campanas, futuras_mc_campanas = generar_campanas(camp_inicial, anio_inicial)
         nuevas_columnas_data = {columna: [None] * len(df_listado_proyectado) for columna in futuras_campanas}
         df_listado_proyectado = df_listado_proyectado.assign(**nuevas_columnas_data)
-        df_coef_pivot = coef_df.melt(id_vars=['CAMPAÑA-AÑO'], var_name='VARIABLE', value_name='Coeficiente')
+        df_coef_pivot = coef_df.melt(id_vars=['CAMPAAA-AAO'], var_name='VARIABLE', value_name='Coeficiente')
         campanas_anio_indice = df_listado_proyectado.columns[-10:]
         
         for camp in campanas_anio_indice:

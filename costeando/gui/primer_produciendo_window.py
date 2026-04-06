@@ -4,8 +4,9 @@ from tkinter import filedialog, messagebox
 import threading
 import logging
 
-# Lógica de negocio original
+# Logica de negocio original
 from costeando.modulos.procesamiento_primer_produciendo import procesar_primer_produciendo
+from costeando.utilidades.manejo_errores_gui import mostrar_error_legible
 
 logger = logging.getLogger(__name__)
 
@@ -21,18 +22,18 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.ruta_rotacion = tk.StringVar()
         self.ruta_estructuras = tk.StringVar()
         
-        # --- Variables de Parámetros ---
-        self.campana_var = tk.StringVar()
+        # --- Variables de ParA'AAmetros ---
+        self.campania_var = tk.StringVar()
         self.anio_var = tk.StringVar()
 
-        # Configuración del Grid
+        # ConfiguraciA'AAn del Grid
         self.grid_columnconfigure(1, weight=1)
 
         # Crear interfaz
         self.crear_interfaz()
 
     def crear_interfaz(self):
-        # --- TÍTULO ---
+        # --- TA'AATULO ---
         lbl_titulo = ctk.CTkLabel(
             self, 
             text="Primer Produciendo", 
@@ -42,11 +43,11 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
 
         # --- INSTRUCCIONES ---
         instrucciones = (
-            "• Maestro: Original TOTVS (Código numérico, sin espacios).\n"
-            "• Produciendo: Archivo produciendo (N-1).\n"
-            "• Stock: Informe 'Stock Actual Valorizado por Producto'.\n"
-            "• Base Descuentos: La más actualizada.\n"
-            "• Rotación: Informe de rotación."
+            "AAAasAAA Maestro: Original TOTVS (CA'AAdigo numA'AArico, sin espacios).\n"
+            "AAAasAAA Produciendo: Archivo produciendo (N-1).\n"
+            "AAAasAAA Stock: Informe 'Stock Actual Valorizado por Producto'.\n"
+            "AAAasAAA Base Descuentos: La mA'AAs actualizada.\n"
+            "AAAasAAA RotaciA'AAn: Informe de rotaciA'AAn."
         )
         lbl_desc = ctk.CTkLabel(
             self, 
@@ -58,13 +59,13 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         lbl_desc.grid(row=1, column=0, columnspan=3, padx=20, pady=(0, 20), sticky="w")
 
         # --- SELECTORES DE ARCHIVOS ---
-        # Configuración de los 6 archivos
+        # ConfiguraciA'AAn de los 6 archivos
         archivos_config = [
             ("Seleccionar Maestro", self.ruta_maestro_produciendo),
             ("Seleccionar Produciendo N-1", self.ruta_produciendo_anterior),
             ("Seleccionar Stock", self.ruta_stock),
             ("Seleccionar Base Descuentos", self.ruta_descuentos_especiales),
-            ("Seleccionar Rotación", self.ruta_rotacion),
+            ("Seleccionar RotaciA'AAn", self.ruta_rotacion),
             ("Seleccionar Estructuras", self.ruta_estructuras)
         ]
 
@@ -72,31 +73,31 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         for i, (texto, variable) in enumerate(archivos_config):
             self.crear_fila_selector(base_row + i, texto, variable)
 
-        # --- INPUTS DE CAMPAÑA Y AÑO ---
+        # --- INPUTS DE CAMPAA'AaEA Y AA'AaEO ---
         last_row = base_row + len(archivos_config)
         
         frame_datos = ctk.CTkFrame(self, fg_color="transparent")
         frame_datos.grid(row=last_row, column=0, columnspan=3, padx=20, pady=20, sticky="ew")
 
-        # Campaña
-        ctk.CTkLabel(frame_datos, text="Campaña (CC):").pack(side="left", padx=(0, 10))
-        self.entry_campaña = ctk.CTkEntry(
+        # CampaA'Ana
+        ctk.CTkLabel(frame_datos, text="CampaA'Ana (CC):").pack(side="left", padx=(0, 10))
+        self.entry_campania = ctk.CTkEntry(
             frame_datos, 
-            textvariable=self.campana_var,
+            textvariable=self.campania_var,
             width=80,
             placeholder_text="Ej: 05"
         )
-        self.entry_campaña.pack(side="left", padx=(0, 30))
+        self.entry_campania.pack(side="left", padx=(0, 30))
 
-        # Año
-        ctk.CTkLabel(frame_datos, text="Año (AAAA):").pack(side="left", padx=(0, 10))
-        self.entry_año = ctk.CTkEntry(
+        # AA'Ano
+        ctk.CTkLabel(frame_datos, text="AA'Ano (AAAA):").pack(side="left", padx=(0, 10))
+        self.entry_anio = ctk.CTkEntry(
             frame_datos, 
             textvariable=self.anio_var,
             width=80,
             placeholder_text="Ej: 2024"
         )
-        self.entry_año.pack(side="left")
+        self.entry_anio.pack(side="left")
 
         # --- BARRA DE PROGRESO ---
         self.progress_bar = ctk.CTkProgressBar(self, mode='indeterminate')
@@ -104,7 +105,7 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.progress_bar.set(0)
         self.progress_bar.grid_remove()
 
-        # --- BOTÓN PROCESAR ---
+        # --- BOTA'AaA"N PROCESAR ---
         self.btn_procesar = ctk.CTkButton(
             self, 
             text='INICIAR PROCESO', 
@@ -117,7 +118,7 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.btn_procesar.grid(row=last_row + 2, column=0, columnspan=3, padx=20, pady=(0, 20), sticky="ew")
 
     def crear_fila_selector(self, row, texto_boton, variable):
-        """Helper para crear filas de selección"""
+        """Helper para crear filas de selecciA'AAn"""
         btn = ctk.CTkButton(
             self, 
             text=texto_boton, 
@@ -148,9 +149,9 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.btn_procesar.configure(state="normal", text="INICIAR PROCESO")
 
     def ejecutar_hilo(self):
-        # Validación UI
-        if not self.campana_var.get() or not self.anio_var.get():
-             messagebox.showerror("Error", "Debe completar Campaña y Año.")
+        # ValidaciA'AAn UI
+        if not self.campania_var.get() or not self.anio_var.get():
+             messagebox.showerror("Error", "Debe completar CampaA'Ana y AA'Ano.")
              return
         
         self.mostrar_progreso()
@@ -161,7 +162,7 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
             self.procesar_primer_produciendo()
         except Exception as e:
             logger.error(f"Error en primer produciendo: {str(e)}", exc_info=True)
-            self.after(0, lambda: messagebox.showerror("Error", f"Ha ocurrido un error: {str(e)}"))
+            self.after(0, lambda: mostrar_error_legible(e))
             self.after(0, self.ocultar_progreso)
 
     def procesar_primer_produciendo(self):
@@ -181,8 +182,8 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
             self.after(0, self.ocultar_progreso)
             return
 
-        campaña = self.campana_var.get()
-        año = self.anio_var.get()
+        campania = self.campania_var.get()
+        anio = self.anio_var.get()
 
         # 3. Carpeta Salida
         carpeta_guardado = filedialog.askdirectory(title="Seleccionar carpeta de salida")
@@ -193,8 +194,8 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         try:
             # 4. Procesamiento
             procesar_primer_produciendo(
-                campaña_actual=campaña,
-                año_actual=año,
+                campania_actual=campania,
+                anio_actual=anio,
                 ruta_produciendo_anterior=self.ruta_produciendo_anterior.get(),
                 ruta_maestro_produciendo=self.ruta_maestro_produciendo.get(),
                 ruta_stock=self.ruta_stock.get(),
@@ -205,9 +206,9 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
             )
          
             self.after(0, self.ocultar_progreso)
-            self.after(0, lambda: messagebox.showinfo("Éxito", "El procesamiento ha finalizado con éxito."))
+            self.after(0, lambda: messagebox.showinfo("A'AaAxito", "El procesamiento ha finalizado con A'AAxito."))
             
         except Exception as e:
-            logger.error(f"Error lógica primer produciendo: {str(e)}", exc_info=True)
-            self.after(0, lambda: messagebox.showerror("Error", f"Ocurrió un error:\n{e}"))
+            logger.error(f"Error lA'AAgica primer produciendo: {str(e)}", exc_info=True)
+            self.after(0, lambda: mostrar_error_legible(e))
             self.after(0, self.ocultar_progreso)

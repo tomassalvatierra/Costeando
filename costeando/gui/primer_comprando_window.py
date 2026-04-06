@@ -5,6 +5,7 @@ import threading
 import logging
 
 from costeando.modulos.procesamiento_primer_comprando import procesar_primer_comprando
+from costeando.utilidades.manejo_errores_gui import mostrar_error_legible
 
 logger = logging.getLogger(__name__)
 
@@ -21,21 +22,21 @@ class PrimerComprandoWindow(ctk.CTkFrame):
         self.ruta_calculo_comprando_ant = tk.StringVar()
         self.ruta_ficha = tk.StringVar()
         
-        # --- Variables de Parámetros ---
+        # --- Variables de Parametros ---
         self.campana_var = tk.StringVar()
         self.anio_var = tk.StringVar()
         self.mdo_var = tk.StringVar()
         self.indice_a_var = tk.StringVar()
         self.indice_b_var = tk.StringVar()
 
-        # Configuración del Grid
+        # Configuracion del Grid
         self.grid_columnconfigure(1, weight=1)
 
         # Crear interfaz
         self.crear_interfaz()
 
     def crear_interfaz(self):
-        # --- TÍTULO ---
+        # --- TITULO ---
         lbl_titulo = ctk.CTkLabel(
             self, 
             text="Primer Comprando", 
@@ -45,11 +46,11 @@ class PrimerComprandoWindow(ctk.CTkFrame):
 
         # --- INSTRUCCIONES ---
         instrucciones = (
-            "• Maestro: Original TOTVS (Código numérico).\n"
-            "• Compras: Archivo 'Compras y Cotizaciones revisadas'.\n"
-            "• Stock: 'Stock Actual Valorizado' (Código numérico).\n"
-            "• Lista (N-1): Debe tener 'COSTOS LISTA ACC'.\n"
-            "• Comprando (N-1): Debe tener 'Costo sin Descuento CXX'."
+            "Maestro: Original TOTVS.\n"
+            "Compras: Archivo 'Compras y Cotizaciones revisadas'.\n"
+            "Stock: 'Stock Actual Valorizado'.\n"
+            "Lista (N-1): Debe tener 'COSTOS LISTA ACC'.\n"
+            "Comprando (N-1): Debe tener 'Costo sin Descuento CXX'."
         )
         lbl_desc = ctk.CTkLabel(
             self, 
@@ -61,7 +62,7 @@ class PrimerComprandoWindow(ctk.CTkFrame):
         lbl_desc.grid(row=1, column=0, columnspan=3, padx=20, pady=(0, 20), sticky="w")
 
         # --- SELECTORES DE ARCHIVOS ---
-        # Lista de configuración para generar filas automáticamente
+        # Lista de configuracion para generar filas automaticamente
         archivos_config = [
             ("Seleccionar Maestro", self.ruta_maestro),
             ("Seleccionar Compras", self.ruta_compras),
@@ -76,21 +77,21 @@ class PrimerComprandoWindow(ctk.CTkFrame):
         for i, (texto, variable) in enumerate(archivos_config):
             self.crear_fila_selector(base_row + i, texto, variable)
 
-        # --- PARÁMETROS NUMÉRICOS ---
+        # --- PARAMETROS NUMERICOS ---
         last_row = base_row + len(archivos_config)
         
-        # Frame contenedor para organizar los inputs numéricos
+        # Frame contenedor para organizar los inputs numericos
         frame_params = ctk.CTkFrame(self, fg_color="transparent")
         frame_params.grid(row=last_row, column=0, columnspan=3, padx=20, pady=20, sticky="ew")
 
-        # Fila 1 de Parámetros: Campaña y Año
-        self.crear_input_param(frame_params, "Campaña (CC):", self.campana_var, 0, 0)
-        self.crear_input_param(frame_params, "Año (AAAA):", self.anio_var, 0, 1)
+        # Fila 1 de Parametros: CampaAa y AAo
+        self.crear_input_param(frame_params, "CanpaAa (CC):", self.campana_var, 0, 0)
+        self.crear_input_param(frame_params, "AAo (AAAA):", self.anio_var, 0, 1)
         self.crear_input_param(frame_params, "Mano Obra:", self.mdo_var, 0, 2)
 
-        # Fila 2 de Parámetros: Índices
-        self.crear_input_param(frame_params, "Índice A:", self.indice_a_var, 1, 0)
-        self.crear_input_param(frame_params, "Índice B:", self.indice_b_var, 1, 1)
+        # Fila 2 de Parametros: indices
+        self.crear_input_param(frame_params, "Indice A:", self.indice_a_var, 1, 0)
+        self.crear_input_param(frame_params, "Indice B:", self.indice_b_var, 1, 1)
 
         # --- BARRA DE PROGRESO ---
         self.progress_bar = ctk.CTkProgressBar(self, mode='indeterminate')
@@ -98,7 +99,7 @@ class PrimerComprandoWindow(ctk.CTkFrame):
         self.progress_bar.set(0)
         self.progress_bar.grid_remove()
 
-        # --- BOTÓN PROCESAR ---
+        # --- BOTON PROCESAR ---
         self.btn_procesar = ctk.CTkButton(
             self, 
             text='INICIAR PROCESO', 
@@ -111,7 +112,7 @@ class PrimerComprandoWindow(ctk.CTkFrame):
         self.btn_procesar.grid(row=last_row + 2, column=0, columnspan=3, padx=20, pady=(0, 20), sticky="ew")
 
     def crear_fila_selector(self, row, texto_boton, variable):
-        """Helper para crear filas de selección de archivos"""
+        """Helper para crear filas de seleccion de archivos"""
         btn = ctk.CTkButton(
             self, 
             text=texto_boton, 
@@ -127,7 +128,7 @@ class PrimerComprandoWindow(ctk.CTkFrame):
         entry.grid(row=row, column=1, columnspan=2, padx=(0, 20), pady=4, sticky="ew")
 
     def crear_input_param(self, parent, label_text, variable, row, col):
-        """Helper para inputs pequeños (Campaña, Indices, etc)"""
+        """Helper para inputs pequeAos (CampaAa, Indices, etc)"""
         frame = ctk.CTkFrame(parent, fg_color="transparent")
         frame.grid(row=row, column=col, padx=10, pady=5, sticky="w")
         
@@ -150,10 +151,10 @@ class PrimerComprandoWindow(ctk.CTkFrame):
         self.btn_procesar.configure(state="normal", text="INICIAR PROCESO")
 
     def ejecutar_hilo(self):
-        # Validación UI rápida
+        # Validacion UI rapida
         if not all([self.campana_var.get(), self.anio_var.get(), self.mdo_var.get(), 
                     self.indice_a_var.get(), self.indice_b_var.get()]):
-             messagebox.showerror("Error", "Debe completar todos los parámetros numéricos.")
+             messagebox.showerror("Error", "Debe completar todos los parametros numericos.")
              return
         
         self.mostrar_progreso()
@@ -164,7 +165,7 @@ class PrimerComprandoWindow(ctk.CTkFrame):
             self.procesar_primer_comprando()
         except Exception as e:
             logger.error(f"Error en primer comprando: {str(e)}", exc_info=True)
-            self.after(0, lambda: messagebox.showerror("Error", f"Ha ocurrido un error: {str(e)}"))
+            self.after(0, lambda: mostrar_error_legible(e))
             self.after(0, self.ocultar_progreso)
 
     def procesar_primer_comprando(self):
@@ -180,16 +181,16 @@ class PrimerComprandoWindow(ctk.CTkFrame):
             self.after(0, self.ocultar_progreso)
             return
 
-        # 2. Convertir y Validar Parámetros
+        # 2. Convertir y Validar Parametros
         try:
-            campaña = self.campana_var.get()
-            año = self.anio_var.get()
+            campania = self.campana_var.get()
+            anio = self.anio_var.get()
             # Convertimos comas a puntos por si acaso
             mano_de_obra = float(self.mdo_var.get().replace(",", "."))
             indice_a = float(self.indice_a_var.get().replace(",", "."))
             indice_b = float(self.indice_b_var.get().replace(",", "."))
         except ValueError:
-            self.after(0, lambda: messagebox.showerror("Error", "Mano de Obra e Índices deben ser numéricos."))
+            self.after(0, lambda: messagebox.showerror("Error", "Mano de Obra e indices deben ser numericos."))
             self.after(0, self.ocultar_progreso)
             return
 
@@ -202,8 +203,8 @@ class PrimerComprandoWindow(ctk.CTkFrame):
         try:
             # 4. Procesar
             procesar_primer_comprando(
-                campaña=campaña,
-                año=año,
+                campania=campania,
+                anio=anio,
                 indice_a=indice_a,
                 indice_b=indice_b,
                 mano_de_obra=mano_de_obra,
@@ -218,9 +219,9 @@ class PrimerComprandoWindow(ctk.CTkFrame):
             )
             
             self.after(0, self.ocultar_progreso)
-            self.after(0, lambda: messagebox.showinfo("Éxito", "El procesamiento ha finalizado con éxito."))
+            self.after(0, lambda: messagebox.showinfo("Exito", "El procesamiento ha finalizado con exito."))
             
         except Exception as e:
-            logger.error(f"Error lógica primer comprando: {str(e)}", exc_info=True)
-            self.after(0, lambda: messagebox.showerror("Error", f"Ocurrió un error:\n{e}"))
+            logger.error(f"Error logica primer comprando: {str(e)}", exc_info=True)
+            self.after(0, lambda: mostrar_error_legible(e))
             self.after(0, self.ocultar_progreso)
