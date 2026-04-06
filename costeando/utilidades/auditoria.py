@@ -18,6 +18,21 @@ def _normalizar_valor_json(valor: Any) -> Any:
     return str(valor)
 
 
+def _obtener_carpeta_manifiestos_por_defecto() -> Path:
+    raiz_proyecto = Path(__file__).resolve().parents[2]
+    return raiz_proyecto / "_artifacts" / "manifiestos"
+
+
+def _resolver_carpeta_guardado(carpeta_guardado: str | None) -> Path:
+    if not carpeta_guardado:
+        return _obtener_carpeta_manifiestos_por_defecto()
+
+    carpeta_texto = str(carpeta_guardado).strip()
+    if carpeta_texto in {".", "./", ".\\"}:
+        return _obtener_carpeta_manifiestos_por_defecto()
+    return Path(carpeta_texto)
+
+
 def guardar_manifiesto_ejecucion(
     carpeta_guardado: str,
     id_ejecucion: str,
@@ -29,7 +44,7 @@ def guardar_manifiesto_ejecucion(
     archivos_generados: dict[str, str],
     codigo_error: str | None = None,
 ):
-    carpeta = Path(carpeta_guardado)
+    carpeta = _resolver_carpeta_guardado(carpeta_guardado)
     carpeta.mkdir(parents=True, exist_ok=True)
 
     manifiesto = {
