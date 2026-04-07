@@ -4,11 +4,138 @@ from typing import Dict
 import os
 from datetime import datetime
 
-from costeando.utilidades.validaciones import validar_archivo_excel, estandarizar_columna_producto
+from costeando.utilidades.auditoria import guardar_manifiesto_ejecucion
+from costeando.utilidades.errores_aplicacion import (
+    ErrorAplicacion,
+    ErrorEntradaArchivo,
+    ErrorEsquemaArchivo,
+    ErrorInternoInesperado,
+    ErrorReglaNegocio,
+    generar_id_ejecucion,
+)
+from costeando.utilidades.validaciones import validar_archivo_excel, estandarizar_columna_producto, validar_columnas
 from costeando.utilidades.configuracion_logging import configurar_logging
 
 configurar_logging()
 logger = logging.getLogger(__name__)
+
+
+def _validar_parametros_listado_general(campania: str, anio: str, carpeta_guardado: str):
+    if not campania or not anio:
+        raise ErrorReglaNegocio(
+            mensaje_tecnico="Faltan campania o anio para Listado General.",
+            codigo_error="CST-NEG-030",
+            titulo_usuario="Parametros incompletos",
+            mensaje_usuario="Faltan campania o anio para ejecutar Listado General.",
+            accion_sugerida="Complete campania y anio antes de ejecutar.",
+        )
+    if not carpeta_guardado:
+        raise ErrorReglaNegocio(
+            mensaje_tecnico="No se indico carpeta de guardado en Listado General.",
+            codigo_error="CST-NEG-031",
+            titulo_usuario="Falta ruta de salida",
+            mensaje_usuario="No se definio carpeta de salida para Listado General.",
+            accion_sugerida="Seleccione una carpeta valida de salida.",
+        )
+
+
+def _validar_archivos_entrada_listado_general(entradas: list[tuple[str, str]]):
+    for ruta_archivo, nombre_archivo in entradas:
+        logger.debug("Validando archivo: %s (%s)", nombre_archivo, ruta_archivo)
+        validar_archivo_excel(ruta_archivo, nombre_archivo)
+
+
+def _cargar_dataframes_listado_general(
+    ruta_produciendo: str,
+    ruta_comprando: str,
+    ruta_costo_primo: str,
+    ruta_base_descuentos: str,
+    ruta_listado: str,
+    ruta_mdo: str,
+    ruta_leader_list: str,
+    ruta_compilado_fechas_ult_compra: str,
+):
+    try:
+        logger.info("Leyendo archivos Excel de entrada...")
+        return (
+            pd.read_excel(ruta_produciendo, engine="openpyxl"),
+            pd.read_excel(ruta_comprando, engine="openpyxl"),
+            pd.read_excel(ruta_costo_primo, engine="openpyxl"),
+            pd.read_excel(ruta_base_descuentos, engine="openpyxl"),
+            pd.read_excel(ruta_listado, engine="openpyxl"),
+            pd.read_excel(ruta_mdo, engine="openpyxl", skiprows=1),
+            pd.read_excel(ruta_leader_list, engine="openpyxl"),
+            pd.read_excel(ruta_compilado_fechas_ult_compra, engine="openpyxl"),
+        )
+    except Exception as error:
+        raise ErrorEntradaArchivo(
+            mensaje_tecnico=f"No se pudieron leer archivos de Listado General: {error}",
+            codigo_error="CST-IO-003",
+            titulo_usuario="Error de lectura de archivos",
+            mensaje_usuario="No fue posible leer uno o mas archivos de entrada.",
+            accion_sugerida="Revise que los archivos no esten abiertos y tengan formato valido.",
+        ) from error
+
+
+def _estandarizar_dataframes_listado_general(
+    df_produciendo: pd.DataFrame,
+    df_comprando: pd.DataFrame,
+    df_costo_primo: pd.DataFrame,
+    df_base_descuentos: pd.DataFrame,
+    df_listado: pd.DataFrame,
+    df_mdo: pd.DataFrame,
+    df_leader_list: pd.DataFrame,
+    df_compilado_fechas_ult_compra: pd.DataFrame,
+):
+    lista_df = [
+        (df_produciendo, "produciendo"),
+        (df_costo_primo, "costo_primo"),
+        (df_base_descuentos, "base_descuentos"),
+        (df_listado, "listado"),
+        (df_comprando, "comprando"),
+        (df_mdo, "mdo"),
+        (df_leader_list, "leader_list"),
+        (df_compilado_fechas_ult_compra, "compilado_fechas_ult_compra"),
+    ]
+    lista_df = [estandarizar_columna_producto(df, nombre) for df, nombre in lista_df]
+    return tuple(lista_df)
+
+
+def _validar_columnas_minimas_listado_general(
+    df_produciendo: pd.DataFrame,
+    df_comprando: pd.DataFrame,
+    df_costo_primo: pd.DataFrame,
+    df_base_descuentos: pd.DataFrame,
+    df_listado: pd.DataFrame,
+    df_mdo: pd.DataFrame,
+    df_leader_list: pd.DataFrame,
+    df_compilado_fechas_ult_compra: pd.DataFrame,
+    campania: str,
+    anio: str,
+):
+    campos_costos = [
+        "Costo sin Descuento C" + campania,
+        "% de obsolescencia",
+        "ROYALTY",
+        "DESCUENTO ESPECIAL",
+        "APLICA DDE CA:",
+    ]
+    validar_columnas(df_produciendo, ["Codigo", "Costo ProducciAn"] + campos_costos, "produciendo")
+    validar_columnas(df_comprando, ["Codigo"] + campos_costos, "comprando")
+    validar_columnas(df_costo_primo, ["Codigo", "Costo Estand"], "costo_primo")
+    validar_columnas(df_base_descuentos, ["Codigo", "TIPO-DESCUENTO"], "base_descuentos")
+    validar_columnas(df_mdo, ["Codigo", "Componente", "Cantidad"], "mdo")
+    validar_columnas(df_leader_list, ["Codigo", "TIPO_OF", "LEYEOFE"], "leader_list")
+    validar_columnas(df_compilado_fechas_ult_compra, ["Codigo", "Tipo Orden"], "compilado_fechas_ult_compra")
+    if "Costo Estandard" not in df_listado.columns and ("COSTO LISTA " + anio[-1] + campania) not in df_listado.columns:
+        raise ErrorEsquemaArchivo(
+            mensaje_tecnico=f"El listado no tiene Costo Estandard ni COSTO LISTA {anio[-1]}{campania}.",
+            codigo_error="CST-VAL-001",
+            titulo_usuario="Estructura de archivo invalida",
+            mensaje_usuario="El listado no contiene columna de costo lista esperada.",
+            accion_sugerida="Revise encabezados de listado y vuelva a intentar.",
+        )
+    validar_columnas(df_listado, ["Codigo", "Stock Actual"], "listado")
 
 
 def procesar_listado_gral_puro(
@@ -22,54 +149,75 @@ def procesar_listado_gral_puro(
     ruta_compilado_fechas_ult_compra: str,
     campania: str,
     anio: str,
-    carpeta_guardado: str
+    carpeta_guardado: str,
+    id_ejecucion: str | None = None,
 ) -> Dict[str, str]:
-
-    logger.info("Iniciando procesamiento puro de Listado General")
-    campania = campania.zfill(2)
-
-    lista = [
-        (ruta_produciendo, "produciendo"),
-        (ruta_comprando, "comprando"),
-        (ruta_costo_primo, "costo_primo"),
-        (ruta_base_descuentos, "base_descuentos"),
-        (ruta_listado, "listado"),
-        (ruta_mdo, "mdo"),
-        (ruta_leader_list, "leader_list"),
-        (ruta_compilado_fechas_ult_compra, "compilado_fechas_ult_compra"),
-    ]
-    for df, nombre in lista:
-        logger.debug(f"Validando archivo: {nombre} ({df})")
-        validar_archivo_excel(df, nombre)
-
+    id_proceso = id_ejecucion or generar_id_ejecucion()
     try:
-        logger.info("Leyendo archivos Excel de entrada...")
-        df_produciendo = pd.read_excel(ruta_produciendo, engine="openpyxl")
-        df_comprando = pd.read_excel(ruta_comprando, engine="openpyxl")
-        df_costo_primo = pd.read_excel(ruta_costo_primo, engine="openpyxl")
-        df_base_descuentos = pd.read_excel(ruta_base_descuentos, engine="openpyxl")
-        df_listado = pd.read_excel(ruta_listado, engine="openpyxl")
-        df_mdo = pd.read_excel(ruta_mdo, engine="openpyxl", skiprows=1)
-        df_leader_list = pd.read_excel(ruta_leader_list, engine="openpyxl")
-        df_compilado_fechas_ult_compra = pd.read_excel(ruta_compilado_fechas_ult_compra, engine="openpyxl")
-    except Exception as e:
-        logger.error(f"Error al leer los archivos de entrada: {e}")
-        raise
-
-    try:
-        lista_df = [
-            (df_produciendo, 'produciendo'),
-            (df_costo_primo, 'costo_primo'),
-            (df_base_descuentos, 'base_descuentos'),
-            (df_listado, 'listado'),
-            (df_comprando, 'comprando'),
-            (df_mdo, 'mdo'),
-            (df_leader_list, 'leader_list'),
-            (df_compilado_fechas_ult_compra, 'compilado_fechas_ult_compra'),
+        logger.info("Iniciando procesamiento puro de Listado General. ID=%s", id_proceso)
+        _validar_parametros_listado_general(campania, anio, carpeta_guardado)
+        campania = campania.zfill(2)
+        entradas = [
+            (ruta_produciendo, "produciendo"),
+            (ruta_comprando, "comprando"),
+            (ruta_costo_primo, "costo_primo"),
+            (ruta_base_descuentos, "base_descuentos"),
+            (ruta_listado, "listado"),
+            (ruta_mdo, "mdo"),
+            (ruta_leader_list, "leader_list"),
+            (ruta_compilado_fechas_ult_compra, "compilado_fechas_ult_compra"),
         ]
-        lista_df = [estandarizar_columna_producto(df, nombre) for df, nombre in lista_df]
-        (df_produciendo, df_costo_primo, df_base_descuentos, df_listado,
-         df_comprando, df_mdo, df_leader_list, df_compilado_fechas_ult_compra) = lista_df
+        _validar_archivos_entrada_listado_general(entradas)
+        (
+            df_produciendo,
+            df_comprando,
+            df_costo_primo,
+            df_base_descuentos,
+            df_listado,
+            df_mdo,
+            df_leader_list,
+            df_compilado_fechas_ult_compra,
+        ) = _cargar_dataframes_listado_general(
+            ruta_produciendo,
+            ruta_comprando,
+            ruta_costo_primo,
+            ruta_base_descuentos,
+            ruta_listado,
+            ruta_mdo,
+            ruta_leader_list,
+            ruta_compilado_fechas_ult_compra,
+        )
+        (
+            df_produciendo,
+            df_costo_primo,
+            df_base_descuentos,
+            df_listado,
+            df_comprando,
+            df_mdo,
+            df_leader_list,
+            df_compilado_fechas_ult_compra,
+        ) = _estandarizar_dataframes_listado_general(
+            df_produciendo,
+            df_comprando,
+            df_costo_primo,
+            df_base_descuentos,
+            df_listado,
+            df_mdo,
+            df_leader_list,
+            df_compilado_fechas_ult_compra,
+        )
+        _validar_columnas_minimas_listado_general(
+            df_produciendo,
+            df_comprando,
+            df_costo_primo,
+            df_base_descuentos,
+            df_listado,
+            df_mdo,
+            df_leader_list,
+            df_compilado_fechas_ult_compra,
+            campania,
+            anio,
+        )
 
         df_listado_general = df_listado.copy()
 
@@ -214,12 +362,88 @@ def procesar_listado_gral_puro(
             carpeta_guardado,
             f"{fecha_hoy} Listado General Completo C{campania}-{anio}.xlsx"
         )
+        if not os.path.exists(carpeta_guardado):
+            os.makedirs(carpeta_guardado)
         logger.info(f"Guardando Listado gral procesado en: {path_listado}")
         df_listado_general.to_excel(path_listado, index=False, engine="openpyxl")
 
         logger.info(f"Archivos guardados correctamente en: {carpeta_guardado}")
-        return {'Listado_general_completo': path_listado}
-
-    except Exception:
-        logger.exception("Error durante el procesamiento de Listado General.")
+        path_manifiesto = guardar_manifiesto_ejecucion(
+            carpeta_guardado=carpeta_guardado,
+            id_ejecucion=id_proceso,
+            proceso="listado_general",
+            estado="OK",
+            entradas={
+                "ruta_produciendo": ruta_produciendo,
+                "ruta_comprando": ruta_comprando,
+                "ruta_costo_primo": ruta_costo_primo,
+                "ruta_base_descuentos": ruta_base_descuentos,
+                "ruta_listado": ruta_listado,
+                "ruta_mdo": ruta_mdo,
+                "ruta_leader_list": ruta_leader_list,
+                "ruta_compilado_fechas_ult_compra": ruta_compilado_fechas_ult_compra,
+            },
+            parametros={"campania": campania, "anio": anio},
+            metricas={"filas_salida": len(df_listado_general)},
+            archivos_generados={"Listado_general_completo": path_listado},
+        )
+        return {
+            "Listado_general_completo": path_listado,
+            "manifiesto": path_manifiesto,
+            "id_ejecucion": id_proceso,
+        }
+    except ErrorAplicacion as error:
+        error.con_id_ejecucion(id_proceso)
+        guardar_manifiesto_ejecucion(
+            carpeta_guardado=carpeta_guardado or ".",
+            id_ejecucion=id_proceso,
+            proceso="listado_general",
+            estado="ERROR",
+            entradas={
+                "ruta_produciendo": ruta_produciendo,
+                "ruta_comprando": ruta_comprando,
+                "ruta_costo_primo": ruta_costo_primo,
+                "ruta_base_descuentos": ruta_base_descuentos,
+                "ruta_listado": ruta_listado,
+                "ruta_mdo": ruta_mdo,
+                "ruta_leader_list": ruta_leader_list,
+                "ruta_compilado_fechas_ult_compra": ruta_compilado_fechas_ult_compra,
+            },
+            parametros={"campania": campania, "anio": anio},
+            metricas={},
+            archivos_generados={},
+            codigo_error=error.codigo_error,
+        )
+        logger.error("Error controlado en Listado General. ID=%s Codigo=%s", id_proceso, error.codigo_error, exc_info=True)
         raise
+    except Exception as error:
+        error_interno = ErrorInternoInesperado(
+            mensaje_tecnico=f"Error inesperado en Listado General: {error}",
+            codigo_error="CST-INT-001",
+            titulo_usuario="Error inesperado",
+            mensaje_usuario="Ocurrio un error inesperado en Listado General.",
+            accion_sugerida="Reintente y si persiste contacte soporte con codigo e ID.",
+            id_ejecucion=id_proceso,
+        )
+        guardar_manifiesto_ejecucion(
+            carpeta_guardado=carpeta_guardado or ".",
+            id_ejecucion=id_proceso,
+            proceso="listado_general",
+            estado="ERROR",
+            entradas={
+                "ruta_produciendo": ruta_produciendo,
+                "ruta_comprando": ruta_comprando,
+                "ruta_costo_primo": ruta_costo_primo,
+                "ruta_base_descuentos": ruta_base_descuentos,
+                "ruta_listado": ruta_listado,
+                "ruta_mdo": ruta_mdo,
+                "ruta_leader_list": ruta_leader_list,
+                "ruta_compilado_fechas_ult_compra": ruta_compilado_fechas_ult_compra,
+            },
+            parametros={"campania": campania, "anio": anio},
+            metricas={},
+            archivos_generados={},
+            codigo_error=error_interno.codigo_error,
+        )
+        logger.error("Error inesperado en Listado General. ID=%s", id_proceso, exc_info=True)
+        raise error_interno from error

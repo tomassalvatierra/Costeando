@@ -45,7 +45,7 @@ def _crear_fixture_primer_comprando(tmp_path: Path):
             "Fch Emision": ["2026-02-01", "2026-02-01"],
             "OBSERVACIONES COSTOS": ["", ""],
             "RESPUESTA COMPRAS": ["", ""],
-            "campania": [campania, campania],
+            "Campaña": [campania, campania],
             "MONEDA": ["Peso", "Peso"],
         }
     ).to_excel(path_compras, index=False)

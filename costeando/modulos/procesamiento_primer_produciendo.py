@@ -113,7 +113,7 @@ def _validar_parametros_primer_produciendo(campania_actual, anio_actual, ruta_sa
 
 
 def _obtener_columna_atiende(df_maestro: pd.DataFrame) -> str:
-    for nombre_columna in ["AAtiende Ne?", "Atiende Ne?"]:
+    for nombre_columna in ["AAtiende Ne?", "Atiende Ne?", "¿Atiende Ne?"]:
         if nombre_columna in df_maestro.columns:
             return nombre_columna
     raise ErrorEsquemaArchivo(

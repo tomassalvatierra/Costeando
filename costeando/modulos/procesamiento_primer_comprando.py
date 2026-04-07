@@ -157,7 +157,7 @@ def procesar_descuento(df_calculo_comprando, df_costos_especiales, campania, ani
     codigos_con_compras = df_compras.loc[fechas_validas, 'Codigo'].unique()
     mascara = df_no_vencidos['Codigo'].isin(codigos_con_compras)
     df_no_vencidos.loc[mascara, 'VENCIDO'] = "Si"
-    df_no_vencidos.loc[mascara, 'NOTAS'] = "X OC en campania C"+campania+"-"+anio
+    df_no_vencidos.loc[mascara, 'NOTAS'] = "X OC en campaña C"+campania+"-"+anio
     mascara_calculo = df_calculo_comprando['Codigo'].isin(codigos_con_compras)
     df_calculo_comprando.loc[mascara_calculo, '% de obsolescencia'] = 0
     df_final = pd.concat([df_vencidos, df_no_vencidos], ignore_index=True)
@@ -166,7 +166,7 @@ def procesar_descuento(df_calculo_comprando, df_costos_especiales, campania, ani
     return df_calculo_comprando, df_final, df_no_vencidos, df_cambios
 
 def _obtener_columna_atiende(df_maestro: pd.DataFrame) -> str:
-    for nombre_columna in ["AAtiende Ne?", "Atiende Ne?"]:
+    for nombre_columna in ["AAtiende Ne?", "Atiende Ne?","¿Atiende Ne?"]:
         if nombre_columna in df_maestro.columns:
             return nombre_columna
     raise ErrorEsquemaArchivo(
@@ -299,7 +299,6 @@ def _preparar_base_calculo_comprando(df_maestro, columna_atiende):
     )
     return df_calculo_comprando.drop(df_calculo_comprando[mascara_exclusion].index)
 
-
 def _anexar_columnas_base(
     df_calculo_comprando,
     df_compras,
@@ -314,12 +313,13 @@ def _anexar_columnas_base(
         "Fch Emision",
         "OBSERVACIONES COSTOS",
         "RESPUESTA COMPRAS",
-        "campania",
+        "Campaña",
         "MONEDA",
         "Stock Actual",
         "COSTO LISTA " + anio_campania_anterior,
         "Costo sin Descuento C" + campania_anterior,
     ]
+
     dataframes_para_merge = [
         df_compras,
         df_compras,
@@ -339,7 +339,6 @@ def _anexar_columnas_base(
             on="Codigo",
         )
     return df_calculo_comprando.drop_duplicates(subset="Codigo", keep="first")
-
 
 def procesar_primer_comprando(campania, anio, indice_a, indice_b, mano_de_obra,
     ruta_maestro, ruta_compras, ruta_stock, ruta_dto_especiales,
@@ -419,50 +418,66 @@ def procesar_primer_comprando(campania, anio, indice_a, indice_b, mano_de_obra,
             campania_anterior,
         )
         df_calculo_comprando['Ult. Compra'] = pd.to_datetime(df_calculo_comprando['Ult. Compra'])
+        
         df_calculo_comprando['Coef de Actualizacion'] = df_calculo_comprando.apply(
             lambda row: asignar_coeficiente(indice_a, indice_b, row), axis=1)
+        
         df_calculo_comprando.rename(columns={'ULTCOS': 'Costo Compra'}, inplace=True)
+        
         df_calculo_comprando["Costo Compra"] = pd.to_numeric(
             df_calculo_comprando["Costo Compra"], errors="coerce"
         ).astype(float)
+        
         df_costos_especiales = pd.merge(df_costos_especiales, df_stock[['Codigo','Stock Actual']], how='left')
         df_costos_especiales['Stock Actual'] = df_costos_especiales['Stock Actual'].fillna(0)
         df_calculo_comprando['% de obsolescencia'] = df_calculo_comprando.apply(
             lambda row: calcular_obsolescencia(fecha_ingresada, row)
             if (row['Tipo'] in ('PA','PD','PC')) and (row['Grupo'] in (1,2,3,4,6)) else None, axis=1)
+        
         df_calculo_comprando, df_costos_especiales, df_no_vencidos, df_cambios = procesar_descuento(
             df_calculo_comprando, df_costos_especiales, campania, anio, df_compras)
+        
         df_calculo_comprando = pd.merge(df_calculo_comprando, df_no_vencidos[['Codigo','DESCUENTO ESPECIAL']], how='left', on='Codigo')
         df_calculo_comprando = pd.merge(df_calculo_comprando, df_no_vencidos[['Codigo','APLICA DDE CA:']], how='left', on='Codigo')
         df_calculo_comprando = pd.merge(df_calculo_comprando, df_costos_especiales[['Codigo','ROYALTY']], how='left', on='Codigo')
+        
         df_calculo_comprando = df_calculo_comprando.sort_values(by=['Codigo','APLICA DDE CA:'], ascending=[True,False])
         df_calculo_comprando.drop_duplicates(subset='Codigo', keep='first', inplace=True)
+        
         for codigo in ['MOD0806','MOD0807','MOD0808']:
             df_calculo_comprando.loc[df_calculo_comprando['Codigo'] == codigo, 'Costo Compra'] = mano_de_obra
+        
         df_calculo_comprando = calcular_variacion(df_calculo_comprando, 'Costo Compra',
             'Costo sin Descuento C'+campania_anterior, '% var Compra VS Costo sin dto C'+campania_anterior)
         df_calculo_comprando = calcular_variacion(df_calculo_comprando, 'Costo Compra',
             'COSTO LISTA '+anio_campania_anterior, '%var Compra vs COSTO LISTA C'+campania_anterior)
+        
         df_calculo_comprando.loc[df_calculo_comprando['Costo Compra'].notnull(), 'Coef de Actualizacion'] = 1
         df_calculo_comprando['Costo sin Descuento C'+campania] = df_calculo_comprando.apply(
             lambda row: calcular_costo_sin_descuento(campania_anterior, row), axis=1)
+        
         columnas_a_rellenar = ['DESCUENTO ESPECIAL','% de obsolescencia','ROYALTY',
                                'Costo sin Descuento C'+campania,'Costo sin Descuento C'+campania_anterior]
         df_calculo_comprando = rellenar_valores(df_calculo_comprando, columnas_a_rellenar)
         df_calculo_comprando.rename(columns={'MONEDA': 'MONEDA/COMPRAS'}, inplace=True)
+        
         df_rotacion = procesar_rotacion(df_ficha_rms)
         df_calculo_comprando = pd.merge(df_calculo_comprando, df_rotacion[['Codigo','Clasificacion']], how='left', on='Codigo')
         fecha_hoy = datetime.now().strftime("%Y-%m-%d")
+        
         if not os.path.exists(ruta_salida):
             os.makedirs(ruta_salida)
+        
         path_rotacion = os.path.join(ruta_salida, f'{fecha_hoy} Rotacion calculada C{campania}-{anio}.xlsx')
         path_base_descuentos = os.path.join(ruta_salida, f'{fecha_hoy} BASE DTOS-Primera etapa comprando C{campania}-{anio}.xlsx')
         path_cambios = os.path.join(ruta_salida, f'{fecha_hoy} Cambios realizados en la base C{campania}-{anio}.xlsx')
         path_calculo_comprando = os.path.join(ruta_salida, f'{fecha_hoy} Calculo Comprando-Primera etapa C{campania}-{anio}.xlsx')
+        
         df_rotacion.to_excel(path_rotacion, index=False, engine='openpyxl')
         df_costos_especiales.to_excel(path_base_descuentos, index=False, engine='openpyxl')
         df_cambios.to_excel(path_cambios, index=False, engine='openpyxl')
         df_calculo_comprando.to_excel(path_calculo_comprando, index=False, engine='openpyxl')
+        
         logger.info(f"Procesamiento finalizado. Archivos guardados en: {ruta_salida}")
         path_manifiesto = guardar_manifiesto_ejecucion(
             carpeta_guardado=ruta_salida,

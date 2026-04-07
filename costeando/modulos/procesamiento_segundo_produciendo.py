@@ -8,6 +8,13 @@ from costeando.utilidades.validaciones import validar_archivo_excel, estandariza
 logger = logging.getLogger(__name__)
 
 
+def _obtener_columna_atiende(df_productos: pd.DataFrame) -> str:
+    for nombre_columna in ["AAtiende Ne?", "Atiende Ne?", "¿Atiende Ne?"]:
+        if nombre_columna in df_productos.columns:
+            return nombre_columna
+    raise ValueError("No se encontro columna atiende en produciendo.")
+
+
 def incorporar_nuevos_dtos(df_especiales, df_importador, df_productos):
     nuevos_codigos = df_importador["Codigo"].tolist()
     df_especiales.loc[df_especiales["Codigo"].isin(nuevos_codigos), "VENCIDO"] = "Si"
@@ -78,10 +85,11 @@ def procesar_segundo_produciendo(
         nuevos_descuentos["APLICA DDE CA:"] = desde_desc_especiales
         nuevos_descuentos["VENCIDO"] = "No"
         nuevos_descuentos["NOTAS"] = "Descuento ajustado porque superaba 75%"
+        columna_atiende = _obtener_columna_atiende(df_produciendo)
         nuevos_descuentos = pd.merge(nuevos_descuentos, df_produciendo[["Codigo","Descripcion"]], how="left")
-        nuevos_descuentos = pd.merge(nuevos_descuentos, df_produciendo[["Codigo","AAtiende Ne?"]], how="left")
+        nuevos_descuentos = pd.merge(nuevos_descuentos, df_produciendo[["Codigo", columna_atiende]], how="left")
         nuevos_descuentos = pd.merge(nuevos_descuentos, df_base_especiales[["Codigo","TIPO-DESCUENTO"]], how="left")
-        nuevos_descuentos = nuevos_descuentos.rename(columns={"AAtiende Ne?": "ATIENDE NE?"})
+        nuevos_descuentos = nuevos_descuentos.rename(columns={columna_atiende: "ATIENDE NE?"})
         nuevos_descuentos.drop_duplicates(inplace=True)
         df_base_especiales = pd.concat([df_base_especiales, nuevos_descuentos], ignore_index=True)
         df_produciendo["% sumatoria descuentos"] = (
