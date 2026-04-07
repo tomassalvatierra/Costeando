@@ -72,7 +72,7 @@ class LeaderListWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         frame_datos.grid(row=row_datos, column=0, columnspan=3, padx=20, pady=20, sticky="ew")
 
         # CampaAa
-        ctk.CTkLabel(frame_datos, text="CampaAa (CC):").pack(side="left", padx=(0, 10))
+        ctk.CTkLabel(frame_datos, text="Campaña (CC):").pack(side="left", padx=(0, 10))
         self.entry_campania = ctk.CTkEntry(
             frame_datos, 
             textvariable=self.campania_var,
@@ -82,7 +82,7 @@ class LeaderListWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.entry_campania.pack(side="left", padx=(0, 30))
 
         # AAo
-        ctk.CTkLabel(frame_datos, text="AAo (AAAA):").pack(side="left", padx=(0, 10))
+        ctk.CTkLabel(frame_datos, text="Año (AAAA):").pack(side="left", padx=(0, 10))
         self.entry_anio = ctk.CTkEntry(
             frame_datos, 
             textvariable=self.anio_var,
@@ -147,7 +147,7 @@ class LeaderListWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
     def ejecutar_hilo(self):
         # Validacion inicial UI
         if not self.campania_var.get() or not self.anio_var.get():
-             messagebox.showerror("Error", "Debe completar CampaAa y AAo.")
+             messagebox.showerror("Error", "Debe completar Campaña y Año.")
              return
         
         self.mostrar_progreso()
@@ -175,12 +175,12 @@ class LeaderListWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
 
         # 2. Validaciones
         if not campania.isdigit() or len(campania) != 2:
-            self.after(0, lambda: messagebox.showerror("Error", "CampaAa debe ser 2 digitos (Ej: 05)."))
+            self.after(0, lambda: messagebox.showerror("Error", "Campaña debe ser 2 digitos (Ej: 05)."))
             self.after(0, self.ocultar_progreso)
             return
 
         if not anio.isdigit() or len(anio) != 4:
-            self.after(0, lambda: messagebox.showerror("Error", "AAo debe ser 4 digitos (Ej: 2024)."))
+            self.after(0, lambda: messagebox.showerror("Error", "Año debe ser 4 digitos (Ej: 2024)."))
             self.after(0, self.ocultar_progreso)
             return
 

@@ -80,7 +80,7 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         frame_datos.grid(row=last_row, column=0, columnspan=3, padx=20, pady=20, sticky="ew")
 
         # CampaA'Ana
-        ctk.CTkLabel(frame_datos, text="CampaA'Ana (CC):").pack(side="left", padx=(0, 10))
+        ctk.CTkLabel(frame_datos, text="Campaña (CC):").pack(side="left", padx=(0, 10))
         self.entry_campania = ctk.CTkEntry(
             frame_datos, 
             textvariable=self.campania_var,
@@ -90,7 +90,7 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.entry_campania.pack(side="left", padx=(0, 30))
 
         # AA'Ano
-        ctk.CTkLabel(frame_datos, text="AA'Ano (AAAA):").pack(side="left", padx=(0, 10))
+        ctk.CTkLabel(frame_datos, text="Año (AAAA):").pack(side="left", padx=(0, 10))
         self.entry_anio = ctk.CTkEntry(
             frame_datos, 
             textvariable=self.anio_var,

@@ -43,11 +43,11 @@ class ValorizacionDYCWindow(ctk.CTkFrame):
         frame_datos = ctk.CTkFrame(self, fg_color="transparent")
         frame_datos.grid(row=5, column=0, columnspan=3, padx=20, pady=20, sticky="ew")
 
-        ctk.CTkLabel(frame_datos, text="Campania (CC):").pack(side="left", padx=(0, 10))
+        ctk.CTkLabel(frame_datos, text="Campaña (CC):").pack(side="left", padx=(0, 10))
         self.entry_campania = ctk.CTkEntry(frame_datos, textvariable=self.campana_var, width=80, placeholder_text="Ej: 05")
         self.entry_campania.pack(side="left", padx=(0, 30))
 
-        ctk.CTkLabel(frame_datos, text="Anio (AAAA):").pack(side="left", padx=(0, 10))
+        ctk.CTkLabel(frame_datos, text="Año (AAAA):").pack(side="left", padx=(0, 10))
         self.entry_anio = ctk.CTkEntry(frame_datos, textvariable=self.anio_var, width=80, placeholder_text="Ej: 2024")
         self.entry_anio.pack(side="left")
 
@@ -98,7 +98,7 @@ class ValorizacionDYCWindow(ctk.CTkFrame):
 
     def ejecutar_hilo(self):
         if not self.campana_var.get() or not self.anio_var.get():
-            messagebox.showerror("Error", "Debe completar campania y anio.")
+            messagebox.showerror("Error", "Debe completar campaña y año.")
             return
         self.mostrar_progreso()
         threading.Thread(target=self.procesar_con_progreso, daemon=True).start()

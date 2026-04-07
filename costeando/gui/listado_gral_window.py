@@ -4,7 +4,6 @@ from tkinter import filedialog, messagebox
 import threading
 import logging
 
-# Logica de negocio original
 from costeando.modulos.procesamiento_listado_gral import procesar_listado_gral_puro
 from costeando.utilidades.manejo_errores_gui import mostrar_error_legible
 
@@ -45,7 +44,7 @@ class ListadoGralWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
 
         # --- INSTRUCCIONES ---
         instrucciones = (
-            "Produciendo/Comprando: Archivos de campaAa a procesar.\n"
+            "Produciendo/Comprando: Archivos de campaña a procesar.\n"
             "Costo Primo: Maestro original.\n"
             "Mano de Obra: Debe incluir las 3 manos de obra.\n"
             "Listado: El archivo a completar."
@@ -76,13 +75,13 @@ class ListadoGralWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         for i, (texto, variable) in enumerate(archivos_config):
             self.crear_fila_selector(base_row + i, texto, variable)
 
-        # --- DATOS DE FECHA (CAMPAAA / AAO) ---
+        # --- DATOS DE FECHA (CAMPAÑA / AÑO) ---
         last_row = base_row + len(archivos_config)
         frame_datos = ctk.CTkFrame(self, fg_color="transparent")
         frame_datos.grid(row=last_row, column=0, columnspan=3, padx=20, pady=20, sticky="ew")
 
-        # CampaAa
-        ctk.CTkLabel(frame_datos, text="CampaAa (CC):").pack(side="left", padx=(0, 10))
+        # Campaña
+        ctk.CTkLabel(frame_datos, text="Campaña (CC):").pack(side="left", padx=(0, 10))
         self.entry_campania = ctk.CTkEntry(
             frame_datos, 
             textvariable=self.campana_var,
@@ -92,7 +91,7 @@ class ListadoGralWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.entry_campania.pack(side="left", padx=(0, 30))
 
         # AAo
-        ctk.CTkLabel(frame_datos, text="AAo (AAAA):").pack(side="left", padx=(0, 10))
+        ctk.CTkLabel(frame_datos, text="Año (AAAA):").pack(side="left", padx=(0, 10))
         self.entry_anio = ctk.CTkEntry(
             frame_datos, 
             textvariable=self.anio_var,
@@ -153,7 +152,7 @@ class ListadoGralWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
     def ejecutar_hilo(self):
         # Validacion basica UI
         if not self.campana_var.get() or not self.anio_var.get():
-             messagebox.showerror("Error", "Debe completar CampaAa y AAo.")
+             messagebox.showerror("Error", "Debe completar Campaña y Año.")
              return
         
         self.mostrar_progreso()

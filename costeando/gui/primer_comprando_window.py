@@ -85,8 +85,8 @@ class PrimerComprandoWindow(ctk.CTkFrame):
         frame_params.grid(row=last_row, column=0, columnspan=3, padx=20, pady=20, sticky="ew")
 
         # Fila 1 de Parametros: CampaAa y AAo
-        self.crear_input_param(frame_params, "CanpaAa (CC):", self.campana_var, 0, 0)
-        self.crear_input_param(frame_params, "AAo (AAAA):", self.anio_var, 0, 1)
+        self.crear_input_param(frame_params, "Campaña (CC):", self.campana_var, 0, 0)
+        self.crear_input_param(frame_params, "Año (AAAA):", self.anio_var, 0, 1)
         self.crear_input_param(frame_params, "Mano Obra:", self.mdo_var, 0, 2)
 
         # Fila 2 de Parametros: indices
@@ -128,7 +128,7 @@ class PrimerComprandoWindow(ctk.CTkFrame):
         entry.grid(row=row, column=1, columnspan=2, padx=(0, 20), pady=4, sticky="ew")
 
     def crear_input_param(self, parent, label_text, variable, row, col):
-        """Helper para inputs pequeAos (CampaAa, Indices, etc)"""
+        """Helper para inputs pequeños (Campaña, Indices, etc)"""
         frame = ctk.CTkFrame(parent, fg_color="transparent")
         frame.grid(row=row, column=col, padx=10, pady=5, sticky="w")
         

@@ -77,8 +77,8 @@ class SegundoComprandoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.crear_input_param(frame_params, "Fin (dd/mm/aaaa):", self.fecha_fin_var, 0, 1, "Ej: 31/01/2025")
 
         # Fila 2: CampaA'Ana y AA'Ano
-        self.crear_input_param(frame_params, "CampaA'Ana (CC):", self.campania_var, 1, 0, "Ej: 05")
-        self.crear_input_param(frame_params, "AA'Ano (AAAA):", self.anio_var, 1, 1, "Ej: 2025")
+        self.crear_input_param(frame_params, "Campaña (CC):", self.campania_var, 1, 0, "Ej: 05")
+        self.crear_input_param(frame_params, "Año (AAAA):", self.anio_var, 1, 1, "Ej: 2025")
 
         # --- BARRA DE PROGRESO ---
         self.progress_bar = ctk.CTkProgressBar(self, mode='indeterminate')
@@ -99,7 +99,7 @@ class SegundoComprandoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.btn_procesar.grid(row=last_row + 2, column=0, columnspan=3, padx=20, pady=(0, 20), sticky="ew")
 
     def crear_fila_selector(self, row, texto_boton, variable):
-        """Helper para selecciA'AAn de archivos"""
+        """Helper para seleccion de archivos"""
         btn = ctk.CTkButton(
             self, 
             text=texto_boton, 
@@ -115,7 +115,7 @@ class SegundoComprandoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         entry.grid(row=row, column=1, columnspan=2, padx=(0, 20), pady=4, sticky="ew")
 
     def crear_input_param(self, parent, label_text, variable, row, col, placeholder=""):
-        """Helper para inputs pequeA'Anos"""
+        """Helper para inputs pequeños"""
         frame = ctk.CTkFrame(parent, fg_color="transparent")
         frame.grid(row=row, column=col, padx=10, pady=8, sticky="w")
         
@@ -141,7 +141,7 @@ class SegundoComprandoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         # ValidaciA'AAn UI
         if not all([self.fecha_inicio_var.get(), self.fecha_fin_var.get(), 
                     self.campania_var.get(), self.anio_var.get()]):
-             messagebox.showerror("Error", "Debe completar todas las fechas y datos de campaA'Ana.")
+             messagebox.showerror("Error", "Debe completar todas las fechas y datos de campaña.")
              return
         
         self.mostrar_progreso()
@@ -174,7 +174,7 @@ class SegundoComprandoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
 
         try:
             # 3. Procesar
-            # Nota: 'importador' puede ser vacA'AAo segA'AAn tu lA'AAgica original ("or None")
+            # Nota: 'importador' puede ser vacio
             procesar_segundo_comprando(
                 ruta_comprando=comprando,
                 ruta_costos_especiales=costos,
@@ -187,9 +187,9 @@ class SegundoComprandoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
             )
             
             self.after(0, self.ocultar_progreso)
-            self.after(0, lambda: messagebox.showinfo("A'AaAxito", "El procesamiento ha finalizado con A'AAxito."))
+            self.after(0, lambda: messagebox.showinfo("Exito", "El procesamiento ha finalizado con exito."))
             
         except Exception as e:
-            logger.error(f"Error lA'AAgica segundo comprando: {str(e)}", exc_info=True)
+            logger.error(f"Error logico segundo comprando: {str(e)}", exc_info=True)
             self.after(0, lambda: mostrar_error_legible(e))
             self.after(0, self.ocultar_progreso)

@@ -144,7 +144,7 @@ class ActualizacionFCHSWindow(ctk.CTkFrame):
             
             # 4. Finalizacion exitosa
             self.after(0, self.ocultar_progreso)
-            self.after(0, lambda: messagebox.showinfo("Aaxito", "El procesamiento ha finalizado con AAxito."))
+            self.after(0, lambda: messagebox.showinfo("Exito", "El procesamiento ha finalizado con exito."))
 
 
         except Exception as e:

@@ -26,7 +26,7 @@ class ProyectadosWindow(ctk.CTkFrame):
 
         instrucciones = (
             "- Lista: Debe tener columnas 'COSTO LISTA ACC' y 'VARIABLE'.\n"
-            "- Coeficientes: Tabla con minimo N+10 campanias futuras."
+            "- Coeficientes: Tabla con minimo N+10 campañas futuras."
         )
         lbl_desc = ctk.CTkLabel(self, text=instrucciones, justify="left", text_color="gray70", font=("Roboto", 12))
         lbl_desc.grid(row=1, column=0, columnspan=3, padx=20, pady=(0, 20), sticky="w")
@@ -37,11 +37,11 @@ class ProyectadosWindow(ctk.CTkFrame):
         frame_datos = ctk.CTkFrame(self, fg_color="transparent")
         frame_datos.grid(row=4, column=0, columnspan=3, padx=20, pady=20, sticky="ew")
 
-        ctk.CTkLabel(frame_datos, text="Campania (CC):").pack(side="left", padx=(0, 10))
+        ctk.CTkLabel(frame_datos, text="Campaña (CC):").pack(side="left", padx=(0, 10))
         self.entry_campania = ctk.CTkEntry(frame_datos, textvariable=self.campania_var, width=80, placeholder_text="Ej: 01")
         self.entry_campania.pack(side="left", padx=(0, 30))
 
-        ctk.CTkLabel(frame_datos, text="Anio (AAAA):").pack(side="left", padx=(0, 10))
+        ctk.CTkLabel(frame_datos, text="Año (AAAA):").pack(side="left", padx=(0, 10))
         self.entry_anio = ctk.CTkEntry(frame_datos, textvariable=self.anio_var, width=80, placeholder_text="Ej: 2025")
         self.entry_anio.pack(side="left")
 
@@ -98,10 +98,10 @@ class ProyectadosWindow(ctk.CTkFrame):
             messagebox.showerror("Error", "Todos los campos son obligatorios.")
             return
         if not (campania.isdigit() and len(campania) == 2):
-            messagebox.showerror("Error", "La campania debe tener 2 digitos. Ejemplo: 01")
+            messagebox.showerror("Error", "La campaña debe tener 2 digitos. Ejemplo: 01")
             return
         if not (anio.isdigit() and len(anio) == 4):
-            messagebox.showerror("Error", "El anio debe tener 4 digitos. Ejemplo: 2025")
+            messagebox.showerror("Error", "El año debe tener 4 digitos. Ejemplo: 2025")
             return
 
         self.mostrar_progreso()
