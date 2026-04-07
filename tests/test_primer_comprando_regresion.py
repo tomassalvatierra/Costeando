@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+﻿from datetime import datetime, timedelta
 import json
 from pathlib import Path
 
@@ -27,7 +27,7 @@ def _crear_fixture_regresion_primer_comprando(tmp_path: Path):
             "Producto": ["1001", "MOD0806"],
             "Cod Actualiz": ["A", "A"],
             "Blq. de Pant": ["No", "No"],
-            "AAtiende Ne?": ["C", "C"],
+            "Atiende Ne?": ["C", "C"],
             "Tipo": ["PA", "PA"],
             "Grupo": [1, 1],
             "Ult. Compra": [fecha_compra_reciente, fecha_compra_reciente],
@@ -140,3 +140,4 @@ def test_regresion_descuentos_y_manifiesto(tmp_path: Path):
     assert manifiesto["id_ejecucion"] == "REGRESIONPC001"
     assert manifiesto["estado"] == "OK"
     assert manifiesto["metricas"]["filas_salida"] == 2
+

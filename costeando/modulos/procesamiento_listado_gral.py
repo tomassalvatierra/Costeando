@@ -1,4 +1,4 @@
-import pandas as pd
+﻿import pandas as pd
 import logging
 from typing import Dict
 import os
@@ -120,7 +120,7 @@ def _validar_columnas_minimas_listado_general(
         "DESCUENTO ESPECIAL",
         "APLICA DDE CA:",
     ]
-    validar_columnas(df_produciendo, ["Codigo", "Costo ProducciAn"] + campos_costos, "produciendo")
+    validar_columnas(df_produciendo, ["Codigo", "Costo Producción"] + campos_costos, "produciendo")
     validar_columnas(df_comprando, ["Codigo"] + campos_costos, "comprando")
     validar_columnas(df_costo_primo, ["Codigo", "Costo Estand"], "costo_primo")
     validar_columnas(df_base_descuentos, ["Codigo", "TIPO-DESCUENTO"], "base_descuentos")
@@ -262,9 +262,9 @@ def procesar_listado_gral_puro(
         )
         df_listado_general.rename(columns={"Tipo Orden": "TIPO ULT COMPRA"}, inplace=True)
 
-        logger.debug("Realizando merge costo de producciAn y CARGA FABRIL")
+        logger.debug("Realizando merge costo de Produccion y CARGA FABRIL")
         df_listado_general = pd.merge(
-            df_listado_general, df_produciendo[["Codigo", "Costo ProducciAn"]], how="left", on="Codigo"
+            df_listado_general, df_produciendo[["Codigo", "Costo Producción"]], how="left", on="Codigo"
         )
 
         cols = [
@@ -308,7 +308,7 @@ def procesar_listado_gral_puro(
 
         logger.debug("Inicia fase de calculos")
         df_listado_general["MANO DE OBRA TOTAL"] = (
-            df_listado_general["Costo ProducciAn"] - df_listado_general["COSTO PRIMO (MATERIALES)"]
+            df_listado_general["Costo Producción"] - df_listado_general["COSTO PRIMO (MATERIALES)"]
         ).round(2)
         df_listado_general["Costo sin Descuento C" + campania] = (
             df_listado_general["COSTO LISTA " + anio[-1] + campania] /
@@ -316,7 +316,7 @@ def procesar_listado_gral_puro(
         ).round(2)
         df_listado_general["CARGA FABRIL"] = (
             df_listado_general["Costo sin Descuento C" + campania] -
-            df_listado_general["Costo ProducciAn"]
+            df_listado_general["Costo Producción"]
         ).round(1)
         df_listado_general["DESCUENTO APLICADO $"] = (
             df_listado_general["COSTO LISTA " + anio[-1] + campania] -
@@ -330,7 +330,7 @@ def procesar_listado_gral_puro(
 
         df_listado_general.loc[
             df_listado_general["COSTO LISTA " + anio[-1] + campania] == 0,
-            ["COSTO PRIMO (MATERIALES)", "MANO DE OBRA TOTAL", "Costo ProducciAn", "CARGA FABRIL"]
+            ["COSTO PRIMO (MATERIALES)", "MANO DE OBRA TOTAL", "Costo Producción", "CARGA FABRIL"]
         ] = 0
 
         df_listado_general["MANO DE OBRA TOTAL"] = df_listado_general["MANO DE OBRA TOTAL"].fillna(0)
@@ -340,10 +340,10 @@ def procesar_listado_gral_puro(
 
         columnas_ordenadas = [
             "Periodo", "Codigo", "COD MADRE", "COD COMB", "Descripcion",
-            "COSTO PRIMO (MATERIALES)", "MANO DE OBRA TOTAL", "Costo ProducciAn",
+            "COSTO PRIMO (MATERIALES)", "MANO DE OBRA TOTAL", "Costo Producción",
             "CARGA FABRIL", "Costo sin Descuento C" + campania,
             "% Sumatoria de Descuentos", "COSTO LISTA " + anio[-1] + campania,
-            "TIPO DE COSTO", "ADI NA", "Ult. Compra", "TIPO ULT COMPRA",
+            "TIPO DE COSTO", "ADI NÂ°", "Ult. Compra", "TIPO ULT COMPRA",
             "MOD 0806 SEGUNDOS MO ELAB. X KILO", "MOD 0807 SEGUNDOS MO ENV. X UNIDAD",
             "MOD 0808 SEGUNDOS MO ACOND.X UNIDAD",
             "% de obsolescencia", "ROYALTY", "DESCUENTO ESPECIAL", "APLICA DDE CA:",
@@ -447,3 +447,4 @@ def procesar_listado_gral_puro(
         )
         logger.error("Error inesperado en Listado General. ID=%s", id_proceso, exc_info=True)
         raise error_interno from error
+

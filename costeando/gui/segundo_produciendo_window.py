@@ -24,14 +24,14 @@ class SegundoProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.campania_var = tk.StringVar()
         self.anio_var = tk.StringVar()
 
-        # ConfiguraciA'AAn del Grid
+        # Configuracion del Grid
         self.grid_columnconfigure(1, weight=1)
 
         # Crear interfaz
         self.crear_interfaz()
 
     def crear_interfaz(self):
-        # --- TA'AATULO ---
+        # --- TITULO ---
         lbl_titulo = ctk.CTkLabel(
             self, 
             text="Segundo Produciendo", 
@@ -41,10 +41,10 @@ class SegundoProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
 
         # --- INSTRUCCIONES ---
         instrucciones = (
-            " Produciendo: Archivo resultante de la primera etapa.\n"
-            " Base Descuentos: La mas actualizada.\n"
-            " Importador Dtos: Opcional, si desea agregar descuentos.\n"
-            " Fechas: Formato dd/mm/aaaa."
+            "- Produciendo: Archivo resultante de la primera etapa.\n"
+            "- Base Descuentos: La mas actualizada.\n"
+            "- Importador Dtos: Opcional, si desea agregar descuentos.\n"
+            "- Fechas: Formato dd/mm/aaaa."
         )
         lbl_desc = ctk.CTkLabel(
             self, 

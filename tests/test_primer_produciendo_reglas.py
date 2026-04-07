@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+﻿from datetime import datetime, timedelta
 
 import pandas as pd
 
@@ -26,7 +26,7 @@ def test_calcular_costo_sin_descuento_con_lleva_cf_si():
             "LLEVA CF": ["Si"],
             "Grupo": [1],
             "Tipo": ["PA"],
-            "Costo ProducciAn": [84.0],
+            "Costo Producción": [84.0],
         }
     )
     costo = calcular_costo_sin_descuento(df.iloc[0], df)
@@ -39,8 +39,9 @@ def test_calcular_costo_sin_descuento_autodetecta_lleva_cf_no():
             "LLEVA CF": [None],
             "Grupo": [2],
             "Tipo": ["PD"],
-            "Costo ProducciAn": [50.0],
+            "Costo Producción": [50.0],
         }
     )
     costo = calcular_costo_sin_descuento(df.iloc[0], df)
     assert costo == 50.0
+

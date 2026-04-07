@@ -1,4 +1,4 @@
-import pandas as pd
+﻿import pandas as pd
 import os
 from datetime import datetime
 import logging
@@ -44,7 +44,7 @@ def actualizar_estado_vencido(df_base_dtos, campania_actual, anio_actual, campan
             df_base_dtos.loc[mascara_terminados, "VENCIDO"] = "Si"
             df_base_dtos.loc[mascara_terminados, "NOTAS"] = "Pierde el descuento por no tener stock"
         except ValueError:
-            logger.info("Error: campania_stock no es un nAmero vAlido.")
+            logger.info("Error: campania_stock no es un numero valido.")
     mascara_general = df_base_dtos.apply(
         lambda row: (absoluta_actual - campania_a_absoluta(row["Campania_Otorgamiento"], row["Anio_Otorgamiento"])) > 27, axis=1)
     df_base_dtos.loc[mascara_general, "VENCIDO"] = "Si"
@@ -78,6 +78,13 @@ def calcular_obsolescencia(fecha, row):
     else: return 75
 
 def calcular_costo_sin_descuento(row, df):
+    costo_base = None
+    for nombre_columna in ["Costo Producción"]:
+        if nombre_columna in row.index:
+            costo_base = row[nombre_columna]
+            break
+    if costo_base is None:
+        raise KeyError("No se encontro columna de costo de produccion.")
     if pd.isna(row["LLEVA CF"]):
         if (row["Grupo"] in (1, 5)) and (row["Tipo"] in ("PA", "PC")):
             lleva_cf = "Si"
@@ -88,9 +95,9 @@ def calcular_costo_sin_descuento(row, df):
     else:
         lleva_cf = row["LLEVA CF"]
     if lleva_cf == "Si":
-        return round(row["Costo ProducciAn"] / 0.84, 2)
+        return round(costo_base / 0.84, 2)
     else:
-        return round(row["Costo ProducciAn"], 2)
+        return round(costo_base, 2)
 
 
 def _validar_parametros_primer_produciendo(campania_actual, anio_actual, ruta_salida):
@@ -113,7 +120,7 @@ def _validar_parametros_primer_produciendo(campania_actual, anio_actual, ruta_sa
 
 
 def _obtener_columna_atiende(df_maestro: pd.DataFrame) -> str:
-    for nombre_columna in ["AAtiende Ne?", "Atiende Ne?", "¿Atiende Ne?"]:
+    for nombre_columna in ["Atiende Ne?", "¿Atiende Ne?", "Atiende Necsdd"]:
         if nombre_columna in df_maestro.columns:
             return nombre_columna
     raise ErrorEsquemaArchivo(
@@ -185,7 +192,7 @@ def procesar_primer_produciendo(
             df_descuentos_especiales,
             df_rotacion,
         )
-        df_maestro_produciendo.rename(columns={"Costo Estand": "Costo ProducciAn"}, inplace=True)
+        df_maestro_produciendo.rename(columns={"Costo Estand": "Costo Producción"}, inplace=True)
         df_produciendo = df_maestro_produciendo.copy()
         df_produciendo = df_produciendo.replace("  /  /    ", "")
         df_produciendo["Ult. Compra"] = pd.to_datetime(df_produciendo["Ult. Compra"], errors="coerce")
@@ -327,3 +334,4 @@ def procesar_primer_produciendo(
         )
         logger.error("Error inesperado en Primer Produciendo. ID=%s", id_proceso, exc_info=True)
         raise error_interno from error
+

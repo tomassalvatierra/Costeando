@@ -44,10 +44,10 @@ class ListadoGralWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
 
         # --- INSTRUCCIONES ---
         instrucciones = (
-            "Produciendo/Comprando: Archivos de campaña a procesar.\n"
-            "Costo Primo: Maestro original.\n"
-            "Mano de Obra: Debe incluir las 3 manos de obra.\n"
-            "Listado: El archivo a completar."
+            "- Produciendo/Comprando: Archivos de campaña a procesar.\n"
+            "- Costo Primo: Maestro original.\n"
+            "- Mano de Obra: Debe incluir las 3 manos de obra.\n"
+            "- Listado: El archivo a completar."
         )
         lbl_desc = ctk.CTkLabel(
             self, 

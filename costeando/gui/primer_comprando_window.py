@@ -46,11 +46,11 @@ class PrimerComprandoWindow(ctk.CTkFrame):
 
         # --- INSTRUCCIONES ---
         instrucciones = (
-            "Maestro: Original TOTVS.\n"
-            "Compras: Archivo 'Compras y Cotizaciones revisadas'.\n"
-            "Stock: 'Stock Actual Valorizado'.\n"
-            "Lista (N-1): Debe tener 'COSTOS LISTA ACC'.\n"
-            "Comprando (N-1): Debe tener 'Costo sin Descuento CXX'."
+            "- Maestro: Original TOTVS.\n"
+            "- Compras: Archivo 'Compras y Cotizaciones revisadas'.\n"
+            "- Stock: 'Stock Actual Valorizado'.\n"
+            "- Lista (N-1): Debe tener 'COSTOS LISTA ACC'.\n"
+            "- Comprando (N-1): Debe tener 'Costo sin Descuento CXX'."
         )
         lbl_desc = ctk.CTkLabel(
             self, 

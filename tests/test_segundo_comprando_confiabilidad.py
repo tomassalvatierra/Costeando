@@ -1,4 +1,4 @@
-import json
+﻿import json
 from pathlib import Path
 
 import pandas as pd
@@ -20,7 +20,7 @@ def _crear_fixture_segundo_comprando(tmp_path: Path):
         {
             "Producto": ["1001", "1002"],
             "Descripcion": ["Prod 1", "Prod 2"],
-            "AAtiende Ne?": ["C", "C"],
+            "Atiende Ne?": ["C", "C"],
             "% de obsolescencia": [10.0, 0.0],
             "DESCUENTO ESPECIAL": [5.0, 2.0],
             "ROYALTY": [-1.0, 0.0],
@@ -100,3 +100,4 @@ def test_segundo_comprando_falla_si_falta_columna_minima(tmp_path: Path):
     with pytest.raises(ErrorEsquemaArchivo) as error:
         procesar_segundo_comprando(**data)
     assert error.value.codigo_error == "CST-VAL-001"
+

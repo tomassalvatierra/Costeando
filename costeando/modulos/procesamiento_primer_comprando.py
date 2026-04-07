@@ -1,4 +1,4 @@
-import pandas as pd
+﻿import pandas as pd
 import numpy as np
 import os
 from datetime import datetime
@@ -157,7 +157,7 @@ def procesar_descuento(df_calculo_comprando, df_costos_especiales, campania, ani
     codigos_con_compras = df_compras.loc[fechas_validas, 'Codigo'].unique()
     mascara = df_no_vencidos['Codigo'].isin(codigos_con_compras)
     df_no_vencidos.loc[mascara, 'VENCIDO'] = "Si"
-    df_no_vencidos.loc[mascara, 'NOTAS'] = "X OC en campaña C"+campania+"-"+anio
+    df_no_vencidos.loc[mascara, 'NOTAS'] = "X OC en campania C"+campania+"-"+anio
     mascara_calculo = df_calculo_comprando['Codigo'].isin(codigos_con_compras)
     df_calculo_comprando.loc[mascara_calculo, '% de obsolescencia'] = 0
     df_final = pd.concat([df_vencidos, df_no_vencidos], ignore_index=True)
@@ -166,7 +166,7 @@ def procesar_descuento(df_calculo_comprando, df_costos_especiales, campania, ani
     return df_calculo_comprando, df_final, df_no_vencidos, df_cambios
 
 def _obtener_columna_atiende(df_maestro: pd.DataFrame) -> str:
-    for nombre_columna in ["AAtiende Ne?", "Atiende Ne?","¿Atiende Ne?"]:
+    for nombre_columna in ["Atiende Ne?", "¿Atiende Ne?", "Atiende Necsdd"]:
         if nombre_columna in df_maestro.columns:
             return nombre_columna
     raise ErrorEsquemaArchivo(
@@ -569,3 +569,4 @@ def procesar_primer_comprando(campania, anio, indice_a, indice_b, mano_de_obra,
         )
         logger.error("Error inesperado en Primer Comprando. ID=%s", id_proceso, exc_info=True)
         raise error_interno from error
+

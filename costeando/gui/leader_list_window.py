@@ -43,9 +43,9 @@ class LeaderListWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
 
         # --- INSTRUCCIONES ---
         instrucciones = (
-            "Maestro: Archivo original TOTVS.\n"
-            "Listado Costos: Debe tener columna 'COSTO LISTA ACC' (N-1).\n"
-            "Resto de archivos: Originales sin modificar."
+            "- Maestro: Archivo original TOTVS.\n"
+            "- Listado Costos: Debe tener columna 'COSTO LISTA ACC' (N-1).\n"
+            "- Resto de archivos: Originales sin modificar."
         )
         lbl_desc = ctk.CTkLabel(
             self, 
@@ -204,7 +204,7 @@ class LeaderListWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
                 ruta_dobles=dobles,
                 ruta_combinadas=combinadas,
                 ruta_stock=stock,
-                campania=campania,
+                campana=campania,
                 anio=anio,
                 carpeta_guardado=carpeta_guardado
             )

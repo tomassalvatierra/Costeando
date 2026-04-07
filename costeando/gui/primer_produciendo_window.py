@@ -43,11 +43,11 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
 
         # --- INSTRUCCIONES ---
         instrucciones = (
-            "AAAasAAA Maestro: Original TOTVS (CA'AAdigo numA'AArico, sin espacios).\n"
-            "AAAasAAA Produciendo: Archivo produciendo (N-1).\n"
-            "AAAasAAA Stock: Informe 'Stock Actual Valorizado por Producto'.\n"
-            "AAAasAAA Base Descuentos: La mA'AAs actualizada.\n"
-            "AAAasAAA RotaciA'AAn: Informe de rotaciA'AAn."
+            "- Maestro: Original TOTVS.\n"
+            "- Produciendo: Archivo produciendo (N-1).\n"
+            "- Stock: Informe 'Stock Actual Valorizado por Producto'.\n"
+            "- Base Descuentos: La mas actualizada.\n"
+            "- Rotacion: Informe de rotacion."
         )
         lbl_desc = ctk.CTkLabel(
             self, 
@@ -59,13 +59,13 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         lbl_desc.grid(row=1, column=0, columnspan=3, padx=20, pady=(0, 20), sticky="w")
 
         # --- SELECTORES DE ARCHIVOS ---
-        # ConfiguraciA'AAn de los 6 archivos
+        # Configuracion de los 6 archivos
         archivos_config = [
             ("Seleccionar Maestro", self.ruta_maestro_produciendo),
             ("Seleccionar Produciendo N-1", self.ruta_produciendo_anterior),
             ("Seleccionar Stock", self.ruta_stock),
             ("Seleccionar Base Descuentos", self.ruta_descuentos_especiales),
-            ("Seleccionar RotaciA'AAn", self.ruta_rotacion),
+            ("Seleccionar Rotacion", self.ruta_rotacion),
             ("Seleccionar Estructuras", self.ruta_estructuras)
         ]
 
@@ -73,13 +73,13 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         for i, (texto, variable) in enumerate(archivos_config):
             self.crear_fila_selector(base_row + i, texto, variable)
 
-        # --- INPUTS DE CAMPAA'AaEA Y AA'AaEO ---
+        # --- INPUTS DE CAMPAÑA Y AÑO ---
         last_row = base_row + len(archivos_config)
         
         frame_datos = ctk.CTkFrame(self, fg_color="transparent")
         frame_datos.grid(row=last_row, column=0, columnspan=3, padx=20, pady=20, sticky="ew")
 
-        # CampaA'Ana
+        # Campaña
         ctk.CTkLabel(frame_datos, text="Campaña (CC):").pack(side="left", padx=(0, 10))
         self.entry_campania = ctk.CTkEntry(
             frame_datos, 
@@ -89,7 +89,7 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         )
         self.entry_campania.pack(side="left", padx=(0, 30))
 
-        # AA'Ano
+        # Año
         ctk.CTkLabel(frame_datos, text="Año (AAAA):").pack(side="left", padx=(0, 10))
         self.entry_anio = ctk.CTkEntry(
             frame_datos, 
@@ -105,7 +105,7 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.progress_bar.set(0)
         self.progress_bar.grid_remove()
 
-        # --- BOTA'AaA"N PROCESAR ---
+        # --- BOTON PROCESAR ---
         self.btn_procesar = ctk.CTkButton(
             self, 
             text='INICIAR PROCESO', 
@@ -118,7 +118,7 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.btn_procesar.grid(row=last_row + 2, column=0, columnspan=3, padx=20, pady=(0, 20), sticky="ew")
 
     def crear_fila_selector(self, row, texto_boton, variable):
-        """Helper para crear filas de selecciA'AAn"""
+        """Helper para crear filas de seleccion"""
         btn = ctk.CTkButton(
             self, 
             text=texto_boton, 
@@ -151,7 +151,7 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
     def ejecutar_hilo(self):
         # ValidaciA'AAn UI
         if not self.campania_var.get() or not self.anio_var.get():
-             messagebox.showerror("Error", "Debe completar CampaA'Ana y AA'Ano.")
+             messagebox.showerror("Error", "Debe completar Campaña y Año.")
              return
         
         self.mostrar_progreso()
@@ -206,9 +206,9 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
             )
          
             self.after(0, self.ocultar_progreso)
-            self.after(0, lambda: messagebox.showinfo("A'AaAxito", "El procesamiento ha finalizado con A'AAxito."))
+            self.after(0, lambda: messagebox.showinfo("Exito", "El procesamiento ha finalizado con exito."))
             
         except Exception as e:
-            logger.error(f"Error lA'AAgica primer produciendo: {str(e)}", exc_info=True)
+            logger.error(f"Error logica primer produciendo: {str(e)}", exc_info=True)
             self.after(0, lambda: mostrar_error_legible(e))
             self.after(0, self.ocultar_progreso)

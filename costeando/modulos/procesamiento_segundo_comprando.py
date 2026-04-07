@@ -1,4 +1,4 @@
-import logging
+﻿import logging
 import os
 from datetime import datetime
 
@@ -50,7 +50,7 @@ def incorporar_nuevos_dtos(df_especiales, df_importador, df_productos):
 
 
 def _obtener_columna_atiende(df_productos: pd.DataFrame) -> str:
-    for nombre_columna in ["AAtiende Ne?", "Atiende Ne?","¿Atiende Ne?"]:
+    for nombre_columna in ["Atiende Ne?", "¿Atiende Ne?", "Atiende Necsdd"]:
         if nombre_columna in df_productos.columns:
             return nombre_columna
     raise ErrorEsquemaArchivo(
@@ -414,3 +414,4 @@ def procesar_segundo_comprando(
         )
         logger.error("Error inesperado en Segundo Comprando. ID=%s", id_proceso, exc_info=True)
         raise error_interno from error
+

@@ -1,4 +1,4 @@
-import json
+﻿import json
 from pathlib import Path
 
 import pandas as pd
@@ -25,7 +25,7 @@ def _crear_fixture_listado_general(tmp_path: Path):
     pd.DataFrame(
         {
             "Producto": ["1001"],
-            "Costo ProducciAn": [100.0],
+            "Costo Producción": [100.0],
             "Costo sin Descuento C02": [110.0],
             "% de obsolescencia": [2.0],
             "ROYALTY": [1.0],
@@ -55,7 +55,7 @@ def _crear_fixture_listado_general(tmp_path: Path):
             "Periodo": ["2026-02"],
             "Descripcion": ["ITEM 1001"],
             "TIPO DE COSTO": ["X"],
-            "ADI NA": [""],
+            "ADI NÂ°": [""],
             "Ult. Compra": ["2026-01-01"],
             "Estado": ["ACTIVO"],
             "Cod Actualiz": ["A"],
@@ -142,3 +142,4 @@ def test_listado_general_falla_si_parametros_incompletos(tmp_path: Path):
         procesar_listado_gral_puro(**data)
 
     assert error.value.codigo_error == "CST-NEG-030"
+

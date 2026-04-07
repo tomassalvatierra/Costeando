@@ -49,7 +49,7 @@ def configurar_logging():
     
     # ConfiguraciAn especAfica por entorno
     if is_compiled:
-        # Modo distribuciAn/producciAn
+        # Modo distribucion/produccion
         log_dir = Path(user_log_dir("ProcesadorCostos"))
         app_log = log_dir / 'procesador_costos.log'
         error_log = log_dir / 'procesador_costos_errors.log'

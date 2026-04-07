@@ -32,10 +32,10 @@ class ActualizacionFCHSWindow(ctk.CTkFrame):
 
         lbl_desc = ctk.CTkLabel(
             self, 
-            text=("Estructuras: Archivo original por nivel (TOTVS).\n"
-                  "Maestro: Archivo original TOTVS.\n"
-                  "Compras: Archivo de compras y cotizaciones revisadas.\n"
-                  "Ordenes Apuntadas: Archivo original TOTVS."),
+            text=("- Estructuras: Archivo original por nivel (TOTVS).\n"
+                  "- Maestro: Archivo original TOTVS.\n"
+                  "- Compras: Archivo de compras y cotizaciones revisadas.\n"
+                  "- Ordenes Apuntadas: Archivo original TOTVS."),
             justify="left",
             text_color="gray70",
             font=("Roboto", 12)

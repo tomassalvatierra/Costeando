@@ -1,4 +1,4 @@
-import pandas as pd
+﻿import pandas as pd
 
 from costeando.modulos.procesamiento_primer_comprando import (
     _anexar_columnas_base,
@@ -12,14 +12,14 @@ def test_preparar_base_filtra_por_tipo_bloqueo_y_atiende():
             "Codigo": ["OK1", "TIPO_GG", "BLOQ", "PROD"],
             "Cod Actualiz": ["1", "1", "1", "1"],
             "Blq. de Pant": ["No", "No", "Si", "No"],
-            "AAtiende Ne?": ["C", "C", "C", "P"],
+            "Atiende Ne?": ["C", "C", "C", "P"],
             "Tipo": ["PA", "GG", "PA", "PA"],
             "Grupo": [1, 1, 1, 1],
             "Ult. Compra": ["2025-01-01"] * 4,
         }
     )
 
-    df_resultado = _preparar_base_calculo_comprando(df_maestro, "AAtiende Ne?")
+    df_resultado = _preparar_base_calculo_comprando(df_maestro, "Atiende Ne?")
 
     assert list(df_resultado["Codigo"]) == ["OK1"]
     assert df_resultado.iloc[0]["Cod Actualiz"] == "A"
@@ -56,3 +56,4 @@ def test_anexar_columnas_base_deja_nulos_si_no_hay_match():
     assert pd.isna(df_resultado.loc[0, "ULTCOS"])
     assert pd.isna(df_resultado.loc[0, "COSTO LISTA 601"])
     assert pd.isna(df_resultado.loc[0, "Costo sin Descuento C01"])
+

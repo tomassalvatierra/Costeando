@@ -4,7 +4,7 @@ from tkinter import filedialog, messagebox
 import threading
 import logging
 
-# LA'AAgica de negocio original
+# Logica de negocio original
 from costeando.modulos.procesamiento_segundo_comprando import procesar_segundo_comprando
 from costeando.utilidades.manejo_errores_gui import mostrar_error_legible
 
@@ -25,14 +25,14 @@ class SegundoComprandoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.campania_var = tk.StringVar()
         self.anio_var = tk.StringVar()
 
-        # ConfiguraciA'AAn del Grid
+        # Configuracion del Grid
         self.grid_columnconfigure(1, weight=1)
 
         # Crear interfaz
         self.crear_interfaz()
 
     def crear_interfaz(self):
-        # --- TA'AATULO ---
+        # --- TITULO ---
         lbl_titulo = ctk.CTkLabel(
             self, 
             text="Segundo Comprando", 
@@ -42,9 +42,9 @@ class SegundoComprandoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
 
         # --- INSTRUCCIONES ---
         instrucciones = (
-            "AAAasAAA Base Descuentos: La mA'AAs actualizada.\n"
-            "AAAasAAA Comprando: Archivo resultante de la primera etapa.\n"
-            "AAAasAAA Fechas: Formato dd/mm/aaaa (Ej: 01/05/2024)."
+            "- Base Descuentos: La mas actualizada.\n"
+            "- Comprando: Archivo resultante de la primera etapa.\n"
+            "- Fechas: Formato dd/mm/aaaa (Ej: 01/05/2024)."
         )
         lbl_desc = ctk.CTkLabel(
             self, 
@@ -66,7 +66,7 @@ class SegundoComprandoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         for i, (texto, variable) in enumerate(archivos_config):
             self.crear_fila_selector(base_row + i, texto, variable)
 
-        # --- PARA'AAMETROS (FECHAS Y CAMPAA'AaEA) ---
+        # --- PARAMETROS (FECHAS Y CAMPAA'AaEA) ---
         last_row = base_row + len(archivos_config)
         
         frame_params = ctk.CTkFrame(self, fg_color="transparent")
@@ -76,7 +76,7 @@ class SegundoComprandoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.crear_input_param(frame_params, "Inicio (dd/mm/aaaa):", self.fecha_inicio_var, 0, 0, "Ej: 01/01/2025")
         self.crear_input_param(frame_params, "Fin (dd/mm/aaaa):", self.fecha_fin_var, 0, 1, "Ej: 31/01/2025")
 
-        # Fila 2: CampaA'Ana y AA'Ano
+        # Fila 2: Campaña y Año
         self.crear_input_param(frame_params, "Campaña (CC):", self.campania_var, 1, 0, "Ej: 05")
         self.crear_input_param(frame_params, "Año (AAAA):", self.anio_var, 1, 1, "Ej: 2025")
 
@@ -86,7 +86,7 @@ class SegundoComprandoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.progress_bar.set(0)
         self.progress_bar.grid_remove()
 
-        # --- BOTA'AaA"N PROCESAR ---
+        # --- BOTON PROCESAR ---
         self.btn_procesar = ctk.CTkButton(
             self, 
             text='INICIAR PROCESO', 
@@ -138,7 +138,7 @@ class SegundoComprandoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.btn_procesar.configure(state="normal", text="INICIAR PROCESO")
 
     def ejecutar_hilo(self):
-        # ValidaciA'AAn UI
+        # Validacion UI
         if not all([self.fecha_inicio_var.get(), self.fecha_fin_var.get(), 
                     self.campania_var.get(), self.anio_var.get()]):
              messagebox.showerror("Error", "Debe completar todas las fechas y datos de campaña.")

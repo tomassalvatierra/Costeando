@@ -1,4 +1,4 @@
-from pathlib import Path
+﻿from pathlib import Path
 
 import pandas as pd
 import pytest
@@ -60,7 +60,7 @@ def _crear_fixture_primer_produciendo(tmp_path: Path):
         {
             "Producto": ["2001", "MOD0806"],
             "Blq. de Pant": [2, 2],
-            "AAtiende Ne?": ["P", "P"],
+            "Atiende Ne?": ["P", "P"],
             "Tipo": ["PA", "PA"],
             "Grupo": [1, 1],
             "Ult. Compra": ["2025-01-01", "2025-01-01"],
@@ -130,3 +130,4 @@ def test_caso_minimo_valido_genera_salidas_y_manifiesto(tmp_path: Path):
     assert Path(resultados["cambios"]).exists()
     assert Path(resultados["manifiesto"]).exists()
     assert resultados["id_ejecucion"]
+

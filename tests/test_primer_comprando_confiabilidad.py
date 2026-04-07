@@ -1,4 +1,4 @@
-from pathlib import Path
+﻿from pathlib import Path
 import json
 
 import pandas as pd
@@ -31,7 +31,7 @@ def _crear_fixture_primer_comprando(tmp_path: Path):
             "Producto": ["1001", "MOD0806"],
             "Cod Actualiz": ["A", "A"],
             "Blq. de Pant": ["No", "No"],
-            "AAtiende Ne?": ["C", "C"],
+            "Atiende Ne?": ["C", "C"],
             "Tipo": ["PA", "PA"],
             "Grupo": [1, 1],
             "Ult. Compra": ["2025-01-01", "2025-01-01"],
@@ -146,7 +146,7 @@ def test_acepta_columna_atiende_legacy(tmp_path: Path):
     data = _crear_fixture_primer_comprando(tmp_path)
     path_maestro = Path(data["ruta_maestro"])
     df_maestro = pd.read_excel(path_maestro, engine="openpyxl")
-    df_maestro = df_maestro.rename(columns={"AAtiende Ne?": "Atiende Ne?"})
+    df_maestro = df_maestro.rename(columns={"Atiende Ne?": "Atiende Ne?"})
     df_maestro.to_excel(path_maestro, index=False)
 
     resultados = procesar_primer_comprando(**data)
@@ -188,3 +188,4 @@ def test_error_controlado_genera_manifiesto_error_con_id_forzado(tmp_path: Path)
     assert manifiesto["estado"] == "ERROR"
     assert manifiesto["codigo_error"] == "CST-VAL-001"
     assert manifiesto["id_ejecucion"] == "IDPRUEBA001"
+
