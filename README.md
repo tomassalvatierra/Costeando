@@ -1,207 +1,261 @@
-# Documentación Técnica – Sistema de Costeo y Procesamiento de Archivos Excel
+# Sistema de Costeo - Guia tecnica
 
 ---
 
-## Tabla de Contenidos
+## Tabla de contenidos
 
-1. [Introducción](#introducción)
-2. [Estructura del Proyecto](#estructura-del-proyecto)
-3. [Flujo General de Procesamiento](#flujo-general-de-procesamiento)
-4. [Módulos Principales](#módulos-principales)
-5. [Validaciones Centralizadas](#validaciones-centralizadas)
-6. [Sistema de Logging](#sistema-de-logging)
-7. [Pruebas Automatizadas](#pruebas-automatizadas)
-8. [Empaquetado y Distribución](#empaquetado-y-distribución)
-9. [Buenas Prácticas y Recomendaciones](#buenas-prácticas-y-recomendaciones)
-10. [Extensión y Mantenimiento](#extensión-y-mantenimiento)
-11. [Contacto y Soporte](#contacto-y-soporte)
-
----
-
-## 1. Introducción
-
-Este proyecto automatiza el procesamiento y depuración de archivos Excel relacionados con costos, compras y producción. Está diseñado para ser **modular, validado, testeable y fácil de mantener**. La arquitectura desacopla la lógica de negocio de la interfaz gráfica, permitiendo su uso tanto desde la GUI como desde scripts o tests.
+1. [Introduccion](#1-introduccion)
+2. [Estructura del proyecto](#2-estructura-del-proyecto)
+3. [Flujo general de procesamiento](#3-flujo-general-de-procesamiento)
+4. [Modulos principales](#4-modulos-principales)
+5. [Validaciones centralizadas](#5-validaciones-centralizadas)
+6. [Sistema de logging y auditoria](#6-sistema-de-logging-y-auditoria)
+7. [Pruebas automatizadas](#7-pruebas-automatizadas)
+8. [Empaquetado y distribucion](#8-empaquetado-y-distribucion)
+9. [Buenas practicas y recomendaciones](#9-buenas-practicas-y-recomendaciones)
+10. [Extension y mantenimiento](#10-extension-y-mantenimiento)
+11. [Contacto y soporte](#11-contacto-y-soporte)
 
 ---
 
-## 2. Estructura del Proyecto
+## 1. Introduccion
 
-```
+Este proyecto automatiza el procesamiento de archivos Excel para analisis y calculo de costos.
+La aplicacion mantiene un modelo operativo simple (GUI + Excel), con foco en:
+
+- Confiabilidad operativa.
+- Trazabilidad de ejecuciones.
+- Validacion temprana de datos.
+- Refactor incremental sin romper resultados de negocio.
+
+La logica de negocio esta desacoplada de la GUI para permitir ejecucion por interfaz, scripts y pruebas automatizadas.
+
+---
+
+## 2. Estructura del proyecto
+
+```text
 Costeando1.1/
-│
-├── main_interfaz_grafica.py         # Interfaz gráfica principal (GUI)
-├── configuracion_logging.py         # Configuración centralizada de logs
-├── requirements.txt                 # Dependencias del proyecto
-├── setup.bat / empaquetar.bat       # Scripts para empaquetado con PyInstaller
-├── README.md                        # Documentación de usuario
-├── logs/                            # Carpeta de logs generados
-├── versiones/                       # Versionado de archivos de salida
-├── costeando/
-│   ├── modulos/
-│   │   ├── procesamiento_actualizacion_fchs.py   
-│   │   ├── procesamiento_compras.py   
-│   │   ├── procesamiento_leader_list.py   
-│   │   ├── procesamiento_primer_comprando.py   
-│   │   ├── procesamiento_segundo_comprando.py   
-│   │   ├── procesamiento_primer_produciendo.py   
-│   │   ├── procesamiento_segundo_produciendo.py
-│   │   ├── procesamiento_proyectados.py
-│   │   ├── procesamiento_valorizacion_dyc.py          
-|   |
-│   └── utilidades/
-│       ├── validaciones.py          # Validaciones reutilizables
-│       |── configuracion_logging.py
-│       |── func_faltante_cotizacion.py
-|                   
-└── tests/
-    |── test_procesamiento_*.py  
-    ├──test_actualizacion_fchs.py  
-    ├── test_compras.py   
-    ├── test_leader_list.py   
-    ├── test_primer_comprando.py   
-    ├── test_segundo_comprando.py   
-    ├── test_primer_produciendo.py  
-    ├── test_segundo_produciendo.py
-    ├── test_proyectados.py
-    ├── test_valorizacion_dyc.py      
+|-- main_interfaz_grafica.py
+|-- main_interfaz_grafica.spec
+|-- Costeando.spec
+|-- setup.bat
+|-- requirements.txt
+|-- README.md
+|-- metodo_uso.md
+|-- costeando/
+|   |-- gui/
+|   |   |-- compras_window.py
+|   |   |-- listado_gral_window.py
+|   |   |-- primer_comprando_window.py
+|   |   |-- primer_produciendo_window.py
+|   |   |-- segundo_comprando_window.py
+|   |   |-- segundo_produciendo_window.py
+|   |   |-- proyectados_window.py
+|   |   |-- valorizacion_dyc_window.py
+|   |   |-- actualizacion_fchs_window.py
+|   |   `-- leader_list_window.py
+|   |-- modulos/
+|   |   |-- procesamiento_compras.py
+|   |   |-- procesamiento_primer_comprando.py
+|   |   |-- procesamiento_segundo_comprando.py
+|   |   |-- procesamiento_primer_produciendo.py
+|   |   |-- procesamiento_segundo_produciendo.py
+|   |   |-- procesamiento_listado_gral.py
+|   |   |-- procesamiento_proyectados.py
+|   |   |-- procesamiento_valorizacion_dyc.py
+|   |   |-- procesamiento_actualizacion_fchs.py
+|   |   `-- procesamiento_leader_list.py
+|   `-- utilidades/
+|       |-- validaciones.py
+|       |-- errores_aplicacion.py
+|       |-- manejo_errores_gui.py
+|       |-- auditoria.py
+|       |-- configuracion_logging.py
+|       `-- func_faltante_cotizacion.py
+|-- tests/
+|   |-- test_primer_comprando_*.py
+|   |-- test_segundo_comprando_*.py
+|   |-- test_procesamiento_*.py
+|   |-- test_*_confiabilidad.py
+|   `-- test_validaciones.py
+`-- _artifacts/
+    `-- manifiestos/   # salida por defecto de manifiestos cuando no se informa carpeta valida
 ```
 
 ---
 
-## 3. Flujo General de Procesamiento
+## 3. Flujo general de procesamiento
 
-1. **Entrada:** Archivos Excel de costos, compras, estructuras, etc.
-2. **Procesamiento:** Cada módulo realiza validaciones, transformaciones y cálculos específicos.
-3. **Salida:** Archivos Excel procesados, listos para uso operativo o análisis.
-4. **Interfaz:** El usuario puede operar desde la GUI o ejecutar los módulos de procesamiento de forma independiente.
+1. Entrada de archivos Excel y parametros por GUI.
+2. Validacion de archivos, columnas, tipos y reglas minimas.
+3. Normalizacion y transformaciones de datos.
+4. Calculo de reglas de negocio del modulo.
+5. Exportacion de archivos resultado.
+6. Generacion de `id_ejecucion` y manifiesto JSON de auditoria (`OK` o `ERROR`).
+7. En caso de error, mapeo a mensaje legible para usuario y log tecnico para soporte.
 
 ---
 
-## 4. Módulos Principales
+## 4. Modulos principales
 
-Cada módulo de procesamiento está desacoplado de la interfaz y expone una función principal, por ejemplo:
+Cada modulo expone una funcion principal de procesamiento desacoplada de GUI.
 
-```python
-def procesar_compras_puro(ruta_compras: str, dolar: float, carpeta_guardado: str) -> Dict[str, str]:
-    ...
+- `procesamiento_compras.py`: transforma base de compras y genera salida operativa.
+- `procesamiento_primer_comprando.py`: primera etapa de costo comprando.
+- `procesamiento_segundo_comprando.py`: segunda etapa de costo comprando.
+- `procesamiento_primer_produciendo.py`: primera etapa de costo produciendo.
+- `procesamiento_segundo_produciendo.py`: segunda etapa de costo produciendo.
+- `procesamiento_listado_gral.py`: consolidacion y armado de listado general.
+- `procesamiento_proyectados.py`: calculos de proyectados.
+- `procesamiento_valorizacion_dyc.py`: valorizacion de costos.
+- `procesamiento_actualizacion_fchs.py`: actualizacion de FCHS.
+- `procesamiento_leader_list.py`: armado de leader list.
+
+Contrato general esperado por modulo:
+
+- Entradas validadas antes de calcular.
+- Errores de dominio con codigo estable.
+- Salidas de archivos + trazabilidad de ejecucion.
+
+---
+
+## 5. Validaciones centralizadas
+
+`costeando/utilidades/validaciones.py` concentra las validaciones reutilizables:
+
+- existencia y extension valida de archivo Excel.
+- columnas obligatorias.
+- deteccion de duplicados de clave.
+- estandarizacion de clave de producto cuando aplica.
+
+Reglas de integridad recomendadas:
+
+- fallar temprano ante inconsistencia.
+- error deterministico para el mismo problema.
+- no modificar nombres de columnas externas que vienen del origen Excel.
+
+---
+
+## 6. Sistema de logging y auditoria
+
+### Logging
+
+- Configuracion central en `costeando/utilidades/configuracion_logging.py`.
+- Se registran eventos informativos, de depuracion y de error.
+- Errores tecnicos se guardan en logs, no se muestran crudos al usuario final.
+
+### Contrato de errores de aplicacion
+
+Definido en `costeando/utilidades/errores_aplicacion.py` con jerarquia tipada:
+
+- `ErrorEntradaArchivo`
+- `ErrorEsquemaArchivo`
+- `ErrorReglaNegocio`
+- `ErrorEscrituraSalida`
+- `ErrorInternoInesperado`
+
+### Error legible en GUI
+
+`costeando/utilidades/manejo_errores_gui.py` construye mensajes con:
+
+- `codigo_error`
+- `titulo_usuario`
+- `mensaje_usuario`
+- `accion_sugerida`
+- `id_ejecucion`
+
+### Manifiesto de auditoria
+
+`costeando/utilidades/auditoria.py` guarda un JSON por ejecucion con:
+
+- `id_ejecucion`, `proceso`, `estado`, `fecha_hora`
+- `entradas`, `parametros`, `metricas`, `archivos_generados`
+- `codigo_error` cuando aplica
+
+Ubicacion:
+
+- Si el proceso recibe carpeta de salida valida, se guarda ahi.
+- Si no recibe carpeta valida (`None`, `"."`, `"./"`, `".\\"`), se guarda en `_artifacts/manifiestos`.
+
+---
+
+## 7. Pruebas automatizadas
+
+### Framework
+
+La suite usa `pytest`.
+
+### Ejecucion completa
+
+```powershell
+pytest tests -q
 ```
 
-**Características:**
-- Validan entradas antes de procesar.
-- Registran logs en cada etapa clave.
-- Manejan excepciones y reportan errores de forma clara.
-- Son fácilmente testeables y reutilizables.
+### Gates recomendados por modulo (ejemplo comprando)
 
-**Ejemplo de uso en un script:**
-```python
-from costeando.modulos.procesamiento_compras import procesar_compras_puro
-procesar_compras_puro('compras.xlsx', 900.0, 'resultados/')
+```powershell
+pytest tests/test_primer_comprando_reglas.py tests/test_primer_comprando_confiabilidad.py tests/test_primer_comprando_regresion.py tests/test_primer_comprando_helpers_refactor.py -q
+pytest tests/test_segundo_comprando_confiabilidad.py tests/test_procesamiento_segundo_comprando.py -q
 ```
 
----
+### Criterio de avance
 
-## 5. Validaciones Centralizadas
-
-El archivo `validaciones.py` contiene funciones reutilizables para:
-- Validar existencia y formato de archivos.
-- Verificar columnas obligatorias.
-- Detectar nulos y duplicados.
-- Lanzar excepciones con mensajes claros.
-
-**Uso típico:**
-```python
-from costeando.utilidades.validaciones import validar_archivo_excel, validar_columnas
-validar_archivo_excel(ruta, "nombre lógico")
-validar_columnas(df, ["Col1", "Col2"], "nombre lógico")
-```
-
-**Ventaja:** Si cambian los requisitos de validación, solo se modifica este archivo.
+- No avanzar de fase con pruebas rojas.
+- Toda refactorizacion debe mantener regresion funcional en verde.
 
 ---
 
-## 6. Sistema de Logging
+## 8. Empaquetado y distribucion
 
-- **Configuración centralizada:** En `configuracion_logging.py`.
-- **Uso en todos los módulos:**
-  ```python
-  import logging
-  logger = logging.getLogger(__name__)
-  logger.info("Mensaje informativo")
-  logger.debug("Mensaje de depuración")
-  logger.error("Mensaje de error", exc_info=True)
-  ```
-- **Archivos de log:** Se almacenan en la carpeta `logs/` y permiten trazabilidad completa de los procesos.
-- **Importante:** Revisa los logs ante cualquier error o comportamiento inesperado.
+- `setup.bat` automatiza tareas de empaquetado.
+- Los archivos `.spec` (`Costeando.spec`, `main_interfaz_grafica.spec`) definen configuracion de build.
+- Recomendacion operativa: validar ejecutable en entorno limpio antes de distribuir.
 
 ---
 
-## 7. Pruebas Automatizadas
+## 9. Buenas practicas y recomendaciones
 
-- **Ubicación:** Carpeta `tests/`.
-- **Cobertura:** Todos los módulos principales tienen su test correspondiente.
-- **Ejecución:**
-  ```bash
-  python -m unittest discover tests
-  ```
-- **Buenas prácticas:** Los paths de archivos de prueba se definen en variables para facilitar la reutilización.
-
----
-
-## 8. Empaquetado y Distribución
-
-- **Script `setup.bat`:** Automatiza el empaquetado con PyInstaller. Trabaja en un entorno virtual.
-- **Opciones recomendadas:**
-  - `--onefile` para un solo ejecutable.
-  - `--windowed` para aplicaciones GUI.
-  - Incluir archivos de datos con `--add-data` si es necesario.
-- **Prueba en limpio:** Siempre probar el ejecutable en una PC sin Python instalado para asegurar que no falte ninguna dependencia.
-
-**Ejemplo de línea en el .bat para incluir archivos de datos:**
-```bat
-pyinstaller --noconfirm --onefile --windowed --add-data "configuracion_logging.py;." %SCRIPT%
-```
+- Usar entorno virtual para desarrollo y pruebas.
+- Mantener `requirements.txt` alineado con dependencias reales.
+- Priorizar funciones pequenas, legibles y de una sola responsabilidad.
+- Mantener nombres en espaniol en codigo nuevo o refactorizado.
+- Respetar columnas externas de origen sin renombrarlas arbitrariamente.
+- Registrar evidencia con tests antes y despues de cada cambio.
 
 ---
 
-## 9. Buenas Prácticas y Recomendaciones
+## 10. Extension y mantenimiento
 
-- **Usar entorno virtual** para desarrollo y empaquetado.
-- **Actualizar `requirements.txt`** al agregar nuevas dependencias.
-- **Documentar funciones y módulos** con docstrings claros.
-- **Mantener los logs limpios** y revisarlos periódicamente.
-- **Eliminar código obsoleto** y mantener la estructura ordenada.
-- **Probar siempre en un entorno limpio** antes de distribuir.
+Estrategia recomendada para nuevos cambios:
 
----
+1. Definir contrato de entrada/salida y errores.
+2. Agregar o actualizar pruebas.
+3. Refactorizar en cortes pequenos.
+4. Ejecutar gate de modulo y luego suite completa.
+5. Documentar impacto tecnico y criterios de aceptacion.
 
-## 10. Extensión y Mantenimiento
-
-- **Nuevos módulos:** Seguir el patrón de función pura, validaciones y logging.
-- **Nuevas validaciones:** Agregar en `validaciones.py` y reutilizar en los módulos.
-- **Integración con CI/CD:** Se recomienda agregar workflows para ejecutar tests automáticamente en cada push.
-- **Soporte multiplataforma:** Si se requiere soporte para Mac/Linux, adaptar los scripts de empaquetado.
+Se evita enfoque big bang para no degradar confiabilidad operativa.
 
 ---
 
-## 11. Contacto y Soporte
+## 11. Contacto y soporte
 
-- **Responsable inicial:** [www.linkedin.com/in/tomas-lahuel-salvatierra-787a53249]
-- **Consultas técnicas:** Revisar primero los logs y la documentación de cada módulo.
-- **Soporte:** [salvatierratomaslahuel@gmail.com]
+- Responsable inicial: [LinkedIn](https://www.linkedin.com/in/tomas-lahuel-salvatierra-787a53249)
+- Soporte tecnico: [salvatierratomaslahuel@gmail.com](email:salvatierratomaslahuel@gmail.com)
 
----
+Para soporte, incluir siempre:
 
-## **Advertencias y Consejos para Nuevos Desarrolladores**
-
-- **Lee el README y esta documentación antes de modificar el código.**
-- **No borres ni modifiques scripts de procesamiento sin entender su flujo.**
-- **Si tienes dudas, consulta con el responsable antes de hacer cambios mayores.**
-- **Haz siempre pruebas después de modificar cualquier módulo.**
-- **Mantén la estructura y los nombres de archivos para evitar errores en la GUI y los scripts.**
+- modulo ejecutado
+- `codigo_error`
+- `id_ejecucion`
+- archivo de log y manifiesto asociado
 
 ---
 
-**Este fue el primer proyecto que realize como desarrollador, acerte, me equivoque y aprendi muchisimo, seguramente si sos un dev esperimentado vas a encontrar millones de errores, y agradeceria mucho que me dieras un feedback. Siempre el fin fue empezar e ir mejorando.**
+## Advertencias para nuevos desarrolladores
 
-**"Adelanten a su yo de ayer. Mantenerse igual, es lo mismo que retroceder." Enji Todoroki.**
-
+- Leer esta guia y `metodo_uso.md` antes de modificar modulos.
+- No cambiar reglas de negocio sin prueba de regresion asociada.
+- No introducir fallbacks silenciosos en columnas externas de origen.
+- Mantener foco en simplicidad + confiabilidad.
