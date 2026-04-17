@@ -31,7 +31,6 @@ def _validar_parametros_actualizacion_fchs(carpeta_guardado: str):
             accion_sugerida="Seleccione una carpeta valida para guardar resultados.",
         )
 
-
 def _cargar_dataframes_actualizacion_fchs(
     ruta_estructuras: str,
     ruta_compras: str,
@@ -70,6 +69,8 @@ def _validar_columnas_minimas_actualizacion_fchs(
     validar_columnas(df_ordenes_apuntadas, ["Producto", "Tipo Orden", "Fch Apunte"], "ordenes apuntadas")
     validar_columnas(df_maestro, ["Codigo", "Descripcion", "Sub Grupo", "Grupo"], "maestro")
 
+def conservar_columnas_finales(df: pd.DataFrame, columnas_objetivo: list[str]) -> pd.DataFrame:
+    return df.reindex(columns=columnas_objetivo)
 
 def _normalizar_columnas_base(
     df_estructuras: pd.DataFrame,
@@ -204,6 +205,7 @@ def procesar_actualizacion_fchs_puro(
     carpeta_guardado: str,
     id_ejecucion: str | None = None,
 ) -> Dict[str, str]:
+    
     id_proceso = id_ejecucion or generar_id_ejecucion()
     try:
         logger.info("Iniciando procesamiento puro de Actualizacion FCHS. ID=%s", id_proceso)
@@ -244,6 +246,17 @@ def procesar_actualizacion_fchs_puro(
             df_fch_ordenes,
             df_maestro,
         )
+        columnas_finales = [
+            "Producto",
+            "Descripcion",
+            "Fch Emision",
+            "Cantidad",
+            "Tipo Orden",
+            "FORMATO",
+        ]
+        validar_columnas(df_concatenado, columnas_finales, "compilado de fchs")
+        df_concatenado = conservar_columnas_finales(df_concatenado, columnas_finales)
+        
         path_guardado = _exportar_actualizacion_fchs(df_concatenado, carpeta_guardado)
         logger.info("Archivo guardado en: %s", path_guardado)
 

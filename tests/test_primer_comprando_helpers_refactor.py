@@ -1,4 +1,4 @@
-﻿import pandas as pd
+import pandas as pd
 
 from costeando.modulos.procesamiento_primer_comprando import (
     _anexar_columnas_base,

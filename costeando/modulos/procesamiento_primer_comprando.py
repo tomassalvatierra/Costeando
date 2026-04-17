@@ -42,8 +42,8 @@ def procesar_rotacion(df_ficha):
     df_ficha["Clasificacion"] = ""
     Rota = df_ficha["Promedio"] / df_ficha["Stock N+6"]
     df_ficha = df_ficha.assign(Rotacion=Rota.values)
-    df_ficha.rename(columns={"Rotacion": "% RotaciAn"}, inplace=True)
-    df_ficha['Clasificacion'] = df_ficha['% RotaciAn'].apply(asignar_clasificacion)
+    df_ficha.rename(columns={"Rotacion": "% Rotacion"}, inplace=True)
+    df_ficha['Clasificacion'] = df_ficha['% Rotacion'].apply(asignar_clasificacion)
     return df_ficha
 
 def campania_a_absoluta(campania, anio):

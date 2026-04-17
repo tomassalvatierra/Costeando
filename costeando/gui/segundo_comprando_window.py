@@ -66,7 +66,7 @@ class SegundoComprandoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         for i, (texto, variable) in enumerate(archivos_config):
             self.crear_fila_selector(base_row + i, texto, variable)
 
-        # --- PARAMETROS (FECHAS Y CAMPAA'AaEA) ---
+        # --- PARAMETROS (FECHAS Y CAMPANIA) ---
         last_row = base_row + len(archivos_config)
         
         frame_params = ctk.CTkFrame(self, fg_color="transparent")

@@ -32,10 +32,10 @@ COLUMNAS_OBLIGATORIAS_COMPRAS = [
     "Observacion",
     "Notas",
     "Tipo",
-    "MONEDA",
+    "Moneda",
     "Prc.Unitario",
     "Fch Emision",
-    "ULTCOS",
+    "Ultimo Costos",
     "Costo Estand",
 ]
 
@@ -43,7 +43,7 @@ COLUMNAS_OBLIGATORIAS_COMPRAS = [
 def clasificacion_compras(row):
     try:
         tipo = row["Tipo"]
-        moneda = row["MONEDA"]
+        moneda = row["Moneda"]
         notas = row["Notas"]
         precio_unitario = row["Prc.Unitario"]
     except KeyError as error:
@@ -151,12 +151,12 @@ def _aplicar_reglas_costos(df_compras: pd.DataFrame, dolar: float) -> pd.DataFra
         ~df_resultado["Tipo-Costos"].isin(TIPOS_COSTO_EXCLUIDOS), :
     ].copy()
     df_resultado.loc[df_resultado["Notas"].notna(), "Prc.Unitario"] = df_resultado["Notas"]
-    df_resultado.loc[df_resultado["Notas"].notna(), "MONEDA"] = "Dolar"
+    df_resultado.loc[df_resultado["Notas"].notna(), "Moneda"] = "Dolar"
     df_resultado = df_resultado.sort_values(
-        by=["Producto", "Fch Emision", "ULTCOS"],
+        by=["Producto", "Fch Emision", "Ultimo Costos"],
         ascending=[True, False, False],
     ).reset_index(drop=True)
-    df_resultado.drop_duplicates(subset=["Producto", "ULTCOS", "Fch Emision"], inplace=True)
+    df_resultado.drop_duplicates(subset=["Producto", "Ultimo Costos", "Fch Emision"], inplace=True)
     df_resultado["Para compras?"] = ""
 
     mascara_repetidos = df_resultado.duplicated(subset="Producto", keep=False)
@@ -165,14 +165,14 @@ def _aplicar_reglas_costos(df_compras: pd.DataFrame, dolar: float) -> pd.DataFra
     df_repetidos_resueltos = resolver_duplicados(df_repetidos)
 
     df_depuradas = pd.concat([df_unicos, df_repetidos_resueltos], ignore_index=True)
-    df_depuradas["Tasa Moneda"] = np.where(df_depuradas["MONEDA"] == "Dolar", dolar, 1.0)
-    df_depuradas["ULTCOS"] = (df_depuradas["Prc.Unitario"] * df_depuradas["Tasa Moneda"]).round(2)
+    df_depuradas["Tasa Moneda"] = np.where(df_depuradas["Moneda"] == "Dolar", dolar, 1.0)
+    df_depuradas["Ultimo Costos"] = (df_depuradas["Prc.Unitario"] * df_depuradas["Tasa Moneda"]).round(2)
     df_depuradas["Var"] = (
-        (df_depuradas["ULTCOS"] / df_depuradas["Costo Estand"]) - 1
+        (df_depuradas["Ultimo Costos"] / df_depuradas["Costo Estand"]) - 1
     ).replace({np.inf: "NUEVO"})
     df_depuradas.drop(columns=["Verificacion"], inplace=True, errors="ignore")
     df_depuradas.sort_values(
-        by=["Producto", "Fch Emision", "ULTCOS"],
+        by=["Producto", "Fch Emision", "Ultimo Costos"],
         ascending=[True, False, False],
         inplace=True,
     )

@@ -1,4 +1,4 @@
-﻿import traceback
+import traceback
 from costeando.modulos.procesamiento_actualizacion_fchs import procesar_actualizacion_fchs_puro
 
 paths = {

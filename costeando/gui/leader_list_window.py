@@ -163,7 +163,7 @@ class LeaderListWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
 
     def procesar_leader_list(self):
         # 1. Obtener y Limpiar datos
-        campania = self.campania_var.get().zfill(2) # Asegura 2 dA'AAgitos
+        campania = self.campania_var.get().zfill(2) # Asegura 2 digitos
         anio= self.anio_var.get()
         
         leader_list = self.ruta_leader_list.get()

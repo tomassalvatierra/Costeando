@@ -22,18 +22,18 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.ruta_rotacion = tk.StringVar()
         self.ruta_estructuras = tk.StringVar()
         
-        # --- Variables de ParA'AAmetros ---
+        # --- Variables de Parametros ---
         self.campania_var = tk.StringVar()
         self.anio_var = tk.StringVar()
 
-        # ConfiguraciA'AAn del Grid
+        # Configuracion del Grid
         self.grid_columnconfigure(1, weight=1)
 
         # Crear interfaz
         self.crear_interfaz()
 
     def crear_interfaz(self):
-        # --- TA'AATULO ---
+        # --- TITULO ---
         lbl_titulo = ctk.CTkLabel(
             self, 
             text="Primer Produciendo", 
@@ -149,7 +149,7 @@ class PrimerProduciendoWindow(ctk.CTkFrame): # <-- Heredamos de CTkFrame
         self.btn_procesar.configure(state="normal", text="INICIAR PROCESO")
 
     def ejecutar_hilo(self):
-        # ValidaciA'AAn UI
+        # Validacion UI
         if not self.campania_var.get() or not self.anio_var.get():
              messagebox.showerror("Error", "Debe completar Campaña y Año.")
              return

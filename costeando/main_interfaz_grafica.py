@@ -19,21 +19,21 @@ from costeando.gui.listado_gral_window import ListadoGralWindow
 configurar_logging()
 logger = logging.getLogger(__name__)
 
-# ConfiguraciAn Global de Tema
-ctk.set_appearance_mode("Dark")  # "System" (estAndar), "Dark", "Light"
-ctk.set_default_color_theme("green")  # "blue" (estAndar), "green", "dark-blue"
+# Configuracion global de tema
+ctk.set_appearance_mode("Dark")  # "System" (estandar), "Dark", "Light"
+ctk.set_default_color_theme("green")  # "blue" (estandar), "green", "dark-blue"
 
 class ProcesadorCostosApp(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.title("Costeando - Sistema de GestiAn")
+        self.title("Costeando - Sistema de Gestion")
         self.geometry("1200x720")
 
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(0, weight=1)
 
-        self.frame_actual = None # Aqui guardaremos la pantalla que se estA viendo
+        self.frame_actual = None # Aqui guardamos la pantalla actual
 
         self.vistas = {
             "Leader List": LeaderListWindow,
@@ -54,7 +54,7 @@ class ProcesadorCostosApp(ctk.CTk):
     def crear_sidebar(self):
         self.sidebar_frame = ctk.CTkFrame(self, width=220, corner_radius=0)
         self.sidebar_frame.grid(row=0, column=0, sticky="nsew")
-        self.sidebar_frame.grid_rowconfigure(11, weight=1) # Empujar botAn salir al fondo
+        self.sidebar_frame.grid_rowconfigure(11, weight=1) # Empujar boton salir al fondo
 
         self.logo_label = ctk.CTkLabel(
             self.sidebar_frame, 
@@ -71,7 +71,7 @@ class ProcesadorCostosApp(ctk.CTk):
                 text=nombre,
                 command=lambda n=nombre: self.seleccionar_modulo(n),
                 fg_color="transparent",
-                text_color=("gray10", "#DCE4EE"), # Color texto (Light, Dark)
+                text_color=("gray10", "#DCE4EE"), # Color de texto (Light, Dark)
                 hover_color=("gray70", "gray30"),
                 anchor="w",
                 height=40
@@ -101,7 +101,7 @@ class ProcesadorCostosApp(ctk.CTk):
         self.lbl_bienvenida.place(relx=0.5, rely=0.5, anchor="center")
 
     def seleccionar_modulo(self, nombre_modulo):
-        #LAgica para cambiar de pantalla
+        # Logica para cambiar de pantalla
         
         if self.frame_actual is not None:
             self.frame_actual.destroy()
@@ -115,9 +115,9 @@ class ProcesadorCostosApp(ctk.CTk):
         
         if ClaseModulo:
             try:
-                logger.info(f"Cargando mAdulo: {nombre_modulo}")
+                logger.info(f"Cargando modulo: {nombre_modulo}")
                 
-                # Instanciamos la clase pasAndole el contenedor principal como 'master'
+                # Instanciamos la clase y pasamos el contenedor principal como 'master'
                 self.frame_actual = ClaseModulo(self.main_container)
                 
                 # Hacemos que ocupe todo el espacio disponible
@@ -128,7 +128,7 @@ class ProcesadorCostosApp(ctk.CTk):
                 messagebox.showerror("Error", f"No se pudo cargar el modulo {nombre_modulo}.\n\nDetalle: {e}")
 
     def cerrar_aplicacion(self):
-        # AquA podrAas agregar chequeos si hay hilos corriendo (opcional)
+        # Aqui se podrian agregar chequeos si hay hilos corriendo (opcional)
         if messagebox.askyesno("Salir", "Desea cerrar la aplicacion?"):
             self.destroy()
 
