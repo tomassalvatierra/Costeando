@@ -35,6 +35,8 @@ class ProcesadorCostosApp(ctk.CTk):
         self.grid_rowconfigure(0, weight=1)
 
         self.frame_actual = None # Aqui guardamos la pantalla actual
+        self.botones_modulos = []
+        self.proceso_en_curso = False
 
         self.vistas = {
             "Leader List": LeaderListWindow,
@@ -51,6 +53,25 @@ class ProcesadorCostosApp(ctk.CTk):
 
         self.crear_sidebar()
         self.crear_area_principal()
+        self.after(200, self.actualizar_bloqueo_navegacion)
+
+    def hay_proceso_en_curso(self) -> bool:
+        if self.frame_actual is None:
+            return False
+        return bool(getattr(self.frame_actual, "proceso_activo", False))
+
+    def actualizar_bloqueo_navegacion(self):
+        proceso_activo = self.hay_proceso_en_curso()
+        if proceso_activo != self.proceso_en_curso:
+            self.proceso_en_curso = proceso_activo
+            estado = "disabled" if proceso_activo else "normal"
+            for boton in self.botones_modulos:
+                boton.configure(state=estado)
+            if proceso_activo:
+                logger.info("Navegacion de modulos bloqueada: proceso en curso.")
+            else:
+                logger.info("Navegacion de modulos habilitada: sin procesos activos.")
+        self.after(200, self.actualizar_bloqueo_navegacion)
 
     def crear_sidebar(self):
         self.sidebar_frame = ctk.CTkFrame(self, width=220, corner_radius=0)
@@ -78,6 +99,7 @@ class ProcesadorCostosApp(ctk.CTk):
                 height=40
             )
             btn.grid(row=i, column=0, sticky="ew", padx=10, pady=2)
+            self.botones_modulos.append(btn)
 
         self.btn_salir = ctk.CTkButton(
             self.sidebar_frame,
@@ -103,6 +125,12 @@ class ProcesadorCostosApp(ctk.CTk):
 
     def seleccionar_modulo(self, nombre_modulo):
         # Logica para cambiar de pantalla
+        if self.hay_proceso_en_curso():
+            messagebox.showwarning(
+                "Proceso en curso",
+                "Hay un proceso en ejecucion. Espere a que finalice antes de cambiar de modulo.",
+            )
+            return
         
         if self.frame_actual is not None:
             self.frame_actual.destroy()
@@ -129,7 +157,12 @@ class ProcesadorCostosApp(ctk.CTk):
                 messagebox.showerror("Error", f"No se pudo cargar el modulo {nombre_modulo}.\n\nDetalle: {e}")
 
     def cerrar_aplicacion(self):
-        # Aqui se podrian agregar chequeos si hay hilos corriendo (opcional)
+        if self.hay_proceso_en_curso():
+            messagebox.showwarning(
+                "Proceso en curso",
+                "Hay un proceso en ejecucion. Espere a que finalice antes de cerrar la aplicacion.",
+            )
+            return
         if messagebox.askyesno("Salir", "Desea cerrar la aplicacion?"):
             self.destroy()
 
