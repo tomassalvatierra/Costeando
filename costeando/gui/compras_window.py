@@ -1,8 +1,8 @@
 import customtkinter as ctk
 import tkinter as tk
 from tkinter import filedialog, messagebox
-import threading
 import logging
+from concurrent.futures import Future, ProcessPoolExecutor
 
 from costeando.modulos.procesamiento_compras import procesar_compras_puro
 from costeando.utilidades.errores_aplicacion import generar_id_ejecucion
@@ -11,11 +11,22 @@ from costeando.utilidades.manejo_errores_gui import mostrar_error_legible
 logger = logging.getLogger(__name__)
 
 
+def ejecutar_compras_en_proceso(parametros: dict) -> dict:
+    return procesar_compras_puro(**parametros)
+
+
 class ComprasWindow(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
         self.ruta_compras = tk.StringVar()
         self.dolar_var = tk.StringVar()
+
+        self.proceso_activo = False
+        self.executor_proceso: ProcessPoolExecutor | None = None
+        self.future_proceso: Future | None = None
+        self.id_verificacion_after: str | None = None
+        self.id_ejecucion_activo: str | None = None
+
         self.grid_columnconfigure(1, weight=1)
         self.crear_interfaz()
 
@@ -39,10 +50,11 @@ class ComprasWindow(ctk.CTkFrame):
         self.entry_dolar = ctk.CTkEntry(frame_dolar, textvariable=self.dolar_var, width=120, placeholder_text="Ej: 1200.50")
         self.entry_dolar.pack(side="left")
 
+        self.fila_progreso = 4
         self.progress_bar = ctk.CTkProgressBar(self, mode="indeterminate")
-        self.progress_bar.grid(row=4, column=0, columnspan=3, padx=20, pady=(30, 10), sticky="ew")
+        self.progress_bar.grid(row=self.fila_progreso, column=0, columnspan=3, padx=20, pady=(30, 10), sticky="ew")
         self.progress_bar.set(0)
-        self.progress_bar.grid_remove()
+        self.progress_bar.grid_forget()
 
         self.btn_procesar = ctk.CTkButton(
             self,
@@ -70,62 +82,100 @@ class ComprasWindow(ctk.CTkFrame):
         entry.grid(row=row, column=1, columnspan=2, padx=(0, 20), pady=8, sticky="ew")
 
     def seleccionar_archivo_compras(self):
+        if self.proceso_activo:
+            return
         archivo = filedialog.askopenfilename(title="Seleccionar Compras a depurar", filetypes=[("Archivos Excel", "*.xlsx")])
         if archivo:
             self.ruta_compras.set(archivo)
 
     def mostrar_progreso(self):
-        self.progress_bar.grid()
+        self.progress_bar.grid(row=self.fila_progreso, column=0, columnspan=3, padx=20, pady=(30, 10), sticky="ew")
         self.progress_bar.start()
         self.btn_procesar.configure(state="disabled", text="Procesando...")
         self.entry_dolar.configure(state="disabled")
 
     def ocultar_progreso(self):
         self.progress_bar.stop()
-        self.progress_bar.grid_remove()
+        self.progress_bar.set(0)
+        self.progress_bar.grid_forget()
         self.btn_procesar.configure(state="normal", text="INICIAR PROCESO")
         self.entry_dolar.configure(state="normal")
 
     def ejecutar_hilo(self):
+        if self.proceso_activo:
+            return
+
         if not self.dolar_var.get() or not self.ruta_compras.get():
             messagebox.showerror("Error", "Todos los campos son obligatorios.")
             return
-        self.mostrar_progreso()
-        threading.Thread(target=self.procesar_con_progreso, daemon=True).start()
 
-    def procesar_con_progreso(self):
-        id_ejecucion = generar_id_ejecucion()
-        try:
-            self.procesar_compras(id_ejecucion)
-        except Exception as error:
-            logger.error("Error en procesamiento de compras. ID=%s", id_ejecucion, exc_info=True)
-            self.after(0, lambda: mostrar_error_legible(error, id_ejecucion))
-            self.after(0, self.ocultar_progreso)
-
-    def procesar_compras(self, id_ejecucion: str):
         try:
             dolar = float(self.dolar_var.get().replace(",", "."))
         except ValueError:
-            self.after(0, lambda: messagebox.showerror("Error", "El valor de Dolar debe ser numerico."))
-            self.after(0, self.ocultar_progreso)
+            messagebox.showerror("Error", "El valor de Dolar debe ser numerico.")
             return
 
-        ruta_compras = self.ruta_compras.get()
         carpeta_guardado = filedialog.askdirectory(title="Selecciona la carpeta para guardar los resultados")
         if not carpeta_guardado:
-            self.after(0, self.ocultar_progreso)
             return
 
+        self.id_ejecucion_activo = generar_id_ejecucion()
+        parametros = {
+            "ruta_compras": self.ruta_compras.get(),
+            "dolar": dolar,
+            "carpeta_guardado": carpeta_guardado,
+            "id_ejecucion": self.id_ejecucion_activo,
+        }
+
+        self.mostrar_progreso()
+        self.proceso_activo = True
         try:
-            procesar_compras_puro(
-                ruta_compras=ruta_compras,
-                dolar=dolar,
-                carpeta_guardado=carpeta_guardado,
-                id_ejecucion=id_ejecucion,
-            )
-            self.after(0, self.ocultar_progreso)
-            self.after(0, lambda: messagebox.showinfo("Exito", "El procesamiento finalizo con exito."))
+            self.executor_proceso = ProcessPoolExecutor(max_workers=1)
+            self.future_proceso = self.executor_proceso.submit(ejecutar_compras_en_proceso, parametros)
+            self.id_verificacion_after = self.after(150, self.verificar_estado_proceso)
         except Exception as error:
-            logger.error("Error en logica de compras. ID=%s", id_ejecucion, exc_info=True)
-            self.after(0, lambda: mostrar_error_legible(error, id_ejecucion))
-            self.after(0, self.ocultar_progreso)
+            logger.error("No se pudo iniciar procesamiento de compras. ID=%s", self.id_ejecucion_activo, exc_info=True)
+            self.finalizar_ejecucion()
+            mostrar_error_legible(error, self.id_ejecucion_activo)
+
+    def verificar_estado_proceso(self):
+        if self.future_proceso is None:
+            self.finalizar_ejecucion()
+            return
+
+        if not self.future_proceso.done():
+            self.id_verificacion_after = self.after(150, self.verificar_estado_proceso)
+            return
+
+        self.id_verificacion_after = None
+        try:
+            self.future_proceso.result()
+            messagebox.showinfo("Exito", "El procesamiento finalizo con exito.")
+        except Exception as error:
+            logger.error("Error en logica de compras. ID=%s", self.id_ejecucion_activo, exc_info=True)
+            mostrar_error_legible(error, self.id_ejecucion_activo)
+        finally:
+            self.finalizar_ejecucion()
+
+    def finalizar_ejecucion(self):
+        if self.id_verificacion_after is not None:
+            try:
+                self.after_cancel(self.id_verificacion_after)
+            except Exception:
+                pass
+            self.id_verificacion_after = None
+
+        self.proceso_activo = False
+        self.ocultar_progreso()
+        if self.executor_proceso is not None:
+            self.executor_proceso.shutdown(wait=False, cancel_futures=True)
+        self.executor_proceso = None
+        self.future_proceso = None
+        self.id_ejecucion_activo = None
+
+    def destroy(self):
+        if self.executor_proceso is not None:
+            self.executor_proceso.shutdown(wait=False, cancel_futures=True)
+            self.executor_proceso = None
+            self.future_proceso = None
+        super().destroy()

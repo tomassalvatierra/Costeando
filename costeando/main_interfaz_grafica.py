@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from tkinter import messagebox
 import logging
+import multiprocessing
 
 from costeando.utilidades.configuracion_logging import configurar_logging
 
@@ -133,5 +134,6 @@ class ProcesadorCostosApp(ctk.CTk):
             self.destroy()
 
 if __name__ == "__main__":
+    multiprocessing.freeze_support()
     app = ProcesadorCostosApp()
     app.mainloop()

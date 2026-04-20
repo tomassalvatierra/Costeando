@@ -1,12 +1,10 @@
 import logging
 import os
-
 import pandas as pd
 
 from costeando.utilidades.errores_aplicacion import (
     ErrorEntradaArchivo,
-    ErrorEsquemaArchivo,
-)
+    ErrorEsquemaArchivo,)
 
 logger = logging.getLogger(__name__)
 
@@ -50,8 +48,7 @@ def validar_no_nulos(df: pd.DataFrame, columnas: list, nombre_df: str = "DataFra
                 codigo_error="CST-VAL-002",
                 titulo_usuario="Datos incompletos",
                 mensaje_usuario=f"La columna {col} del archivo {nombre_df} contiene valores faltantes.",
-                accion_sugerida="Complete los valores faltantes y vuelva a ejecutar.",
-            )
+                accion_sugerida="Complete los valores faltantes y vuelva a ejecutar.")
 
 
 def validar_duplicados(df: pd.DataFrame, columnas: list, nombre_df: str = "DataFrame"):
@@ -69,8 +66,7 @@ def validar_columna_numerica(df: pd.DataFrame, columna: str, nombre_df: str = "D
             codigo_error="CST-VAL-003",
             titulo_usuario="Tipo de dato invalido",
             mensaje_usuario=f"La columna {columna} del archivo {nombre_df} no contiene valores numericos validos.",
-            accion_sugerida=f"Revise el formato numerico de la columna {columna}.",
-        )
+            accion_sugerida=f"Revise el formato numerico de la columna {columna}.")
 
 
 def validar_columna_fecha_parseable(df: pd.DataFrame, columna: str, nombre_df: str = "DataFrame"):
@@ -82,8 +78,7 @@ def validar_columna_fecha_parseable(df: pd.DataFrame, columna: str, nombre_df: s
             codigo_error="CST-VAL-004",
             titulo_usuario="Formato de fecha invalido",
             mensaje_usuario=f"La columna {columna} del archivo {nombre_df} no tiene fechas validas.",
-            accion_sugerida="Corrija el formato de fecha (ejemplo: dd/mm/aaaa) y reintente.",
-        )
+            accion_sugerida="Corrija el formato de fecha (ejemplo: dd/mm/aaaa) y reintente.")
 
 
 def validar_clave_unica(df: pd.DataFrame, columna_clave: str, nombre_df: str = "DataFrame"):
@@ -94,8 +89,7 @@ def validar_clave_unica(df: pd.DataFrame, columna_clave: str, nombre_df: str = "
             codigo_error="CST-VAL-005",
             titulo_usuario="Clave duplicada",
             mensaje_usuario=f"El archivo {nombre_df} contiene valores repetidos en {columna_clave}.",
-            accion_sugerida=f"Elimine duplicados en {columna_clave} y vuelva a procesar.",
-        )
+            accion_sugerida=f"Elimine duplicados en {columna_clave} y vuelva a procesar.")
 
 
 def estandarizar_columna_producto(df: pd.DataFrame, nombre_df: str) -> pd.DataFrame:
@@ -114,7 +108,7 @@ def estandarizar_columna_producto(df: pd.DataFrame, nombre_df: str) -> pd.DataFr
             codigo_error="CST-VAL-001",
             titulo_usuario="Estructura de archivo invalida",
             mensaje_usuario=f"El archivo {nombre_df} no contiene Codigo ni Producto.",
-            accion_sugerida="Verifique el encabezado de la clave de producto.",
-        )
+            accion_sugerida="Verifique el encabezado de la clave de producto.")
     df["Codigo"] = df["Codigo"].astype(str).str.strip()
+    
     return df
