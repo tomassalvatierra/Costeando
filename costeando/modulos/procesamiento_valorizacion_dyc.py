@@ -16,6 +16,8 @@ from costeando.utilidades.errores_aplicacion import (
 )
 from costeando.utilidades.validaciones import (
     estandarizar_columna_producto,
+    normalizar_campania,
+    validar_anio,
     validar_archivo_excel,
     validar_columnas,
 )
@@ -27,7 +29,7 @@ def estandarizar_codigo(df: pd.DataFrame) -> pd.DataFrame:
     df["Codigo"] = df["Codigo"].astype(str).str.strip()
     return df
 
-def _validar_parametros_valorizacion_dyc(campania: str, anio: str, carpeta_guardado: str) -> tuple[str, str]:
+def _validar_parametros_valorizacion_dyc(campania: str, anio: str, carpeta_guardado: str) -> tuple[str, str, str]:
     if not all([campania, anio]):
         raise ErrorReglaNegocio(
             mensaje_tecnico="Faltan campania/anio en Valorizacion DYC.",
@@ -44,25 +46,10 @@ def _validar_parametros_valorizacion_dyc(campania: str, anio: str, carpeta_guard
             mensaje_usuario="No se definio una carpeta de salida.",
             accion_sugerida="Seleccione una carpeta de salida valida.",
         )
-    if not str(campania).isdigit():
-        raise ErrorReglaNegocio(
-            mensaje_tecnico=f"Campania invalida en Valorizacion DYC: {campania}",
-            codigo_error="CST-NEG-072",
-            titulo_usuario="Campania invalida",
-            mensaje_usuario="La campania informada no es valida.",
-            accion_sugerida="Use una campania numerica.",
-        )
-    if not str(anio).isdigit() or len(str(anio)) != 4:
-        raise ErrorReglaNegocio(
-            mensaje_tecnico=f"Anio invalido en Valorizacion DYC: {anio}",
-            codigo_error="CST-NEG-073",
-            titulo_usuario="Anio invalido",
-            mensaje_usuario="El anio informado no es valido.",
-            accion_sugerida="Use un anio con formato AAAA.",
-        )
-    campania_normalizada = str(campania).zfill(2)
-    anio_campania = anio[-1] + campania_normalizada
-    return campania_normalizada, anio_campania
+    anio_normalizado = validar_anio(anio, "Valorizacion DYC", "CST-NEG-073")
+    campania_normalizada = normalizar_campania(campania, "Valorizacion DYC", "CST-NEG-072")
+    anio_campania = anio_normalizado[-1] + campania_normalizada
+    return campania_normalizada, anio_normalizado, anio_campania
 
 
 def _cargar_dataframes_valorizacion_dyc(
@@ -192,7 +179,11 @@ def procesar_valorizacion_dyc_puro(
         validar_archivo_excel(ruta_listado, "listado")
         validar_archivo_excel(ruta_combinadas, "combinadas")
         validar_archivo_excel(ruta_dobles, "dobles")
-        campania_normalizada, anio_campania = _validar_parametros_valorizacion_dyc(campana, anio, carpeta_guardado)
+        campania_normalizada, anio, anio_campania = _validar_parametros_valorizacion_dyc(
+            campana,
+            anio,
+            carpeta_guardado,
+        )
 
         df_listado, df_combinadas, df_dobles = _cargar_dataframes_valorizacion_dyc(
             ruta_listado,

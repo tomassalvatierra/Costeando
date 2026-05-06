@@ -13,6 +13,8 @@ from costeando.utilidades.errores_aplicacion import (
 )
 from costeando.utilidades.validaciones import (
     estandarizar_columna_producto,
+    normalizar_campania,
+    validar_anio,
     validar_archivo_excel,
     validar_columna_fecha_parseable,
     validar_columnas,
@@ -195,6 +197,9 @@ def _validar_parametros_primer_comprando(campania, anio, indice_a, indice_b, man
             mensaje_usuario="No se definio una carpeta de salida.",
             accion_sugerida="Seleccione una carpeta valida para guardar resultados.",
         )
+    campania_normalizada = normalizar_campania(campania, "Primer Comprando", "CST-NEG-010")
+    anio_normalizado = validar_anio(anio, "Primer Comprando", "CST-NEG-010")
+    return campania_normalizada, anio_normalizado
 
 
 def _validar_columnas_minimas_primer_comprando(
@@ -357,7 +362,14 @@ def procesar_primer_comprando(campania, anio, indice_a, indice_b, mano_de_obra,
             ruta_calculo_comprando_ant,
             ruta_ficha,
         )
-        _validar_parametros_primer_comprando(campania, anio, indice_a, indice_b, mano_de_obra, ruta_salida)
+        campania, anio = _validar_parametros_primer_comprando(
+            campania,
+            anio,
+            indice_a,
+            indice_b,
+            mano_de_obra,
+            ruta_salida,
+        )
 
         (
             df_maestro,
@@ -569,4 +581,3 @@ def procesar_primer_comprando(campania, anio, indice_a, indice_b, mano_de_obra,
         )
         logger.error("Error inesperado en Primer Comprando. ID=%s", id_proceso, exc_info=True)
         raise error_interno from error
-

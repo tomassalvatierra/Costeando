@@ -75,6 +75,17 @@ def test_falla_si_faltan_columnas_en_lista(tmp_path: Path):
     assert error.value.codigo_error == "CST-VAL-001"
 
 
+def test_falla_si_falta_coeficiente_para_variable(tmp_path: Path):
+    data = _crear_fixture_proyectados(tmp_path)
+    coeficientes = _crear_coeficientes("02", "2026").drop(columns=["VAR_B"])
+    coeficientes.to_excel(data["ruta_coef"], index=False)
+
+    with pytest.raises(ErrorEsquemaArchivo) as error:
+        procesar_proyectados_puro(**data)
+
+    assert error.value.codigo_error == "CST-VAL-006"
+
+
 def test_caso_minimo_valido_genera_salidas_y_manifiesto(tmp_path: Path):
     data = _crear_fixture_proyectados(tmp_path)
     resultados = procesar_proyectados_puro(**data)

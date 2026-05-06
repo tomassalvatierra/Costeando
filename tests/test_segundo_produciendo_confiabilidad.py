@@ -69,6 +69,17 @@ def test_falla_si_faltan_parametros_requeridos(tmp_path: Path):
     assert error.value.codigo_error == "CST-NEG-050"
 
 
+def test_falla_si_fecha_inicio_supera_fecha_final(tmp_path: Path):
+    data = _crear_fixture_segundo_produciendo(tmp_path)
+    data["fecha_compras_inicio"] = "31/01/2026"
+    data["fecha_compras_final"] = "01/01/2026"
+
+    with pytest.raises(ErrorReglaNegocio) as error:
+        procesar_segundo_produciendo(**data)
+
+    assert error.value.codigo_error == "CST-NEG-055"
+
+
 def test_falla_si_archivo_no_existe(tmp_path: Path):
     data = _crear_fixture_segundo_produciendo(tmp_path)
     data["ruta_base_especiales"] = str(tmp_path / "base_inexistente.xlsx")

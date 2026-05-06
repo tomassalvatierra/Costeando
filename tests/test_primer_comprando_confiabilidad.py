@@ -142,6 +142,25 @@ def test_caso_minimo_valido_genera_salidas_y_manifiesto(tmp_path: Path):
     assert resultados["id_ejecucion"]
 
 
+def test_normaliza_campania_de_un_digito(tmp_path: Path):
+    data = _crear_fixture_primer_comprando(tmp_path)
+    data["campania"] = "1"
+
+    path_listado = Path(data["ruta_listado"])
+    df_listado = pd.read_excel(path_listado, engine="openpyxl")
+    df_listado["COSTO LISTA 518"] = [90.0, 10.0]
+    df_listado.to_excel(path_listado, index=False)
+
+    path_comprando_anterior = Path(data["ruta_calculo_comprando_ant"])
+    df_comprando_anterior = pd.read_excel(path_comprando_anterior, engine="openpyxl")
+    df_comprando_anterior["Costo sin Descuento C18"] = [95.0, 10.0]
+    df_comprando_anterior.to_excel(path_comprando_anterior, index=False)
+
+    resultados = procesar_primer_comprando(**data)
+
+    assert "C01-2026" in Path(resultados["calculo_comprando"]).name
+
+
 def test_acepta_columna_atiende_legacy(tmp_path: Path):
     data = _crear_fixture_primer_comprando(tmp_path)
     path_maestro = Path(data["ruta_maestro"])

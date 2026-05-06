@@ -16,6 +16,8 @@ from costeando.utilidades.errores_aplicacion import (
 )
 from costeando.utilidades.validaciones import (
     estandarizar_columna_producto,
+    normalizar_campania,
+    validar_anio,
     validar_archivo_excel,
     validar_columnas,
 )
@@ -58,7 +60,7 @@ def _obtener_columna_atiende(df_maestro: pd.DataFrame) -> str:
     )
 
 
-def _validar_parametros_leader_list(campania: str, anio: str, carpeta_guardado: str) -> str:
+def _validar_parametros_leader_list(campania: str, anio: str, carpeta_guardado: str) -> tuple[str, str]:
     if not all([campania, anio]):
         raise ErrorReglaNegocio(
             mensaje_tecnico="Faltan campania/anio en Leader List.",
@@ -75,23 +77,9 @@ def _validar_parametros_leader_list(campania: str, anio: str, carpeta_guardado: 
             mensaje_usuario="No se definio una carpeta de salida.",
             accion_sugerida="Seleccione una carpeta valida para guardar resultados.",
         )
-    if not str(campania).isdigit():
-        raise ErrorReglaNegocio(
-            mensaje_tecnico=f"Campania invalida en Leader List: {campania}",
-            codigo_error="CST-NEG-092",
-            titulo_usuario="Campania invalida",
-            mensaje_usuario="La campania informada no es valida.",
-            accion_sugerida="Use una campania numerica.",
-        )
-    if not str(anio).isdigit() or len(str(anio)) != 4:
-        raise ErrorReglaNegocio(
-            mensaje_tecnico=f"Anio invalido en Leader List: {anio}",
-            codigo_error="CST-NEG-093",
-            titulo_usuario="Anio invalido",
-            mensaje_usuario="El anio informado no es valido.",
-            accion_sugerida="Use un anio con formato AAAA.",
-        )
-    return str(campania).zfill(2)
+    anio_normalizado = validar_anio(anio, "Leader List", "CST-NEG-093")
+    campania_normalizada = normalizar_campania(campania, "Leader List", "CST-NEG-092")
+    return campania_normalizada, anio_normalizado
 
 
 def _cargar_dataframes_leader_list(
@@ -393,7 +381,7 @@ def procesar_leader_list_puro(
         validar_archivo_excel(ruta_combinadas, "combinadas")
         validar_archivo_excel(ruta_stock, "stock")
 
-        campania = _validar_parametros_leader_list(campana, anio, carpeta_guardado)
+        campania, anio = _validar_parametros_leader_list(campana, anio, carpeta_guardado)
         campania_anterior, anio_campania_anterior, anio_campania = asignacion_campanias(campania, anio)
 
         (

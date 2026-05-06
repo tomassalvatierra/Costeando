@@ -16,6 +16,8 @@ from costeando.utilidades.errores_aplicacion import (
 )
 from costeando.utilidades.validaciones import (
     estandarizar_columna_producto,
+    normalizar_campania,
+    validar_anio,
     validar_archivo_excel,
     validar_columnas,
 )
@@ -29,7 +31,13 @@ def obtener_coeficiente(df_coef_pivot: pd.DataFrame, campania: str, variable: st
     ]["Coeficiente"]
     if not resultado.empty:
         return resultado.values[0]
-    return 0
+    raise ErrorEsquemaArchivo(
+        mensaje_tecnico=f"No existe coeficiente para campania={campania}, variable={variable}",
+        codigo_error="CST-VAL-006",
+        titulo_usuario="Coeficiente faltante",
+        mensaje_usuario="La tabla de coeficientes no contiene todos los valores necesarios.",
+        accion_sugerida="Revise que existan coeficientes para cada campania proyectada y variable.",
+    )
 
 
 def generar_campanias(campania_inicial: str, anio_inicial: str) -> tuple[list[str], list[str]]:
@@ -47,7 +55,7 @@ def generar_campanias(campania_inicial: str, anio_inicial: str) -> tuple[list[st
     return campanias, mc_campanias
 
 
-def _validar_parametros_proyectados(campania: str, anio: str, carpeta_guardado: str) -> str:
+def _validar_parametros_proyectados(campania: str, anio: str, carpeta_guardado: str) -> tuple[str, str]:
     if not all([campania, anio]):
         raise ErrorReglaNegocio(
             mensaje_tecnico="Faltan campania/anio en Proyectados.",
@@ -64,23 +72,9 @@ def _validar_parametros_proyectados(campania: str, anio: str, carpeta_guardado: 
             mensaje_usuario="No se definio una carpeta de salida.",
             accion_sugerida="Seleccione una carpeta de salida valida.",
         )
-    if not str(campania).isdigit():
-        raise ErrorReglaNegocio(
-            mensaje_tecnico=f"Campania invalida en Proyectados: {campania}",
-            codigo_error="CST-NEG-062",
-            titulo_usuario="Campania invalida",
-            mensaje_usuario="La campania informada no es valida.",
-            accion_sugerida="Use una campania numerica.",
-        )
-    if not str(anio).isdigit() or len(str(anio)) != 4:
-        raise ErrorReglaNegocio(
-            mensaje_tecnico=f"Anio invalido en Proyectados: {anio}",
-            codigo_error="CST-NEG-063",
-            titulo_usuario="Anio invalido",
-            mensaje_usuario="El anio informado no es valido.",
-            accion_sugerida="Use un anio con formato AAAA.",
-        )
-    return str(campania).zfill(2)
+    anio_normalizado = validar_anio(anio, "Proyectados", "CST-NEG-063")
+    campania_normalizada = normalizar_campania(campania, "Proyectados", "CST-NEG-062")
+    return campania_normalizada, anio_normalizado
 
 
 def _cargar_dataframes_proyectados(ruta_lista: str, ruta_coeficientes: str) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -211,7 +205,11 @@ def procesar_proyectados_puro(
         logger.info("Iniciando procesamiento puro de Proyectados. ID=%s", id_proceso)
         validar_archivo_excel(ruta_lista, "listado de costos")
         validar_archivo_excel(ruta_coef, "tabla de coeficientes")
-        campania_normalizada = _validar_parametros_proyectados(camp_inicial, anio_inicial, carpeta_guardado)
+        campania_normalizada, anio_inicial = _validar_parametros_proyectados(
+            camp_inicial,
+            anio_inicial,
+            carpeta_guardado,
+        )
 
         df_lista, df_coeficientes = _cargar_dataframes_proyectados(ruta_lista, ruta_coef)
         df_lista = estandarizar_columna_producto(df_lista, "listado de costos")

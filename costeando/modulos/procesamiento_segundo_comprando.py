@@ -16,8 +16,11 @@ from costeando.utilidades.errores_aplicacion import (
 )
 from costeando.utilidades.validaciones import (
     estandarizar_columna_producto,
+    normalizar_campania,
+    validar_anio,
     validar_archivo_excel,
     validar_columnas,
+    validar_rango_fechas,
 )
 
 logger = logging.getLogger(__name__)
@@ -85,18 +88,16 @@ def _validar_parametros_segundo_comprando(
             mensaje_usuario="No se definio carpeta de salida.",
             accion_sugerida="Seleccione una carpeta valida para guardar resultados.",
         )
-    try:
-        fecha_inicio = pd.to_datetime(fecha_compras_inicio, format="%d/%m/%Y")
-        fecha_final = pd.to_datetime(fecha_compras_final, format="%d/%m/%Y")
-    except ValueError as error:
-        raise ErrorReglaNegocio(
-            mensaje_tecnico=f"Fechas invalidas en Segundo Comprando: {error}",
-            codigo_error="CST-NEG-042",
-            titulo_usuario="Formato de fecha invalido",
-            mensaje_usuario="Las fechas de compra no tienen formato valido.",
-            accion_sugerida="Use formato dd/mm/aaaa para inicio y fin.",
-        ) from error
-    return fecha_inicio, fecha_final
+    anio_normalizado = validar_anio(anio, "Segundo Comprando", "CST-NEG-040")
+    campania_normalizada = normalizar_campania(campania, "Segundo Comprando", "CST-NEG-040")
+    fecha_inicio, fecha_final = validar_rango_fechas(
+        fecha_compras_inicio,
+        fecha_compras_final,
+        "Segundo Comprando",
+        "CST-NEG-042",
+        "CST-NEG-043",
+    )
+    return fecha_inicio, fecha_final, campania_normalizada, anio_normalizado
 
 
 def _cargar_dataframes_segundo_comprando(
@@ -176,14 +177,13 @@ def procesar_segundo_comprando(
         if ruta_importador_descuentos:
             validar_archivo_excel(ruta_importador_descuentos, "importador descuentos")
 
-        fecha_inicio, fecha_final = _validar_parametros_segundo_comprando(
+        fecha_inicio, fecha_final, campania, anio = _validar_parametros_segundo_comprando(
             campania,
             anio,
             fecha_compras_inicio,
             fecha_compras_final,
             carpeta_guardado,
         )
-        campania = campania.zfill(2)
         anio_campania = anio[-1] + campania
         desde_desc_especiales = f"{anio}/{campania}"
         campania_anio = f"CAMP-{campania}/{str(int(anio) % 100)}"

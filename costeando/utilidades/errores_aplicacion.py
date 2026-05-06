@@ -31,6 +31,19 @@ class ErrorAplicacion(Exception):
         self.id_ejecucion = id_ejecucion
         return self
 
+    def __reduce__(self):
+        return (
+            self.__class__,
+            (
+                self.mensaje_tecnico,
+                self.codigo_error,
+                self.titulo_usuario,
+                self.mensaje_usuario,
+                self.accion_sugerida,
+                self.id_ejecucion,
+            ),
+        )
+
 
 class ErrorEntradaArchivo(ErrorAplicacion):
     pass

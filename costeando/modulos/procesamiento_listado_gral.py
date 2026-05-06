@@ -13,7 +13,13 @@ from costeando.utilidades.errores_aplicacion import (
     ErrorReglaNegocio,
     generar_id_ejecucion,
 )
-from costeando.utilidades.validaciones import validar_archivo_excel, estandarizar_columna_producto, validar_columnas
+from costeando.utilidades.validaciones import (
+    estandarizar_columna_producto,
+    normalizar_campania,
+    validar_anio,
+    validar_archivo_excel,
+    validar_columnas,
+)
 from costeando.utilidades.configuracion_logging import configurar_logging
 
 configurar_logging()
@@ -37,6 +43,9 @@ def _validar_parametros_listado_general(campania: str, anio: str, carpeta_guarda
             mensaje_usuario="No se definio carpeta de salida para Listado General.",
             accion_sugerida="Seleccione una carpeta valida de salida.",
         )
+    campania_normalizada = normalizar_campania(campania, "Listado General", "CST-NEG-030")
+    anio_normalizado = validar_anio(anio, "Listado General", "CST-NEG-030")
+    return campania_normalizada, anio_normalizado
 
 
 def _validar_archivos_entrada_listado_general(entradas: list[tuple[str, str]]):
@@ -155,8 +164,7 @@ def procesar_listado_gral_puro(
     id_proceso = id_ejecucion or generar_id_ejecucion()
     try:
         logger.info("Iniciando procesamiento puro de Listado General. ID=%s", id_proceso)
-        _validar_parametros_listado_general(campania, anio, carpeta_guardado)
-        campania = campania.zfill(2)
+        campania, anio = _validar_parametros_listado_general(campania, anio, carpeta_guardado)
         entradas = [
             (ruta_produciendo, "produciendo"),
             (ruta_comprando, "comprando"),

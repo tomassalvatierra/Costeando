@@ -13,6 +13,8 @@ from costeando.utilidades.errores_aplicacion import (
 from costeando.utilidades.func_faltante_cotizacion import asignar_faltantes_cotizacion
 from costeando.utilidades.validaciones import (
     estandarizar_columna_producto,
+    normalizar_campania,
+    validar_anio,
     validar_archivo_excel,
     validar_columna_fecha_parseable,
     validar_columnas,
@@ -117,6 +119,9 @@ def _validar_parametros_primer_produciendo(campania_actual, anio_actual, ruta_sa
             mensaje_usuario="No se definio una carpeta de salida.",
             accion_sugerida="Seleccione una carpeta de salida valida.",
         )
+    campania_normalizada = normalizar_campania(campania_actual, "Primer Produciendo", "CST-NEG-020")
+    anio_normalizado = validar_anio(anio_actual, "Primer Produciendo", "CST-NEG-020")
+    return campania_normalizada, anio_normalizado
 
 
 def _obtener_columna_atiende(df_maestro: pd.DataFrame) -> str:
@@ -168,7 +173,11 @@ def procesar_primer_produciendo(
         validar_archivo_excel(ruta_descuentos_especiales, "descuentos especiales")
         validar_archivo_excel(ruta_rotacion, "rotacion")
         validar_archivo_excel(ruta_estructuras, "estructuras")
-        _validar_parametros_primer_produciendo(campania_actual, anio_actual, ruta_salida)
+        campania_actual, anio_actual = _validar_parametros_primer_produciendo(
+            campania_actual,
+            anio_actual,
+            ruta_salida,
+        )
         fecha_actual = datetime.now()
         campania_stock = int(campania_actual) - 5
         df_produciendo_anterior = pd.read_excel(ruta_produciendo_anterior, engine="openpyxl")

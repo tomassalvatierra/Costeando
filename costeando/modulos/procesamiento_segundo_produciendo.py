@@ -17,8 +17,11 @@ from costeando.utilidades.errores_aplicacion import (
 )
 from costeando.utilidades.validaciones import (
     estandarizar_columna_producto,
+    normalizar_campania,
+    validar_anio,
     validar_archivo_excel,
     validar_columnas,
+    validar_rango_fechas,
 )
 
 logger = logging.getLogger(__name__)
@@ -93,7 +96,7 @@ def _validar_parametros_segundo_produciendo(
     fecha_compras_inicio: str,
     fecha_compras_final: str,
     carpeta_guardado: str,
-) -> tuple[pd.Timestamp, pd.Timestamp, str]:
+) -> tuple[pd.Timestamp, pd.Timestamp, str, str]:
     if not all([campania, anio, fecha_compras_inicio, fecha_compras_final]):
         raise ErrorReglaNegocio(
             mensaje_tecnico="Faltan parametros obligatorios en Segundo Produciendo.",
@@ -110,34 +113,16 @@ def _validar_parametros_segundo_produciendo(
             mensaje_usuario="No se definio carpeta de salida.",
             accion_sugerida="Seleccione una carpeta valida para guardar resultados.",
         )
-    if not str(anio).isdigit() or len(str(anio)) != 4:
-        raise ErrorReglaNegocio(
-            mensaje_tecnico=f"Anio invalido en Segundo Produciendo: {anio}",
-            codigo_error="CST-NEG-052",
-            titulo_usuario="Anio invalido",
-            mensaje_usuario="El anio informado no es valido.",
-            accion_sugerida="Use un anio con formato AAAA.",
-        )
-    if not str(campania).isdigit():
-        raise ErrorReglaNegocio(
-            mensaje_tecnico=f"Campania invalida en Segundo Produciendo: {campania}",
-            codigo_error="CST-NEG-053",
-            titulo_usuario="Campania invalida",
-            mensaje_usuario="La campania informada no es valida.",
-            accion_sugerida="Use una campania numerica.",
-        )
-    try:
-        fecha_inicio = pd.to_datetime(fecha_compras_inicio, format="%d/%m/%Y")
-        fecha_final = pd.to_datetime(fecha_compras_final, format="%d/%m/%Y")
-    except ValueError as error:
-        raise ErrorReglaNegocio(
-            mensaje_tecnico=f"Fechas invalidas en Segundo Produciendo: {error}",
-            codigo_error="CST-NEG-054",
-            titulo_usuario="Formato de fecha invalido",
-            mensaje_usuario="Las fechas de compra no tienen formato valido.",
-            accion_sugerida="Use formato dd/mm/aaaa para inicio y fin.",
-        ) from error
-    return fecha_inicio, fecha_final, str(campania).zfill(2)
+    anio_normalizado = validar_anio(anio, "Segundo Produciendo", "CST-NEG-052")
+    campania_normalizada = normalizar_campania(campania, "Segundo Produciendo", "CST-NEG-053")
+    fecha_inicio, fecha_final = validar_rango_fechas(
+        fecha_compras_inicio,
+        fecha_compras_final,
+        "Segundo Produciendo",
+        "CST-NEG-054",
+        "CST-NEG-055",
+    )
+    return fecha_inicio, fecha_final, campania_normalizada, anio_normalizado
 
 
 def _cargar_dataframes_segundo_produciendo(
@@ -310,7 +295,7 @@ def procesar_segundo_produciendo(
         if ruta_importador_descuentos:
             validar_archivo_excel(ruta_importador_descuentos, "importador descuentos")
 
-        fecha_inicio, fecha_final, campania_normalizada = _validar_parametros_segundo_produciendo(
+        fecha_inicio, fecha_final, campania_normalizada, anio = _validar_parametros_segundo_produciendo(
             campania,
             anio,
             fecha_compras_inicio,

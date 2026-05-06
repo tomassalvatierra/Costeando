@@ -90,6 +90,17 @@ def test_segundo_comprando_falla_si_faltan_parametros(tmp_path: Path):
     assert error.value.codigo_error == "CST-NEG-040"
 
 
+def test_segundo_comprando_falla_si_fecha_inicio_supera_fecha_final(tmp_path: Path):
+    data, _ = _crear_fixture_segundo_comprando(tmp_path)
+    data["fecha_compras_inicio"] = "31/01/2026"
+    data["fecha_compras_final"] = "01/01/2026"
+
+    with pytest.raises(ErrorReglaNegocio) as error:
+        procesar_segundo_comprando(**data)
+
+    assert error.value.codigo_error == "CST-NEG-043"
+
+
 def test_segundo_comprando_falla_si_falta_columna_minima(tmp_path: Path):
     data, _ = _crear_fixture_segundo_comprando(tmp_path)
     path_comprando = Path(data["ruta_comprando"])
