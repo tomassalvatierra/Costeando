@@ -187,6 +187,30 @@ def test_falla_si_fechas_maestro_son_invalidas(tmp_path: Path):
     assert error.value.codigo_error == "CST-VAL-004"
 
 
+def test_permite_ult_compra_vacia_en_maestro(tmp_path: Path):
+    data = _crear_fixture_primer_comprando(tmp_path)
+    path_maestro = Path(data["ruta_maestro"])
+    df_maestro = pd.read_excel(path_maestro, engine="openpyxl")
+    df_maestro["Ult. Compra"] = [None, "  /  /    "]
+    df_maestro.to_excel(path_maestro, index=False)
+
+    resultados = procesar_primer_comprando(**data)
+
+    assert Path(resultados["calculo_comprando"]).exists()
+
+
+def test_acepta_compras_depuradas_con_nombres_nuevos(tmp_path: Path):
+    data = _crear_fixture_primer_comprando(tmp_path)
+    path_compras = Path(data["ruta_compras"])
+    df_compras = pd.read_excel(path_compras, engine="openpyxl")
+    df_compras = df_compras.rename(columns={"ULTCOS": "Ultimo Costo", "MONEDA": "Moneda"})
+    df_compras.to_excel(path_compras, index=False)
+
+    resultados = procesar_primer_comprando(**data)
+
+    assert Path(resultados["calculo_comprando"]).exists()
+
+
 def test_error_controlado_genera_manifiesto_error_con_id_forzado(tmp_path: Path):
     data = _crear_fixture_primer_comprando(tmp_path)
     data["id_ejecucion"] = "IDPRUEBA001"
@@ -207,4 +231,3 @@ def test_error_controlado_genera_manifiesto_error_con_id_forzado(tmp_path: Path)
     assert manifiesto["estado"] == "ERROR"
     assert manifiesto["codigo_error"] == "CST-VAL-001"
     assert manifiesto["id_ejecucion"] == "IDPRUEBA001"
-

@@ -123,9 +123,6 @@ def _leer_y_validar_compras(ruta_compras: str) -> pd.DataFrame:
         ) from error
 
     validar_columnas(df_compras, COLUMNAS_OBLIGATORIAS_COMPRAS, "Compras")
-    validar_columna_numerica(df_compras, "Costo Estand", "Compras")
-    validar_columna_numerica(df_compras, "Prc.Unitario", "Compras")
-    validar_columna_fecha_parseable(df_compras, "Fch Emision", "Compras")
     return df_compras
 
 
@@ -223,6 +220,9 @@ def procesar_compras_puro(
         total_filas_entrada = len(df_compras)
         df_normalizado = _filtrar_y_normalizar_compras(df_compras)
         total_filas_filtradas = len(df_normalizado)
+        validar_columna_numerica(df_normalizado, "Costo Estand", "Compras filtradas")
+        validar_columna_numerica(df_normalizado, "Prc.Unitario", "Compras filtradas")
+        validar_columna_fecha_parseable(df_normalizado, "Fch Emision", "Compras filtradas")
         df_depuradas = _aplicar_reglas_costos(df_normalizado, dolar)
         total_filas_salida = len(df_depuradas)
         path_compras = _guardar_salida_compras(df_depuradas, carpeta_guardado)

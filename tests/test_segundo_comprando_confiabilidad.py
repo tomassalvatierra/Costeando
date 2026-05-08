@@ -4,7 +4,10 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from costeando.modulos.procesamiento_segundo_comprando import procesar_segundo_comprando
+from costeando.modulos.procesamiento_segundo_comprando import (
+    incorporar_nuevos_dtos,
+    procesar_segundo_comprando,
+)
 from costeando.utilidades.errores_aplicacion import ErrorEsquemaArchivo, ErrorReglaNegocio
 
 
@@ -80,6 +83,63 @@ def test_segundo_comprando_ok_genera_salidas_y_manifiesto(tmp_path: Path):
     assert manifiesto["estado"] == "OK"
     assert manifiesto["proceso"] == "segundo_comprando"
     assert manifiesto["metricas"]["filas_salida"] == 2
+
+
+def test_incorporar_nuevos_dtos_pisa_descuento_vigente_y_agrega_historial():
+    df_especiales = pd.DataFrame(
+        {
+            "Codigo": ["1001", "1002"],
+            "DESCUENTO ESPECIAL": [5.0, 0.0],
+            "APLICA DDE CA:": ["2025/01", "2025/01"],
+            "VENCIDO": ["No", "No"],
+            "NOTAS": ["", ""],
+        }
+    )
+    df_importador = pd.DataFrame(
+        {
+            "Codigo": ["1001", "1002", "1003"],
+            "DESCUENTO ESPECIAL": [12.0, 8.0, 4.0],
+            "APLICA DDE CA:": ["2026/02", "2026/02", "2026/02"],
+        }
+    )
+    df_productos = pd.DataFrame(
+        {
+            "Codigo": ["1001", "1002", "1003", "1004"],
+            "DESCUENTO ESPECIAL": [5.0, 0.0, None, 3.0],
+            "APLICA DDE CA:": ["2025/01", "2025/01", None, "2025/01"],
+        }
+    )
+
+    df_base_actualizada, df_productos_actualizados = incorporar_nuevos_dtos(
+        df_especiales,
+        df_importador,
+        df_productos,
+    )
+
+    descuentos_por_codigo = df_productos_actualizados.set_index("Codigo")["DESCUENTO ESPECIAL"]
+    aplica_por_codigo = df_productos_actualizados.set_index("Codigo")["APLICA DDE CA:"]
+    assert descuentos_por_codigo["1001"] == 12.0
+    assert descuentos_por_codigo["1002"] == 8.0
+    assert descuentos_por_codigo["1003"] == 4.0
+    assert descuentos_por_codigo["1004"] == 3.0
+    assert aplica_por_codigo["1001"] == "2026/02"
+    assert aplica_por_codigo["1002"] == "2026/02"
+    assert aplica_por_codigo["1003"] == "2026/02"
+    assert aplica_por_codigo["1004"] == "2025/01"
+
+    anteriores = df_base_actualizada[
+        (df_base_actualizada["Codigo"].isin(["1001", "1002"]))
+        & (df_base_actualizada["APLICA DDE CA:"] == "2025/01")
+    ]
+    assert anteriores["VENCIDO"].tolist() == ["Si", "Si"]
+    assert anteriores["NOTAS"].tolist() == [
+        "Vencido, ingreso un nuevo descuento",
+        "Vencido, ingreso un nuevo descuento",
+    ]
+
+    nuevos = df_base_actualizada[df_base_actualizada["APLICA DDE CA:"] == "2026/02"]
+    assert nuevos["Codigo"].tolist() == ["1001", "1002", "1003"]
+    assert nuevos["DESCUENTO ESPECIAL"].tolist() == [12.0, 8.0, 4.0]
 
 
 def test_segundo_comprando_falla_si_faltan_parametros(tmp_path: Path):

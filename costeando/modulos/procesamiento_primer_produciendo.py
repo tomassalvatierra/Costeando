@@ -150,7 +150,12 @@ def _validar_columnas_minimas_primer_produciendo(
         ["Codigo", "Blq. de Pant", columna_atiende, "Tipo", "Grupo", "Ult. Compra", "Costo Estand"],
         "maestro produciendo",
     )
-    validar_columna_fecha_parseable(df_maestro_produciendo, "Ult. Compra", "maestro produciendo")
+    validar_columna_fecha_parseable(
+        df_maestro_produciendo,
+        "Ult. Compra",
+        "maestro produciendo",
+        permitir_vacios=True,
+    )
     validar_columnas(df_produciendo_anterior, ["Codigo"], "produciendo anterior")
     validar_columnas(df_stock, ["Codigo", "Stock Actual"], "stock")
     validar_columnas(df_descuentos_especiales, ["Codigo", "VENCIDO"], "descuentos especiales")

@@ -44,9 +44,10 @@ def incorporar_nuevos_dtos(df_especiales, df_importador, df_productos):
     nuevos_valores.columns = ["DESCUENTO ESPECIAL", "APLICA DDE CA:"]
     nuevos_valores = nuevos_valores.set_index(df_productos.index)
 
-    df_productos[["DESCUENTO ESPECIAL", "APLICA DDE CA:"]] = df_productos[
-        ["DESCUENTO ESPECIAL", "APLICA DDE CA:"]
-    ].combine_first(nuevos_valores)
+    columnas_descuento = ["DESCUENTO ESPECIAL", "APLICA DDE CA:"]
+    df_productos[columnas_descuento] = nuevos_valores.combine_first(
+        df_productos[columnas_descuento]
+    )
 
     df_base_especiales_concatenado = pd.concat([df_especiales, df_importador], ignore_index=True)
     return df_base_especiales_concatenado, df_productos

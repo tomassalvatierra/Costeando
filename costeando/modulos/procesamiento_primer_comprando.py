@@ -72,6 +72,8 @@ def asignar_coeficiente(indice_a, indice_b, row):
         return None
 
 def calcular_obsolescencia(fecha, row):
+    if pd.isna(row['Ult. Compra']):
+        return 0
     dias_antiguedad = (fecha - row['Ult. Compra']).days
     if dias_antiguedad < 365:
         return 0
@@ -215,7 +217,7 @@ def _validar_columnas_minimas_primer_comprando(
 ):
     columna_atiende = _obtener_columna_atiende(df_maestro)
     validar_columnas(df_maestro, ["Codigo", "Cod Actualiz", "Blq. de Pant", columna_atiende, "Tipo", "Grupo", "Ult. Compra"], "maestro")
-    validar_columna_fecha_parseable(df_maestro, "Ult. Compra", "maestro")
+    validar_columna_fecha_parseable(df_maestro, "Ult. Compra", "maestro", permitir_vacios=True)
     validar_columnas(df_compras, ["Codigo", "ULTCOS", "Fch Emision", "MONEDA"], "compras")
     validar_columnas(df_stock, ["Codigo", "Stock Actual"], "stock")
     validar_columnas(df_costos_especiales, ["Codigo", "VENCIDO", "APLICA DDE CA:", "TIPO-DESCUENTO"], "base descuentos")
@@ -286,7 +288,33 @@ def _estandarizar_dataframes_primer_comprando(
         (df_ficha_rms, "Ficha RMS"),
     ]
     lista_dfs_estandarizados = [estandarizar_columna_producto(df, nombre) for df, nombre in lista_dfs]
-    return tuple(lista_dfs_estandarizados)
+    (
+        df_maestro,
+        df_compras,
+        df_stock,
+        df_costos_especiales,
+        df_listado_anterior,
+        df_calculo_comprando_anterior,
+        df_ficha_rms,
+    ) = lista_dfs_estandarizados
+
+    columnas_compras = {}
+    if "ULTCOS" not in df_compras.columns and "Ultimo Costo" in df_compras.columns:
+        columnas_compras["Ultimo Costo"] = "ULTCOS"
+    if "MONEDA" not in df_compras.columns and "Moneda" in df_compras.columns:
+        columnas_compras["Moneda"] = "MONEDA"
+    if columnas_compras:
+        df_compras = df_compras.rename(columns=columnas_compras)
+
+    return (
+        df_maestro,
+        df_compras,
+        df_stock,
+        df_costos_especiales,
+        df_listado_anterior,
+        df_calculo_comprando_anterior,
+        df_ficha_rms,
+    )
 
 
 def _preparar_base_calculo_comprando(df_maestro, columna_atiende):
@@ -429,7 +457,7 @@ def procesar_primer_comprando(campania, anio, indice_a, indice_b, mano_de_obra,
             anio_campania_anterior,
             campania_anterior,
         )
-        df_calculo_comprando['Ult. Compra'] = pd.to_datetime(df_calculo_comprando['Ult. Compra'])
+        df_calculo_comprando['Ult. Compra'] = pd.to_datetime(df_calculo_comprando['Ult. Compra'], errors="coerce")
         
         df_calculo_comprando['Coef de Actualizacion'] = df_calculo_comprando.apply(
             lambda row: asignar_coeficiente(indice_a, indice_b, row), axis=1)

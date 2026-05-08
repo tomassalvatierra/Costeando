@@ -76,16 +76,44 @@ def validar_columna_numerica(df: pd.DataFrame, columna: str, nombre_df: str = "D
             accion_sugerida=f"Revise el formato numerico de la columna {columna} en las filas indicadas en el log.")
 
 
-def validar_columna_fecha_parseable(df: pd.DataFrame, columna: str, nombre_df: str = "DataFrame"):
+def validar_columna_fecha_parseable(
+    df: pd.DataFrame,
+    columna: str,
+    nombre_df: str = "DataFrame",
+    permitir_vacios: bool = False,
+):
     validar_columnas(df, [columna], nombre_df)
-    fechas = pd.to_datetime(df[columna], errors="coerce", format="mixed")
+    valores = df[columna]
+    texto_valores = valores.astype("string").str.strip()
+    texto_sin_espacios = texto_valores.str.replace(" ", "", regex=False)
+    vacios = (
+        valores.isna()
+        | texto_valores.isin(["", "NaT", "nan", "None"])
+        | texto_sin_espacios.str.fullmatch(r"/+").fillna(False)
+    )
+
+    fechas = pd.to_datetime(valores, errors="coerce", format="mixed")
     invalidas = fechas.isna()
+    if permitir_vacios:
+        invalidas = invalidas & ~vacios
     if invalidas.any():
-        filas_invalidas = [posicion + 2 for posicion, invalida in enumerate(invalidas) if invalida]
+        filas_invalidas = []
+        ejemplos_invalidos = []
+        for posicion, (indice, invalida) in enumerate(invalidas.items()):
+            if not invalida:
+                continue
+            try:
+                fila_excel = int(indice) + 2
+            except (TypeError, ValueError):
+                fila_excel = posicion + 2
+            filas_invalidas.append(fila_excel)
+            if len(ejemplos_invalidos) < 10:
+                ejemplos_invalidos.append(f"fila {fila_excel}: {repr(df.iloc[posicion][columna])}")
         raise ErrorEsquemaArchivo(
             mensaje_tecnico=(
                 f"Fechas invalidas en {columna} de {nombre_df}. "
-                f"Filas Excel: {filas_invalidas}"
+                f"Filas Excel: {filas_invalidas}. "
+                f"Ejemplos: {ejemplos_invalidos}"
             ),
             codigo_error="CST-VAL-004",
             titulo_usuario="Formato de fecha invalido",

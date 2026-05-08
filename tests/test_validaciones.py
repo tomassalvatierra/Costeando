@@ -50,3 +50,19 @@ def test_validar_columna_fecha_falla_si_hay_un_valor_invalido():
         validar_columna_fecha_parseable(df, "Fecha", "fechas")
 
     assert error.value.codigo_error == "CST-VAL-004"
+
+
+def test_validar_columna_fecha_permite_vacios_si_se_indica():
+    df = pd.DataFrame({"Fecha": ["2026-01-01", None, "", "  /  /    "]})
+
+    validar_columna_fecha_parseable(df, "Fecha", "fechas", permitir_vacios=True)
+
+
+def test_validar_columna_fecha_permitiendo_vacios_falla_si_hay_texto_invalido():
+    df = pd.DataFrame({"Fecha": ["2026-01-01", "", "sin_fecha"]})
+
+    with pytest.raises(ErrorEsquemaArchivo) as error:
+        validar_columna_fecha_parseable(df, "Fecha", "fechas", permitir_vacios=True)
+
+    assert error.value.codigo_error == "CST-VAL-004"
+    assert "sin_fecha" in error.value.mensaje_tecnico
