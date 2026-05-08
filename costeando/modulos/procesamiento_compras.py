@@ -166,10 +166,17 @@ def _aplicar_reglas_costos(df_compras: pd.DataFrame, dolar: float) -> pd.DataFra
 
     df_depuradas = pd.concat([df_unicos, df_repetidos_resueltos], ignore_index=True)
     df_depuradas["Tasa Moneda"] = np.where(df_depuradas["Moneda"] == "Dolar", dolar, 1.0)
+    df_depuradas["Prc.Unitario"] = pd.to_numeric(df_depuradas["Prc.Unitario"], errors="coerce")
+    df_depuradas["Costo Estand"] = pd.to_numeric(df_depuradas["Costo Estand"], errors="coerce")
     df_depuradas["Ultimo Costo"] = (df_depuradas["Prc.Unitario"] * df_depuradas["Tasa Moneda"]).round(2)
-    df_depuradas["Var"] = (
-        (df_depuradas["Ultimo Costo"] / df_depuradas["Costo Estand"]) - 1
-    ).replace({np.inf: "NUEVO"})
+
+    costo_estandar_cero = df_depuradas["Costo Estand"].eq(0)
+    costo_estandar_valido = ~costo_estandar_cero
+    df_depuradas["Var"] = pd.Series("NUEVO", index=df_depuradas.index, dtype="object")
+    df_depuradas.loc[costo_estandar_valido, "Var"] = (
+        (df_depuradas.loc[costo_estandar_valido, "Ultimo Costo"]
+            / df_depuradas.loc[costo_estandar_valido, "Costo Estand"])- 1
+    )
     df_depuradas.drop(columns=["Verificacion"], inplace=True, errors="ignore")
     df_depuradas.sort_values(
         by=["Producto", "Fch Emision", "Ultimo Costo"],
