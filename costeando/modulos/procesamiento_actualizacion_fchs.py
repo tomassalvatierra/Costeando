@@ -5,7 +5,6 @@ from typing import Dict
 
 import pandas as pd
 
-from costeando.utilidades.auditoria import guardar_manifiesto_ejecucion
 from costeando.utilidades.errores_aplicacion import (
     ErrorAplicacion,
     ErrorEntradaArchivo,
@@ -258,46 +257,18 @@ def procesar_actualizacion_fchs_puro(
         df_concatenado = conservar_columnas_finales(df_concatenado, columnas_finales)
         
         path_guardado = _exportar_actualizacion_fchs(df_concatenado, carpeta_guardado)
-        logger.info("Archivo guardado en: %s", path_guardado)
-
-        path_manifiesto = guardar_manifiesto_ejecucion(
-            carpeta_guardado=carpeta_guardado,
-            id_ejecucion=id_proceso,
-            proceso="actualizacion_fchs",
-            estado="OK",
-            entradas={
-                "ruta_estructuras": ruta_estructuras,
-                "ruta_compras": ruta_compras,
-                "ruta_maestro": ruta_maestro,
-                "ruta_ordenes_apuntadas": ruta_ordenes_apuntadas,
-            },
-            parametros={},
-            metricas={"filas_salida": len(df_concatenado)},
-            archivos_generados={"actualizacion_fchs": path_guardado},
+        logger.info(
+            "Archivo de Actualizacion FCHS guardado. ID=%s Filas salida=%s Archivo=%s",
+            id_proceso,
+            len(df_concatenado),
+            path_guardado,
         )
         return {
             "actualizacion_fchs": path_guardado,
-            "manifiesto": path_manifiesto,
             "id_ejecucion": id_proceso,
         }
     except ErrorAplicacion as error:
         error.con_id_ejecucion(id_proceso)
-        guardar_manifiesto_ejecucion(
-            carpeta_guardado=carpeta_guardado or ".",
-            id_ejecucion=id_proceso,
-            proceso="actualizacion_fchs",
-            estado="ERROR",
-            entradas={
-                "ruta_estructuras": ruta_estructuras,
-                "ruta_compras": ruta_compras,
-                "ruta_maestro": ruta_maestro,
-                "ruta_ordenes_apuntadas": ruta_ordenes_apuntadas,
-            },
-            parametros={},
-            metricas={},
-            archivos_generados={},
-            codigo_error=error.codigo_error,
-        )
         logger.error(
             "Error controlado en Actualizacion FCHS. ID=%s Codigo=%s",
             id_proceso,
@@ -313,22 +284,6 @@ def procesar_actualizacion_fchs_puro(
             mensaje_usuario="Ocurrio un error inesperado en Actualizacion FCHS.",
             accion_sugerida="Reintente y si persiste contacte soporte con codigo e ID.",
             id_ejecucion=id_proceso,
-        )
-        guardar_manifiesto_ejecucion(
-            carpeta_guardado=carpeta_guardado or ".",
-            id_ejecucion=id_proceso,
-            proceso="actualizacion_fchs",
-            estado="ERROR",
-            entradas={
-                "ruta_estructuras": ruta_estructuras,
-                "ruta_compras": ruta_compras,
-                "ruta_maestro": ruta_maestro,
-                "ruta_ordenes_apuntadas": ruta_ordenes_apuntadas,
-            },
-            parametros={},
-            metricas={},
-            archivos_generados={},
-            codigo_error=error_interno.codigo_error,
         )
         logger.error("Error inesperado en Actualizacion FCHS. ID=%s", id_proceso, exc_info=True)
         raise error_interno from error

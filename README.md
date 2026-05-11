@@ -9,7 +9,7 @@
 3. [Flujo general de procesamiento](#3-flujo-general-de-procesamiento)
 4. [Modulos principales](#4-modulos-principales)
 5. [Validaciones centralizadas](#5-validaciones-centralizadas)
-6. [Sistema de logging y auditoria](#6-sistema-de-logging-y-auditoria)
+6. [Sistema de logging y errores](#6-sistema-de-logging-y-errores)
 7. [Pruebas automatizadas](#7-pruebas-automatizadas)
 8. [Empaquetado y distribucion](#8-empaquetado-y-distribucion)
 9. [Buenas practicas y recomendaciones](#9-buenas-practicas-y-recomendaciones)
@@ -70,7 +70,6 @@ Costeando1.1/
 |       |-- validaciones.py
 |       |-- errores_aplicacion.py
 |       |-- manejo_errores_gui.py
-|       |-- auditoria.py
 |       |-- configuracion_logging.py
 |       `-- func_faltante_cotizacion.py
 |-- tests/
@@ -79,8 +78,6 @@ Costeando1.1/
 |   |-- test_procesamiento_*.py
 |   |-- test_*_confiabilidad.py
 |   `-- test_validaciones.py
-`-- _artifacts/
-    `-- manifiestos/   # salida por defecto de manifiestos cuando no se informa carpeta valida
 ```
 
 ---
@@ -92,7 +89,7 @@ Costeando1.1/
 3. Normalizacion y transformaciones de datos.
 4. Calculo de reglas de negocio del modulo.
 5. Exportacion de archivos resultado.
-6. Generacion de `id_ejecucion` y manifiesto JSON de auditoria (`OK` o `ERROR`).
+6. Generacion de `id_ejecucion` para rastrear la ejecucion en logs.
 7. En caso de error, mapeo a mensaje legible para usuario y log tecnico para soporte.
 
 ---
@@ -137,7 +134,7 @@ Reglas de integridad recomendadas:
 
 ---
 
-## 6. Sistema de logging y auditoria
+## 6. Sistema de logging y errores
 
 ### Logging
 
@@ -165,18 +162,14 @@ Definido en `costeando/utilidades/errores_aplicacion.py` con jerarquia tipada:
 - `accion_sugerida`
 - `id_ejecucion`
 
-### Manifiesto de auditoria
+### Logs y mensajes de usuario
 
-`costeando/utilidades/auditoria.py` guarda un JSON por ejecucion con:
+Los procesos no generan archivos JSON adicionales. La informacion tecnica se registra en logs rotativos y los cuadros de la GUI muestran:
 
-- `id_ejecucion`, `proceso`, `estado`, `fecha_hora`
-- `entradas`, `parametros`, `metricas`, `archivos_generados`
-- `codigo_error` cuando aplica
-
-Ubicacion:
-
-- Si el proceso recibe carpeta de salida valida, se guarda ahi.
-- Si no recibe carpeta valida (`None`, `"."`, `"./"`, `".\\"`), se guarda en `_artifacts/manifiestos`.
+- que fallo
+- que hacer
+- `codigo_error`
+- `id_ejecucion`
 
 ---
 
@@ -239,23 +232,7 @@ Se evita enfoque big bang para no degradar confiabilidad operativa.
 
 ---
 
-## 11. Contacto y soporte
+## 11. Contacto
 
 - Responsable inicial: [LinkedIn](https://www.linkedin.com/in/tomas-lahuel-salvatierra-787a53249)
-- Soporte tecnico: [salvatierratomaslahuel@gmail.com](email:salvatierratomaslahuel@gmail.com)
 
-Para soporte, incluir siempre:
-
-- modulo ejecutado
-- `codigo_error`
-- `id_ejecucion`
-- archivo de log y manifiesto asociado
-
----
-
-## Advertencias para nuevos desarrolladores
-
-- Leer esta guia y `metodo_uso.md` antes de modificar modulos.
-- No cambiar reglas de negocio sin prueba de regresion asociada.
-- No introducir fallbacks silenciosos en columnas externas de origen.
-- Mantener foco en simplicidad + confiabilidad.

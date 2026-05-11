@@ -5,7 +5,6 @@ from typing import Dict
 
 import pandas as pd
 
-from costeando.utilidades.auditoria import guardar_manifiesto_ejecucion
 from costeando.utilidades.errores_aplicacion import (
     ErrorAplicacion,
     ErrorEntradaArchivo,
@@ -453,49 +452,16 @@ def procesar_leader_list_puro(
             anio,
             carpeta_guardado,
         )
-        logger.info("Leader List finalizado. Archivos en: %s", carpeta_guardado)
-
-        path_manifiesto = guardar_manifiesto_ejecucion(
-            carpeta_guardado=carpeta_guardado,
-            id_ejecucion=id_proceso,
-            proceso="leader_list",
-            estado="OK",
-            entradas={
-                "ruta_leader_list": ruta_leader_list,
-                "ruta_listado_anterior": ruta_listado_anterior,
-                "ruta_maestro": ruta_maestro,
-                "ruta_dobles": ruta_dobles,
-                "ruta_combinadas": ruta_combinadas,
-                "ruta_stock": ruta_stock,
-            },
-            parametros={"campania": campania, "anio": anio},
-            metricas={
-                "filas_leader_list": len(df_leader_list),
-                "filas_combinadas_agrupadas": len(df_combinadas_agrupadas),
-            },
-            archivos_generados=salidas,
+        logger.info(
+            "Leader List finalizado. ID=%s Filas leader=%s Filas combinadas=%s Archivos=%s",
+            id_proceso,
+            len(df_leader_list),
+            len(df_combinadas_agrupadas),
+            salidas,
         )
-        return {**salidas, "manifiesto": path_manifiesto, "id_ejecucion": id_proceso}
+        return {**salidas, "id_ejecucion": id_proceso}
     except ErrorAplicacion as error:
         error.con_id_ejecucion(id_proceso)
-        guardar_manifiesto_ejecucion(
-            carpeta_guardado=carpeta_guardado or ".",
-            id_ejecucion=id_proceso,
-            proceso="leader_list",
-            estado="ERROR",
-            entradas={
-                "ruta_leader_list": ruta_leader_list,
-                "ruta_listado_anterior": ruta_listado_anterior,
-                "ruta_maestro": ruta_maestro,
-                "ruta_dobles": ruta_dobles,
-                "ruta_combinadas": ruta_combinadas,
-                "ruta_stock": ruta_stock,
-            },
-            parametros={"campania": campana, "anio": anio},
-            metricas={},
-            archivos_generados={},
-            codigo_error=error.codigo_error,
-        )
         logger.error(
             "Error controlado en Leader List. ID=%s Codigo=%s",
             id_proceso,
@@ -511,24 +477,6 @@ def procesar_leader_list_puro(
             mensaje_usuario="Ocurrio un error inesperado en Leader List.",
             accion_sugerida="Reintente y si persiste contacte soporte con codigo e ID.",
             id_ejecucion=id_proceso,
-        )
-        guardar_manifiesto_ejecucion(
-            carpeta_guardado=carpeta_guardado or ".",
-            id_ejecucion=id_proceso,
-            proceso="leader_list",
-            estado="ERROR",
-            entradas={
-                "ruta_leader_list": ruta_leader_list,
-                "ruta_listado_anterior": ruta_listado_anterior,
-                "ruta_maestro": ruta_maestro,
-                "ruta_dobles": ruta_dobles,
-                "ruta_combinadas": ruta_combinadas,
-                "ruta_stock": ruta_stock,
-            },
-            parametros={"campania": campana, "anio": anio},
-            metricas={},
-            archivos_generados={},
-            codigo_error=error_interno.codigo_error,
         )
         logger.error("Error inesperado en Leader List. ID=%s", id_proceso, exc_info=True)
         raise error_interno from error

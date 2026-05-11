@@ -6,7 +6,6 @@ from typing import Dict
 import numpy as np
 import pandas as pd
 
-from costeando.utilidades.auditoria import guardar_manifiesto_ejecucion
 from costeando.utilidades.errores_aplicacion import (
     ErrorAplicacion,
     ErrorEntradaArchivo,
@@ -362,45 +361,15 @@ def procesar_segundo_produciendo(
             anio,
             carpeta_guardado,
         )
-        logger.info("Segundo Produciendo finalizado. Archivos en: %s", carpeta_guardado)
-
-        path_manifiesto = guardar_manifiesto_ejecucion(
-            carpeta_guardado=carpeta_guardado,
-            id_ejecucion=id_proceso,
-            proceso="segundo_produciendo",
-            estado="OK",
-            entradas={
-                "ruta_produciendo": ruta_produciendo,
-                "ruta_base_especiales": ruta_base_especiales,
-                "ruta_importador_descuentos": ruta_importador_descuentos,
-            },
-            parametros={
-                "campania": campania_normalizada,
-                "anio": anio,
-                "fecha_compras_inicio": fecha_compras_inicio,
-                "fecha_compras_final": fecha_compras_final,
-            },
-            metricas={"filas_salida": len(df_produciendo)},
-            archivos_generados=paths_salidas,
+        logger.info(
+            "Segundo Produciendo finalizado. ID=%s Filas salida=%s Archivos=%s",
+            id_proceso,
+            len(df_produciendo),
+            paths_salidas,
         )
-        return {**paths_salidas, "manifiesto": path_manifiesto, "id_ejecucion": id_proceso}
+        return {**paths_salidas, "id_ejecucion": id_proceso}
     except ErrorAplicacion as error:
         error.con_id_ejecucion(id_proceso)
-        guardar_manifiesto_ejecucion(
-            carpeta_guardado=carpeta_guardado or ".",
-            id_ejecucion=id_proceso,
-            proceso="segundo_produciendo",
-            estado="ERROR",
-            entradas={
-                "ruta_produciendo": ruta_produciendo,
-                "ruta_base_especiales": ruta_base_especiales,
-                "ruta_importador_descuentos": ruta_importador_descuentos,
-            },
-            parametros={"campania": campania, "anio": anio},
-            metricas={},
-            archivos_generados={},
-            codigo_error=error.codigo_error,
-        )
         logger.error(
             "Error controlado en Segundo Produciendo. ID=%s Codigo=%s",
             id_proceso,
@@ -416,21 +385,6 @@ def procesar_segundo_produciendo(
             mensaje_usuario="Ocurrio un error inesperado en Segundo Produciendo.",
             accion_sugerida="Reintente y si persiste contacte soporte con codigo e ID.",
             id_ejecucion=id_proceso,
-        )
-        guardar_manifiesto_ejecucion(
-            carpeta_guardado=carpeta_guardado or ".",
-            id_ejecucion=id_proceso,
-            proceso="segundo_produciendo",
-            estado="ERROR",
-            entradas={
-                "ruta_produciendo": ruta_produciendo,
-                "ruta_base_especiales": ruta_base_especiales,
-                "ruta_importador_descuentos": ruta_importador_descuentos,
-            },
-            parametros={"campania": campania, "anio": anio},
-            metricas={},
-            archivos_generados={},
-            codigo_error=error_interno.codigo_error,
         )
         logger.error("Error inesperado en Segundo Produciendo. ID=%s", id_proceso, exc_info=True)
         raise error_interno from error

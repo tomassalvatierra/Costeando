@@ -1,11 +1,15 @@
 import customtkinter as ctk
 import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import filedialog
 import logging
 from concurrent.futures import Future, ProcessPoolExecutor
 
 from costeando.modulos.procesamiento_valorizacion_dyc import procesar_valorizacion_dyc_puro
-from costeando.utilidades.manejo_errores_gui import mostrar_error_legible
+from costeando.utilidades.manejo_errores_gui import (
+    mostrar_advertencia_usuario,
+    mostrar_error_legible,
+    mostrar_exito_proceso,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -119,14 +123,22 @@ class ValorizacionDYCWindow(ctk.CTkFrame):
             return
 
         if not self.campana_var.get() or not self.anio_var.get():
-            messagebox.showerror("Error", "Debe completar campania y anio.")
+            mostrar_advertencia_usuario(
+                "Datos incompletos",
+                "Debe completar campania y anio.",
+                "Ingrese ambos datos antes de iniciar el proceso.",
+            )
             return
 
         ruta_listado = self.ruta_listado.get()
         ruta_combinadas = self.ruta_combinadas.get()
         ruta_dobles = self.ruta_dobles.get()
         if not all([ruta_listado, ruta_combinadas, ruta_dobles]):
-            messagebox.showerror("Error", "Debe seleccionar todos los archivos requeridos.")
+            mostrar_advertencia_usuario(
+                "Archivos incompletos",
+                "Debe seleccionar todos los archivos requeridos.",
+                "Complete los selectores pendientes antes de iniciar.",
+            )
             return
 
         carpeta_guardado = filedialog.askdirectory(title="Seleccionar carpeta de salida")
@@ -164,8 +176,8 @@ class ValorizacionDYCWindow(ctk.CTkFrame):
 
         self.id_verificacion_after = None
         try:
-            self.future_proceso.result()
-            messagebox.showinfo("Exito", "El procesamiento finalizo con exito.")
+            resultado = self.future_proceso.result()
+            mostrar_exito_proceso("Valorizacion DYC", resultado)
         except Exception as error:
             logger.error("Error en Valorizacion DyC: %s", str(error), exc_info=True)
             mostrar_error_legible(error)

@@ -1,4 +1,3 @@
-import json
 from pathlib import Path
 
 import pandas as pd
@@ -105,20 +104,13 @@ def _crear_fixture_listado_general(tmp_path: Path):
     }
 
 
-def test_listado_general_ok_genera_salida_y_manifiesto(tmp_path: Path):
+def test_listado_general_ok_genera_salida_sin_manifiesto(tmp_path: Path):
     data = _crear_fixture_listado_general(tmp_path)
     resultado = procesar_listado_gral_puro(**data)
 
     assert Path(resultado["Listado_general_completo"]).exists()
-    assert Path(resultado["manifiesto"]).exists()
     assert resultado["id_ejecucion"] == "IDLST001"
-
-    with open(resultado["manifiesto"], "r", encoding="utf-8") as archivo:
-        manifiesto = json.load(archivo)
-
-    assert manifiesto["estado"] == "OK"
-    assert manifiesto["proceso"] == "listado_general"
-    assert manifiesto["metricas"]["filas_salida"] == 1
+    assert "manifiesto" not in resultado
 
 
 def test_listado_general_falla_si_falta_columna_en_leader(tmp_path: Path):
@@ -131,7 +123,7 @@ def test_listado_general_falla_si_falta_columna_en_leader(tmp_path: Path):
 
     assert error.value.codigo_error == "CST-VAL-001"
     manifiestos = list(Path(data["carpeta_guardado"]).glob("*manifiesto_listado_general_*.json"))
-    assert manifiestos
+    assert not manifiestos
 
 
 def test_listado_general_falla_si_parametros_incompletos(tmp_path: Path):

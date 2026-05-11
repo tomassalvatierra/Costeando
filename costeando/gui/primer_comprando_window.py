@@ -1,11 +1,15 @@
 import customtkinter as ctk
 import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import filedialog
 import logging
 from concurrent.futures import Future, ProcessPoolExecutor
 
 from costeando.modulos.procesamiento_primer_comprando import procesar_primer_comprando
-from costeando.utilidades.manejo_errores_gui import mostrar_error_legible
+from costeando.utilidades.manejo_errores_gui import (
+    mostrar_advertencia_usuario,
+    mostrar_error_legible,
+    mostrar_exito_proceso,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -157,7 +161,11 @@ class PrimerComprandoWindow(ctk.CTkFrame):
                 self.indice_b_var.get(),
             ]
         ):
-            messagebox.showerror("Error", "Debe completar todos los parametros numericos.")
+            mostrar_advertencia_usuario(
+                "Parametros incompletos",
+                "Debe completar campania, anio, mano de obra e indices.",
+                "Revise los campos numericos y vuelva a iniciar el proceso.",
+            )
             return
 
         archivos = [
@@ -170,7 +178,11 @@ class PrimerComprandoWindow(ctk.CTkFrame):
             self.ruta_ficha.get(),
         ]
         if not all(archivos):
-            messagebox.showerror("Error", "Debe seleccionar todos los archivos requeridos.")
+            mostrar_advertencia_usuario(
+                "Archivos incompletos",
+                "Debe seleccionar todos los archivos requeridos.",
+                "Complete los selectores pendientes antes de iniciar.",
+            )
             return
 
         try:
@@ -178,7 +190,11 @@ class PrimerComprandoWindow(ctk.CTkFrame):
             indice_a = float(self.indice_a_var.get().replace(",", "."))
             indice_b = float(self.indice_b_var.get().replace(",", "."))
         except ValueError:
-            messagebox.showerror("Error", "Mano de Obra e indices deben ser numericos.")
+            mostrar_advertencia_usuario(
+                "Valores invalidos",
+                "Mano de Obra e indices deben ser numericos.",
+                "Use solo numeros y punto o coma decimal.",
+            )
             return
 
         carpeta_guardado = filedialog.askdirectory(title="Seleccionar carpeta de salida")
@@ -223,8 +239,8 @@ class PrimerComprandoWindow(ctk.CTkFrame):
 
         self.id_verificacion_after = None
         try:
-            self.future_proceso.result()
-            messagebox.showinfo("Exito", "El procesamiento ha finalizado con exito.")
+            resultado = self.future_proceso.result()
+            mostrar_exito_proceso("Primer Comprando", resultado)
         except Exception as error:
             logger.error("Error en Primer Comprando: %s", str(error), exc_info=True)
             mostrar_error_legible(error)

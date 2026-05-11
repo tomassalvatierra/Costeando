@@ -1,11 +1,15 @@
 import customtkinter as ctk
 import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import filedialog
 import logging
 from concurrent.futures import Future, ProcessPoolExecutor
 
 from costeando.modulos.procesamiento_primer_produciendo import procesar_primer_produciendo
-from costeando.utilidades.manejo_errores_gui import mostrar_error_legible
+from costeando.utilidades.manejo_errores_gui import (
+    mostrar_advertencia_usuario,
+    mostrar_error_legible,
+    mostrar_exito_proceso,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -154,7 +158,11 @@ class PrimerProduciendoWindow(ctk.CTkFrame):
             return
 
         if not self.campania_var.get() or not self.anio_var.get():
-            messagebox.showerror("Error", "Debe completar Campania y Anio.")
+            mostrar_advertencia_usuario(
+                "Datos incompletos",
+                "Debe completar Campania y Anio.",
+                "Ingrese ambos datos antes de iniciar el proceso.",
+            )
             return
 
         archivos = [
@@ -166,7 +174,11 @@ class PrimerProduciendoWindow(ctk.CTkFrame):
             self.ruta_estructuras.get(),
         ]
         if not all(archivos):
-            messagebox.showerror("Error", "Debe seleccionar todos los archivos requeridos.")
+            mostrar_advertencia_usuario(
+                "Archivos incompletos",
+                "Debe seleccionar todos los archivos requeridos.",
+                "Complete los selectores pendientes antes de iniciar.",
+            )
             return
 
         carpeta_guardado = filedialog.askdirectory(title="Seleccionar carpeta de salida")
@@ -207,8 +219,8 @@ class PrimerProduciendoWindow(ctk.CTkFrame):
 
         self.id_verificacion_after = None
         try:
-            self.future_proceso.result()
-            messagebox.showinfo("Exito", "El procesamiento ha finalizado con exito.")
+            resultado = self.future_proceso.result()
+            mostrar_exito_proceso("Primer Produciendo", resultado)
         except Exception as error:
             logger.error("Error en Primer Produciendo: %s", str(error), exc_info=True)
             mostrar_error_legible(error)

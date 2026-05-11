@@ -7,7 +7,6 @@ import os
 import numpy as np
 import pandas as pd
 
-from costeando.utilidades.auditoria import guardar_manifiesto_ejecucion
 from costeando.utilidades.errores_aplicacion import (
     ErrorAplicacion,
     ErrorEscrituraSalida,
@@ -25,7 +24,7 @@ from costeando.utilidades.validaciones import (
 logger = logging.getLogger(__name__)
 
 PALABRAS_EXCLUIDAS_PRODUCTO = ["MAT", "GAS", "BSUSO", "FLE", "HON", "SER"]
-TIPOS_COSTO_EXCLUIDOS = ["Excedente - Pesos", "Sufacturacion - Dolar", "Excedente - Dolar"]
+TIPOS_COSTO_EXCLUIDOS = ["Excedente - Pesos", "Excedente - Dolar"]
 COLUMNAS_OBLIGATORIAS_COMPRAS = [
     "Resid. Elim.",
     "Producto",
@@ -61,13 +60,12 @@ def clasificacion_compras(row):
         if notas == 0:
             return "Excedente - Dolar"
         try:
-            resultado = notas / precio_unitario
-            if 1.8 <= resultado <= 2.4:
-                return "Sufacturacion - Dolar"
-            if 0.7 <= resultado <= 1.3:
-                return "Excedente - Dolar"
+            resultado = round(precio_unitario / notas,1)
+            if np.isclose(resultado, [0.4, 0.5, 0.6]).any():
+                return "Subfacturacion - Dolar"
+            return "Excedente - Dolar"
         except ZeroDivisionError:
-            return "Error: Precio Unitario es 0"
+            return "Error: Notas es 0"
     return "Otro"
 
 
@@ -182,6 +180,7 @@ def _aplicar_reglas_costos(df_compras: pd.DataFrame, dolar: float) -> pd.DataFra
     )
     df_depuradas["OBSERVACIONES COSTOS"] = ""
     df_depuradas["RESPUESTA COMPRAS"] = ""
+    
     return df_depuradas
 
 
@@ -209,7 +208,7 @@ def procesar_compras_puro(
 ) -> Dict[str, str]:
     """
     Procesa el archivo de compras y guarda el archivo generado en la carpeta indicada.
-    Devuelve un diccionario con los paths de salida (incluye manifiesto de auditoria).
+    Devuelve un diccionario con los paths de salida.
     """
     id_proceso = id_ejecucion or generar_id_ejecucion()
     logger.info("Iniciando procesamiento de compras. ID ejecucion=%s", id_proceso)
@@ -227,39 +226,20 @@ def procesar_compras_puro(
         total_filas_salida = len(df_depuradas)
         path_compras = _guardar_salida_compras(df_depuradas, carpeta_guardado)
 
-        manifiesto = guardar_manifiesto_ejecucion(
-            carpeta_guardado=carpeta_guardado,
-            id_ejecucion=id_proceso,
-            proceso="compras",
-            estado="OK",
-            entradas={"ruta_compras": ruta_compras},
-            parametros={"dolar": dolar},
-            metricas={
-                "filas_entrada": total_filas_entrada,
-                "filas_post_filtro": total_filas_filtradas,
-                "filas_salida": total_filas_salida,
-            },
-            archivos_generados={"compras_depuradas": path_compras},
+        logger.info(
+            "Proceso compras finalizado. ID=%s Filas entrada=%s Filas filtradas=%s Filas salida=%s Archivo=%s",
+            id_proceso,
+            total_filas_entrada,
+            total_filas_filtradas,
+            total_filas_salida,
+            path_compras,
         )
-        logger.info("Proceso compras finalizado. ID=%s", id_proceso)
         return {
             "compras_depuradas": path_compras,
-            "manifiesto": manifiesto,
             "id_ejecucion": id_proceso,
         }
     except ErrorAplicacion as error:
         error.con_id_ejecucion(id_proceso)
-        guardar_manifiesto_ejecucion(
-            carpeta_guardado=carpeta_guardado,
-            id_ejecucion=id_proceso,
-            proceso="compras",
-            estado="ERROR",
-            entradas={"ruta_compras": ruta_compras},
-            parametros={"dolar": dolar},
-            metricas={},
-            archivos_generados={},
-            codigo_error=error.codigo_error,
-        )
         logger.error("Error controlado en compras. ID=%s Codigo=%s", id_proceso, error.codigo_error, exc_info=True)
         raise
     except Exception as error:
@@ -270,17 +250,6 @@ def procesar_compras_puro(
             mensaje_usuario="Ocurrio un error inesperado durante el procesamiento de compras.",
             accion_sugerida="Reintente la operacion y contacte soporte si el problema persiste.",
             id_ejecucion=id_proceso,
-        )
-        guardar_manifiesto_ejecucion(
-            carpeta_guardado=carpeta_guardado,
-            id_ejecucion=id_proceso,
-            proceso="compras",
-            estado="ERROR",
-            entradas={"ruta_compras": ruta_compras},
-            parametros={"dolar": dolar},
-            metricas={},
-            archivos_generados={},
-            codigo_error=error_interno.codigo_error,
         )
         logger.error("Error inesperado en compras. ID=%s", id_proceso, exc_info=True)
         raise error_interno from error

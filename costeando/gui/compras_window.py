@@ -1,12 +1,16 @@
 import customtkinter as ctk
 import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import filedialog
 import logging
 from concurrent.futures import Future, ProcessPoolExecutor
 
 from costeando.modulos.procesamiento_compras import procesar_compras_puro
 from costeando.utilidades.errores_aplicacion import generar_id_ejecucion
-from costeando.utilidades.manejo_errores_gui import mostrar_error_legible
+from costeando.utilidades.manejo_errores_gui import (
+    mostrar_advertencia_usuario,
+    mostrar_error_legible,
+    mostrar_exito_proceso,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -106,13 +110,21 @@ class ComprasWindow(ctk.CTkFrame):
             return
 
         if not self.dolar_var.get() or not self.ruta_compras.get():
-            messagebox.showerror("Error", "Todos los campos son obligatorios.")
+            mostrar_advertencia_usuario(
+                "Datos incompletos",
+                "Debe seleccionar el archivo de compras e ingresar la cotizacion del dolar.",
+                "Complete los campos marcados y vuelva a iniciar el proceso.",
+            )
             return
 
         try:
             dolar = float(self.dolar_var.get().replace(",", "."))
         except ValueError:
-            messagebox.showerror("Error", "El valor de Dolar debe ser numerico.")
+            mostrar_advertencia_usuario(
+                "Cotizacion invalida",
+                "El valor de Dolar debe ser numerico.",
+                "Use solo numeros y punto o coma decimal. Ejemplo: 1200.50.",
+            )
             return
 
         carpeta_guardado = filedialog.askdirectory(title="Selecciona la carpeta para guardar los resultados")
@@ -149,8 +161,8 @@ class ComprasWindow(ctk.CTkFrame):
 
         self.id_verificacion_after = None
         try:
-            self.future_proceso.result()
-            messagebox.showinfo("Exito", "El procesamiento finalizo con exito.")
+            resultado = self.future_proceso.result()
+            mostrar_exito_proceso("Compras", resultado)
         except Exception as error:
             logger.error("Error en logica de compras. ID=%s", self.id_ejecucion_activo, exc_info=True)
             mostrar_error_legible(error, self.id_ejecucion_activo)

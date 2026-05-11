@@ -1,11 +1,15 @@
 import customtkinter as ctk
 import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import filedialog
 import logging
 from concurrent.futures import Future, ProcessPoolExecutor
 
 from costeando.modulos.procesamiento_listado_gral import procesar_listado_gral_puro
-from costeando.utilidades.manejo_errores_gui import mostrar_error_legible
+from costeando.utilidades.manejo_errores_gui import (
+    mostrar_advertencia_usuario,
+    mostrar_error_legible,
+    mostrar_exito_proceso,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -159,7 +163,11 @@ class ListadoGralWindow(ctk.CTkFrame):
         campania = self.campana_var.get()
         anio = self.anio_var.get()
         if not campania or not anio:
-            messagebox.showerror("Error", "Debe completar Campania y Anio.")
+            mostrar_advertencia_usuario(
+                "Datos incompletos",
+                "Debe completar Campania y Anio.",
+                "Ingrese ambos datos antes de iniciar el proceso.",
+            )
             return
 
         archivos = [
@@ -173,7 +181,11 @@ class ListadoGralWindow(ctk.CTkFrame):
             self.ruta_compilado_fechas.get(),
         ]
         if not all(archivos):
-            messagebox.showerror("Error", "Todos los archivos son obligatorios.")
+            mostrar_advertencia_usuario(
+                "Archivos incompletos",
+                "Todos los archivos son obligatorios.",
+                "Complete los selectores pendientes antes de iniciar.",
+            )
             return
 
         carpeta_guardado = filedialog.askdirectory(title="Seleccionar carpeta de guardado")
@@ -216,8 +228,8 @@ class ListadoGralWindow(ctk.CTkFrame):
 
         self.id_verificacion_after = None
         try:
-            self.future_proceso.result()
-            messagebox.showinfo("Exito", "El procesamiento ha finalizado con exito.")
+            resultado = self.future_proceso.result()
+            mostrar_exito_proceso("Listado General", resultado)
         except Exception as error:
             logger.error("Error en Listado General: %s", str(error), exc_info=True)
             mostrar_error_legible(error)

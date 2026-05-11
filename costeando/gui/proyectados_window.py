@@ -1,11 +1,15 @@
 import customtkinter as ctk
 import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import filedialog
 import logging
 from concurrent.futures import Future, ProcessPoolExecutor
 
 from costeando.modulos.procesamiento_proyectados import procesar_proyectados_puro
-from costeando.utilidades.manejo_errores_gui import mostrar_error_legible
+from costeando.utilidades.manejo_errores_gui import (
+    mostrar_advertencia_usuario,
+    mostrar_error_legible,
+    mostrar_exito_proceso,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -117,16 +121,32 @@ class ProyectadosWindow(ctk.CTkFrame):
         ruta_coef = self.ruta_coef.get()
 
         if not campania or not anio:
-            messagebox.showerror("Error", "Todos los campos son obligatorios.")
+            mostrar_advertencia_usuario(
+                "Datos incompletos",
+                "Campania y anio son obligatorios.",
+                "Complete ambos campos antes de iniciar.",
+            )
             return
         if not (campania.isdigit() and len(campania) == 2):
-            messagebox.showerror("Error", "La campania debe tener 2 digitos. Ejemplo: 01")
+            mostrar_advertencia_usuario(
+                "Campania invalida",
+                "La campania debe tener 2 digitos. Ejemplo: 01.",
+                "Corrija la campania y vuelva a iniciar.",
+            )
             return
         if not (anio.isdigit() and len(anio) == 4):
-            messagebox.showerror("Error", "El anio debe tener 4 digitos. Ejemplo: 2025")
+            mostrar_advertencia_usuario(
+                "Anio invalido",
+                "El anio debe tener 4 digitos. Ejemplo: 2025.",
+                "Corrija el anio y vuelva a iniciar.",
+            )
             return
         if not all([ruta_lista, ruta_coef]):
-            messagebox.showerror("Error", "Debe seleccionar ambos archivos.")
+            mostrar_advertencia_usuario(
+                "Archivos incompletos",
+                "Debe seleccionar la lista y el archivo de coeficientes.",
+                "Complete ambos selectores antes de iniciar.",
+            )
             return
 
         carpeta_guardado = filedialog.askdirectory(title="Seleccionar carpeta de salida")
@@ -163,8 +183,8 @@ class ProyectadosWindow(ctk.CTkFrame):
 
         self.id_verificacion_after = None
         try:
-            self.future_proceso.result()
-            messagebox.showinfo("Exito", "El procesamiento finalizo con exito.")
+            resultado = self.future_proceso.result()
+            mostrar_exito_proceso("Proyectados", resultado)
         except Exception as error:
             logger.error("Error en logica proyectados: %s", str(error), exc_info=True)
             mostrar_error_legible(error)

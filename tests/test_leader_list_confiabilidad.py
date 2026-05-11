@@ -1,4 +1,3 @@
-import json
 from pathlib import Path
 
 import pandas as pd
@@ -106,16 +105,11 @@ def test_falla_si_faltan_columnas_en_leader_list(tmp_path: Path):
     assert error.value.codigo_error == "CST-VAL-001"
 
 
-def test_caso_minimo_valido_genera_salidas_y_manifiesto(tmp_path: Path):
+def test_caso_minimo_valido_genera_salidas_sin_manifiesto(tmp_path: Path):
     data = _crear_fixture_leader_list(tmp_path)
     resultados = procesar_leader_list_puro(**data)
 
     assert Path(resultados["leader_list"]).exists()
     assert Path(resultados["combinadas_agrupadas"]).exists()
-    assert Path(resultados["manifiesto"]).exists()
     assert resultados["id_ejecucion"]
-
-    with open(resultados["manifiesto"], "r", encoding="utf-8") as archivo:
-        manifiesto = json.load(archivo)
-    assert manifiesto["estado"] == "OK"
-    assert manifiesto["proceso"] == "leader_list"
+    assert "manifiesto" not in resultados

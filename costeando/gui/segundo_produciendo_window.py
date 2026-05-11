@@ -1,12 +1,16 @@
 import logging
 from concurrent.futures import Future, ProcessPoolExecutor
 import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import filedialog
 
 import customtkinter as ctk
 
 from costeando.modulos.procesamiento_segundo_produciendo import procesar_segundo_produciendo
-from costeando.utilidades.manejo_errores_gui import mostrar_error_legible
+from costeando.utilidades.manejo_errores_gui import (
+    mostrar_advertencia_usuario,
+    mostrar_error_legible,
+    mostrar_exito_proceso,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -152,13 +156,21 @@ class SegundoProduciendoWindow(ctk.CTkFrame):
             return
 
         if not all([self.fecha_inicio_var.get(), self.fecha_fin_var.get(), self.campania_var.get(), self.anio_var.get()]):
-            messagebox.showerror("Error", "Debe completar todas las fechas y datos de campania.")
+            mostrar_advertencia_usuario(
+                "Datos incompletos",
+                "Debe completar todas las fechas y datos de campania.",
+                "Complete inicio, fin, campania y anio antes de iniciar.",
+            )
             return
 
         ruta_produciendo = self.ruta_segundo_produciendo.get()
         ruta_base = self.ruta_base_especiales.get()
         if not ruta_produciendo or not ruta_base:
-            messagebox.showerror("Error", "Produciendo y Base Descuentos son obligatorios.")
+            mostrar_advertencia_usuario(
+                "Archivos incompletos",
+                "Produciendo y Base Descuentos son obligatorios.",
+                "Seleccione ambos archivos antes de iniciar.",
+            )
             return
 
         carpeta_guardado = filedialog.askdirectory(title="Seleccionar carpeta de salida")
@@ -198,8 +210,8 @@ class SegundoProduciendoWindow(ctk.CTkFrame):
 
         self.id_verificacion_after = None
         try:
-            self.future_proceso.result()
-            messagebox.showinfo("Exito", "El procesamiento ha finalizado con exito.")
+            resultado = self.future_proceso.result()
+            mostrar_exito_proceso("Segundo Produciendo", resultado)
         except Exception as error:
             logger.error("Error en Segundo Produciendo: %s", str(error), exc_info=True)
             mostrar_error_legible(error)

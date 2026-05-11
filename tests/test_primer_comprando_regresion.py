@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-import json
 from pathlib import Path
 
 import pandas as pd
@@ -122,7 +121,7 @@ def test_regresion_valores_clave_calculo_comprando(tmp_path: Path):
     assert fila_mod0806["Clasificacion"] == "BAJA ROTACION"
 
 
-def test_regresion_descuentos_y_manifiesto(tmp_path: Path):
+def test_regresion_descuentos_sin_manifiesto(tmp_path: Path):
     data = _crear_fixture_regresion_primer_comprando(tmp_path)
     resultados = procesar_primer_comprando(**data)
 
@@ -133,11 +132,6 @@ def test_regresion_descuentos_y_manifiesto(tmp_path: Path):
     assert len(df_cambios) == 2
     assert set(df_base_descuentos["VENCIDO"]) == {"Si"}
     assert set(df_cambios["VENCIDO"]) == {"Si"}
-
-    with open(resultados["manifiesto"], "r", encoding="utf-8") as archivo:
-        manifiesto = json.load(archivo)
-
-    assert manifiesto["id_ejecucion"] == "REGRESIONPC001"
-    assert manifiesto["estado"] == "OK"
-    assert manifiesto["metricas"]["filas_salida"] == 2
+    assert resultados["id_ejecucion"] == "REGRESIONPC001"
+    assert "manifiesto" not in resultados
 

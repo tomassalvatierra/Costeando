@@ -6,7 +6,6 @@ from typing import Dict
 import numpy as np
 import pandas as pd
 
-from costeando.utilidades.auditoria import guardar_manifiesto_ejecucion
 from costeando.utilidades.errores_aplicacion import (
     ErrorAplicacion,
     ErrorEntradaArchivo,
@@ -214,47 +213,19 @@ def procesar_valorizacion_dyc_puro(
             anio,
             carpeta_guardado,
         )
-        logger.info("Archivo de Valorizacion DYC guardado en: %s", path_guardado)
-
-        path_manifiesto = guardar_manifiesto_ejecucion(
-            carpeta_guardado=carpeta_guardado,
-            id_ejecucion=id_proceso,
-            proceso="valorizacion_dyc",
-            estado="OK",
-            entradas={
-                "ruta_listado": ruta_listado,
-                "ruta_combinadas": ruta_combinadas,
-                "ruta_dobles": ruta_dobles,
-            },
-            parametros={"campania": campania_normalizada, "anio": anio},
-            metricas={
-                "filas_combinadas": len(df_combinadas_valorizadas),
-                "filas_dobles": len(df_dobles_valorizados),
-            },
-            archivos_generados={"valorizacion_dyc": path_guardado},
+        logger.info(
+            "Archivo de Valorizacion DYC guardado. ID=%s Filas combinadas=%s Filas dobles=%s Archivo=%s",
+            id_proceso,
+            len(df_combinadas_valorizadas),
+            len(df_dobles_valorizados),
+            path_guardado,
         )
         return {
             "valorizacion_dyc": path_guardado,
-            "manifiesto": path_manifiesto,
             "id_ejecucion": id_proceso,
         }
     except ErrorAplicacion as error:
         error.con_id_ejecucion(id_proceso)
-        guardar_manifiesto_ejecucion(
-            carpeta_guardado=carpeta_guardado or ".",
-            id_ejecucion=id_proceso,
-            proceso="valorizacion_dyc",
-            estado="ERROR",
-            entradas={
-                "ruta_listado": ruta_listado,
-                "ruta_combinadas": ruta_combinadas,
-                "ruta_dobles": ruta_dobles,
-            },
-            parametros={"campania": campana, "anio": anio},
-            metricas={},
-            archivos_generados={},
-            codigo_error=error.codigo_error,
-        )
         logger.error(
             "Error controlado en Valorizacion DYC. ID=%s Codigo=%s",
             id_proceso,
@@ -270,21 +241,6 @@ def procesar_valorizacion_dyc_puro(
             mensaje_usuario="Ocurrio un error inesperado en Valorizacion DYC.",
             accion_sugerida="Reintente y si persiste contacte soporte con codigo e ID.",
             id_ejecucion=id_proceso,
-        )
-        guardar_manifiesto_ejecucion(
-            carpeta_guardado=carpeta_guardado or ".",
-            id_ejecucion=id_proceso,
-            proceso="valorizacion_dyc",
-            estado="ERROR",
-            entradas={
-                "ruta_listado": ruta_listado,
-                "ruta_combinadas": ruta_combinadas,
-                "ruta_dobles": ruta_dobles,
-            },
-            parametros={"campania": campana, "anio": anio},
-            metricas={},
-            archivos_generados={},
-            codigo_error=error_interno.codigo_error,
         )
         logger.error("Error inesperado en Valorizacion DYC. ID=%s", id_proceso, exc_info=True)
         raise error_interno from error

@@ -122,12 +122,11 @@ def test_falla_si_faltan_columnas_en_maestro(tmp_path: Path):
     assert error.value.codigo_error == "CST-VAL-001"
 
 
-def test_caso_minimo_valido_genera_salidas_y_manifiesto(tmp_path: Path):
+def test_caso_minimo_valido_genera_salidas_sin_manifiesto(tmp_path: Path):
     data = _crear_fixture_primer_produciendo(tmp_path)
     resultados = procesar_primer_produciendo(**data)
     assert Path(resultados["produciendo"]).exists()
     assert Path(resultados["base_descuentos"]).exists()
     assert Path(resultados["cambios"]).exists()
-    assert Path(resultados["manifiesto"]).exists()
     assert resultados["id_ejecucion"]
-
+    assert "manifiesto" not in resultados

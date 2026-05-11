@@ -1,11 +1,15 @@
 import customtkinter as ctk
 import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import filedialog
 import logging
 from concurrent.futures import Future, ProcessPoolExecutor
 
 from costeando.modulos.procesamiento_segundo_comprando import procesar_segundo_comprando
-from costeando.utilidades.manejo_errores_gui import mostrar_error_legible
+from costeando.utilidades.manejo_errores_gui import (
+    mostrar_advertencia_usuario,
+    mostrar_error_legible,
+    mostrar_exito_proceso,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -137,13 +141,21 @@ class SegundoComprandoWindow(ctk.CTkFrame):
             return
 
         if not all([self.fecha_inicio_var.get(), self.fecha_fin_var.get(), self.campania_var.get(), self.anio_var.get()]):
-            messagebox.showerror("Error", "Debe completar todas las fechas y datos de campania.")
+            mostrar_advertencia_usuario(
+                "Datos incompletos",
+                "Debe completar todas las fechas y datos de campania.",
+                "Complete inicio, fin, campania y anio antes de iniciar.",
+            )
             return
 
         comprando = self.ruta_comprando.get()
         costos = self.ruta_costos_especiales.get()
         if not comprando or not costos:
-            messagebox.showerror("Error", "Los archivos de Comprando y Base Descuentos son obligatorios.")
+            mostrar_advertencia_usuario(
+                "Archivos incompletos",
+                "Los archivos de Comprando y Base Descuentos son obligatorios.",
+                "Seleccione ambos archivos antes de iniciar.",
+            )
             return
 
         carpeta_guardado = filedialog.askdirectory(title="Seleccionar carpeta de salida")
@@ -183,8 +195,8 @@ class SegundoComprandoWindow(ctk.CTkFrame):
 
         self.id_verificacion_after = None
         try:
-            self.future_proceso.result()
-            messagebox.showinfo("Exito", "El procesamiento ha finalizado con exito.")
+            resultado = self.future_proceso.result()
+            mostrar_exito_proceso("Segundo Comprando", resultado)
         except Exception as error:
             logger.error("Error en Segundo Comprando: %s", str(error), exc_info=True)
             mostrar_error_legible(error)

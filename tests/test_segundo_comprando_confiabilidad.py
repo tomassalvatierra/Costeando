@@ -1,4 +1,3 @@
-import json
 from pathlib import Path
 
 import pandas as pd
@@ -67,22 +66,15 @@ def _crear_fixture_segundo_comprando(tmp_path: Path):
     }, str(path_importador)
 
 
-def test_segundo_comprando_ok_genera_salidas_y_manifiesto(tmp_path: Path):
+def test_segundo_comprando_ok_genera_salidas_sin_manifiesto(tmp_path: Path):
     data, _ = _crear_fixture_segundo_comprando(tmp_path)
     resultado = procesar_segundo_comprando(**data)
 
     assert Path(resultado["comprando"]).exists()
     assert Path(resultado["especiales"]).exists()
     assert Path(resultado["importador"]).exists()
-    assert Path(resultado["manifiesto"]).exists()
     assert resultado["id_ejecucion"] == "ID2COMP001"
-
-    with open(resultado["manifiesto"], "r", encoding="utf-8") as archivo:
-        manifiesto = json.load(archivo)
-
-    assert manifiesto["estado"] == "OK"
-    assert manifiesto["proceso"] == "segundo_comprando"
-    assert manifiesto["metricas"]["filas_salida"] == 2
+    assert "manifiesto" not in resultado
 
 
 def test_incorporar_nuevos_dtos_pisa_descuento_vigente_y_agrega_historial():

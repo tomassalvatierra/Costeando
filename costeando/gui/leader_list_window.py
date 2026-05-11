@@ -1,11 +1,15 @@
 import customtkinter as ctk
 import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import filedialog
 import logging
 
 from concurrent.futures import Future, ProcessPoolExecutor
 from costeando.modulos.procesamiento_leader_list import procesar_leader_list_puro
-from costeando.utilidades.manejo_errores_gui import mostrar_error_legible
+from costeando.utilidades.manejo_errores_gui import (
+    mostrar_advertencia_usuario,
+    mostrar_error_legible,
+    mostrar_exito_proceso,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -150,10 +154,18 @@ class LeaderListWindow(ctk.CTkFrame):
         anio = self.anio_var.get()
 
         if not campania.isdigit() or len(campania) != 2:
-            messagebox.showerror("Error", "Campania debe ser 2 digitos (Ej: 05).")
+            mostrar_advertencia_usuario(
+                "Campania invalida",
+                "Campania debe ser de 2 digitos. Ejemplo: 05.",
+                "Corrija la campania y vuelva a iniciar.",
+            )
             return
         if not anio.isdigit() or len(anio) != 4:
-            messagebox.showerror("Error", "Anio debe ser 4 digitos (Ej: 2024).")
+            mostrar_advertencia_usuario(
+                "Anio invalido",
+                "Anio debe ser de 4 digitos. Ejemplo: 2024.",
+                "Corrija el anio y vuelva a iniciar.",
+            )
             return
 
         leader_list = self.ruta_leader_list.get()
@@ -163,7 +175,11 @@ class LeaderListWindow(ctk.CTkFrame):
         combinadas = self.ruta_combinadas.get()
         stock = self.ruta_stock.get()
         if not all([leader_list, listado, maestro, dobles, combinadas, stock]):
-            messagebox.showerror("Error", "Todos los archivos son obligatorios.")
+            mostrar_advertencia_usuario(
+                "Archivos incompletos",
+                "Todos los archivos son obligatorios.",
+                "Complete los selectores pendientes antes de iniciar.",
+            )
             return
 
         carpeta_guardado = filedialog.askdirectory(title="Selecciona la carpeta para guardar los resultados")
@@ -204,8 +220,8 @@ class LeaderListWindow(ctk.CTkFrame):
 
         self.id_verificacion_after = None
         try:
-            self.future_proceso.result()
-            messagebox.showinfo("Exito", "El procesamiento ha finalizado con exito.")
+            resultado = self.future_proceso.result()
+            mostrar_exito_proceso("Leader List", resultado)
         except Exception as error:
             logger.error("Error en Leader List: %s", str(error), exc_info=True)
             mostrar_error_legible(error)

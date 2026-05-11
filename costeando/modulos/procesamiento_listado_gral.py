@@ -4,7 +4,6 @@ from typing import Dict
 import os
 from datetime import datetime
 
-from costeando.utilidades.auditoria import guardar_manifiesto_ejecucion
 from costeando.utilidades.errores_aplicacion import (
     ErrorAplicacion,
     ErrorEntradaArchivo,
@@ -375,53 +374,18 @@ def procesar_listado_gral_puro(
         logger.info(f"Guardando Listado gral procesado en: {path_listado}")
         df_listado_general.to_excel(path_listado, index=False, engine="openpyxl")
 
-        logger.info(f"Archivos guardados correctamente en: {carpeta_guardado}")
-        path_manifiesto = guardar_manifiesto_ejecucion(
-            carpeta_guardado=carpeta_guardado,
-            id_ejecucion=id_proceso,
-            proceso="listado_general",
-            estado="OK",
-            entradas={
-                "ruta_produciendo": ruta_produciendo,
-                "ruta_comprando": ruta_comprando,
-                "ruta_costo_primo": ruta_costo_primo,
-                "ruta_base_descuentos": ruta_base_descuentos,
-                "ruta_listado": ruta_listado,
-                "ruta_mdo": ruta_mdo,
-                "ruta_leader_list": ruta_leader_list,
-                "ruta_compilado_fechas_ult_compra": ruta_compilado_fechas_ult_compra,
-            },
-            parametros={"campania": campania, "anio": anio},
-            metricas={"filas_salida": len(df_listado_general)},
-            archivos_generados={"Listado_general_completo": path_listado},
+        logger.info(
+            "Listado General finalizado. ID=%s Filas salida=%s Archivo=%s",
+            id_proceso,
+            len(df_listado_general),
+            path_listado,
         )
         return {
             "Listado_general_completo": path_listado,
-            "manifiesto": path_manifiesto,
             "id_ejecucion": id_proceso,
         }
     except ErrorAplicacion as error:
         error.con_id_ejecucion(id_proceso)
-        guardar_manifiesto_ejecucion(
-            carpeta_guardado=carpeta_guardado or ".",
-            id_ejecucion=id_proceso,
-            proceso="listado_general",
-            estado="ERROR",
-            entradas={
-                "ruta_produciendo": ruta_produciendo,
-                "ruta_comprando": ruta_comprando,
-                "ruta_costo_primo": ruta_costo_primo,
-                "ruta_base_descuentos": ruta_base_descuentos,
-                "ruta_listado": ruta_listado,
-                "ruta_mdo": ruta_mdo,
-                "ruta_leader_list": ruta_leader_list,
-                "ruta_compilado_fechas_ult_compra": ruta_compilado_fechas_ult_compra,
-            },
-            parametros={"campania": campania, "anio": anio},
-            metricas={},
-            archivos_generados={},
-            codigo_error=error.codigo_error,
-        )
         logger.error("Error controlado en Listado General. ID=%s Codigo=%s", id_proceso, error.codigo_error, exc_info=True)
         raise
     except Exception as error:
@@ -432,26 +396,6 @@ def procesar_listado_gral_puro(
             mensaje_usuario="Ocurrio un error inesperado en Listado General.",
             accion_sugerida="Reintente y si persiste contacte soporte con codigo e ID.",
             id_ejecucion=id_proceso,
-        )
-        guardar_manifiesto_ejecucion(
-            carpeta_guardado=carpeta_guardado or ".",
-            id_ejecucion=id_proceso,
-            proceso="listado_general",
-            estado="ERROR",
-            entradas={
-                "ruta_produciendo": ruta_produciendo,
-                "ruta_comprando": ruta_comprando,
-                "ruta_costo_primo": ruta_costo_primo,
-                "ruta_base_descuentos": ruta_base_descuentos,
-                "ruta_listado": ruta_listado,
-                "ruta_mdo": ruta_mdo,
-                "ruta_leader_list": ruta_leader_list,
-                "ruta_compilado_fechas_ult_compra": ruta_compilado_fechas_ult_compra,
-            },
-            parametros={"campania": campania, "anio": anio},
-            metricas={},
-            archivos_generados={},
-            codigo_error=error_interno.codigo_error,
         )
         logger.error("Error inesperado en Listado General. ID=%s", id_proceso, exc_info=True)
         raise error_interno from error

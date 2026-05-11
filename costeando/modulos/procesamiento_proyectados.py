@@ -5,7 +5,6 @@ from typing import Dict
 
 import pandas as pd
 
-from costeando.utilidades.auditoria import guardar_manifiesto_ejecucion
 from costeando.utilidades.errores_aplicacion import (
     ErrorAplicacion,
     ErrorEntradaArchivo,
@@ -234,35 +233,16 @@ def procesar_proyectados_puro(
             anio_inicial,
             carpeta_guardado,
         )
-        logger.info("Proyectados finalizado. Archivos en: %s", carpeta_guardado)
-
-        path_manifiesto = guardar_manifiesto_ejecucion(
-            carpeta_guardado=carpeta_guardado,
-            id_ejecucion=id_proceso,
-            proceso="proyectados",
-            estado="OK",
-            entradas={"ruta_lista": ruta_lista, "ruta_coef": ruta_coef},
-            parametros={"campania": campania_normalizada, "anio": anio_inicial},
-            metricas={
-                "filas_proyectado": len(df_proyectado),
-                "filas_proyectado_comercial": len(df_proyectado_comercial),
-            },
-            archivos_generados=salidas,
+        logger.info(
+            "Proyectados finalizado. ID=%s Filas proyectado=%s Filas comercial=%s Archivos=%s",
+            id_proceso,
+            len(df_proyectado),
+            len(df_proyectado_comercial),
+            salidas,
         )
-        return {**salidas, "manifiesto": path_manifiesto, "id_ejecucion": id_proceso}
+        return {**salidas, "id_ejecucion": id_proceso}
     except ErrorAplicacion as error:
         error.con_id_ejecucion(id_proceso)
-        guardar_manifiesto_ejecucion(
-            carpeta_guardado=carpeta_guardado or ".",
-            id_ejecucion=id_proceso,
-            proceso="proyectados",
-            estado="ERROR",
-            entradas={"ruta_lista": ruta_lista, "ruta_coef": ruta_coef},
-            parametros={"campania": camp_inicial, "anio": anio_inicial},
-            metricas={},
-            archivos_generados={},
-            codigo_error=error.codigo_error,
-        )
         logger.error(
             "Error controlado en Proyectados. ID=%s Codigo=%s",
             id_proceso,
@@ -278,17 +258,6 @@ def procesar_proyectados_puro(
             mensaje_usuario="Ocurrio un error inesperado en Proyectados.",
             accion_sugerida="Reintente y si persiste contacte soporte con codigo e ID.",
             id_ejecucion=id_proceso,
-        )
-        guardar_manifiesto_ejecucion(
-            carpeta_guardado=carpeta_guardado or ".",
-            id_ejecucion=id_proceso,
-            proceso="proyectados",
-            estado="ERROR",
-            entradas={"ruta_lista": ruta_lista, "ruta_coef": ruta_coef},
-            parametros={"campania": camp_inicial, "anio": anio_inicial},
-            metricas={},
-            archivos_generados={},
-            codigo_error=error_interno.codigo_error,
         )
         logger.error("Error inesperado en Proyectados. ID=%s", id_proceso, exc_info=True)
         raise error_interno from error

@@ -1,4 +1,3 @@
-import json
 from pathlib import Path
 
 import pandas as pd
@@ -75,15 +74,10 @@ def test_falla_si_faltan_columnas_en_combinadas(tmp_path: Path):
     assert error.value.codigo_error == "CST-VAL-001"
 
 
-def test_caso_minimo_valido_genera_salida_y_manifiesto(tmp_path: Path):
+def test_caso_minimo_valido_genera_salida_sin_manifiesto(tmp_path: Path):
     data = _crear_fixture_valorizacion_dyc(tmp_path)
     resultados = procesar_valorizacion_dyc_puro(**data)
 
     assert Path(resultados["valorizacion_dyc"]).exists()
-    assert Path(resultados["manifiesto"]).exists()
     assert resultados["id_ejecucion"]
-
-    with open(resultados["manifiesto"], "r", encoding="utf-8") as archivo:
-        manifiesto = json.load(archivo)
-    assert manifiesto["estado"] == "OK"
-    assert manifiesto["proceso"] == "valorizacion_dyc"
+    assert "manifiesto" not in resultados

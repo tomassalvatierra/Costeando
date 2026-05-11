@@ -1,11 +1,15 @@
 import customtkinter as ctk
 import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import filedialog
 import logging
 from concurrent.futures import Future, ProcessPoolExecutor
 
 from costeando.modulos.procesamiento_actualizacion_fchs import procesar_actualizacion_fchs_puro
-from costeando.utilidades.manejo_errores_gui import mostrar_error_legible
+from costeando.utilidades.manejo_errores_gui import (
+    mostrar_advertencia_usuario,
+    mostrar_error_legible,
+    mostrar_exito_proceso,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -123,7 +127,11 @@ class ActualizacionFCHSWindow(ctk.CTkFrame):
             self.ruta_ordenes_apuntadas.get(),
         ]
         if not all(archivos_requeridos):
-            messagebox.showerror("Error", "Debe seleccionar todos los archivos requeridos.")
+            mostrar_advertencia_usuario(
+                "Archivos incompletos",
+                "Debe seleccionar todos los archivos requeridos.",
+                "Complete los selectores pendientes antes de iniciar.",
+            )
             return
 
         carpeta_guardado = filedialog.askdirectory(title="Seleccionar carpeta de guardado")
@@ -160,8 +168,8 @@ class ActualizacionFCHSWindow(ctk.CTkFrame):
 
         self.id_verificacion_after = None
         try:
-            self.future_proceso.result()
-            messagebox.showinfo("Exito", "El procesamiento ha finalizado con exito.")
+            resultado = self.future_proceso.result()
+            mostrar_exito_proceso("Actualizacion FCHS", resultado)
         except Exception as error:
             logger.error("Error en Actualizacion FCHS: %s", str(error), exc_info=True)
             mostrar_error_legible(error)

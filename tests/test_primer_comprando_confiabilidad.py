@@ -1,5 +1,4 @@
 from pathlib import Path
-import json
 
 import pandas as pd
 import pytest
@@ -131,15 +130,15 @@ def test_falla_si_faltan_columnas_en_maestro(tmp_path: Path):
     assert error.value.codigo_error == "CST-VAL-001"
 
 
-def test_caso_minimo_valido_genera_salidas_y_manifiesto(tmp_path: Path):
+def test_caso_minimo_valido_genera_salidas_sin_manifiesto(tmp_path: Path):
     data = _crear_fixture_primer_comprando(tmp_path)
     resultados = procesar_primer_comprando(**data)
     assert Path(resultados["calculo_comprando"]).exists()
     assert Path(resultados["rotacion"]).exists()
     assert Path(resultados["base_descuentos"]).exists()
     assert Path(resultados["cambios"]).exists()
-    assert Path(resultados["manifiesto"]).exists()
     assert resultados["id_ejecucion"]
+    assert "manifiesto" not in resultados
 
 
 def test_normaliza_campania_de_un_digito(tmp_path: Path):
@@ -171,7 +170,7 @@ def test_acepta_columna_atiende_legacy(tmp_path: Path):
     resultados = procesar_primer_comprando(**data)
 
     assert Path(resultados["calculo_comprando"]).exists()
-    assert Path(resultados["manifiesto"]).exists()
+    assert "manifiesto" not in resultados
 
 
 def test_falla_si_fechas_maestro_son_invalidas(tmp_path: Path):
@@ -211,7 +210,7 @@ def test_acepta_compras_depuradas_con_nombres_nuevos(tmp_path: Path):
     assert Path(resultados["calculo_comprando"]).exists()
 
 
-def test_error_controlado_genera_manifiesto_error_con_id_forzado(tmp_path: Path):
+def test_error_controlado_conserva_id_forzado_sin_manifiesto(tmp_path: Path):
     data = _crear_fixture_primer_comprando(tmp_path)
     data["id_ejecucion"] = "IDPRUEBA001"
     path_maestro = Path(data["ruta_maestro"])
@@ -221,13 +220,5 @@ def test_error_controlado_genera_manifiesto_error_con_id_forzado(tmp_path: Path)
         procesar_primer_comprando(**data)
 
     assert error.value.codigo_error == "CST-VAL-001"
-
-    archivos_manifiesto = list((Path(data["ruta_salida"])).glob("*manifiesto_primer_comprando_*.json"))
-    assert archivos_manifiesto
-
-    with open(archivos_manifiesto[0], "r", encoding="utf-8") as archivo:
-        manifiesto = json.load(archivo)
-
-    assert manifiesto["estado"] == "ERROR"
-    assert manifiesto["codigo_error"] == "CST-VAL-001"
-    assert manifiesto["id_ejecucion"] == "IDPRUEBA001"
+    assert error.value.id_ejecucion == "IDPRUEBA001"
+    assert not list(Path(data["ruta_salida"]).glob("*manifiesto*.json"))

@@ -3,7 +3,6 @@ import numpy as np
 import os
 from datetime import datetime
 import logging
-from costeando.utilidades.auditoria import guardar_manifiesto_ejecucion
 from costeando.utilidades.errores_aplicacion import (
     ErrorAplicacion,
     ErrorEsquemaArchivo,
@@ -518,65 +517,21 @@ def procesar_primer_comprando(campania, anio, indice_a, indice_b, mano_de_obra,
         df_cambios.to_excel(path_cambios, index=False, engine='openpyxl')
         df_calculo_comprando.to_excel(path_calculo_comprando, index=False, engine='openpyxl')
         
-        logger.info(f"Procesamiento finalizado. Archivos guardados en: {ruta_salida}")
-        path_manifiesto = guardar_manifiesto_ejecucion(
-            carpeta_guardado=ruta_salida,
-            id_ejecucion=id_proceso,
-            proceso="primer_comprando",
-            estado="OK",
-            entradas={
-                "ruta_maestro": ruta_maestro,
-                "ruta_compras": ruta_compras,
-                "ruta_stock": ruta_stock,
-                "ruta_dto_especiales": ruta_dto_especiales,
-                "ruta_listado": ruta_listado,
-                "ruta_calculo_comprando_ant": ruta_calculo_comprando_ant,
-                "ruta_ficha": ruta_ficha,
-            },
-            parametros={
-                "campania": campania,
-                "anio": anio,
-                "indice_a": indice_a,
-                "indice_b": indice_b,
-                "mano_de_obra": mano_de_obra,
-            },
-            metricas={"filas_salida": len(df_calculo_comprando)},
-            archivos_generados={
-                "calculo_comprando": path_calculo_comprando,
-                "rotacion": path_rotacion,
-                "base_descuentos": path_base_descuentos,
-                "cambios": path_cambios,
-            },
+        logger.info(
+            "Primer Comprando finalizado. ID=%s Filas salida=%s Carpeta=%s",
+            id_proceso,
+            len(df_calculo_comprando),
+            ruta_salida,
         )
         return {
             'calculo_comprando': path_calculo_comprando,
             'rotacion': path_rotacion,
             'base_descuentos': path_base_descuentos,
             'cambios': path_cambios,
-            'manifiesto': path_manifiesto,
             'id_ejecucion': id_proceso,
         }
     except ErrorAplicacion as error:
         error.con_id_ejecucion(id_proceso)
-        guardar_manifiesto_ejecucion(
-            carpeta_guardado=ruta_salida or ".",
-            id_ejecucion=id_proceso,
-            proceso="primer_comprando",
-            estado="ERROR",
-            entradas={
-                "ruta_maestro": ruta_maestro,
-                "ruta_compras": ruta_compras,
-                "ruta_stock": ruta_stock,
-                "ruta_dto_especiales": ruta_dto_especiales,
-                "ruta_listado": ruta_listado,
-                "ruta_calculo_comprando_ant": ruta_calculo_comprando_ant,
-                "ruta_ficha": ruta_ficha,
-            },
-            parametros={"campania": campania, "anio": anio},
-            metricas={},
-            archivos_generados={},
-            codigo_error=error.codigo_error,
-        )
         logger.error("Error controlado en Primer Comprando. ID=%s Codigo=%s", id_proceso, error.codigo_error, exc_info=True)
         raise
     except Exception as error:
@@ -587,25 +542,6 @@ def procesar_primer_comprando(campania, anio, indice_a, indice_b, mano_de_obra,
             mensaje_usuario="Ocurrio un error inesperado en Primer Comprando.",
             accion_sugerida="Reintente y si persiste contacte soporte con codigo e ID.",
             id_ejecucion=id_proceso,
-        )
-        guardar_manifiesto_ejecucion(
-            carpeta_guardado=ruta_salida or ".",
-            id_ejecucion=id_proceso,
-            proceso="primer_comprando",
-            estado="ERROR",
-            entradas={
-                "ruta_maestro": ruta_maestro,
-                "ruta_compras": ruta_compras,
-                "ruta_stock": ruta_stock,
-                "ruta_dto_especiales": ruta_dto_especiales,
-                "ruta_listado": ruta_listado,
-                "ruta_calculo_comprando_ant": ruta_calculo_comprando_ant,
-                "ruta_ficha": ruta_ficha,
-            },
-            parametros={"campania": campania, "anio": anio},
-            metricas={},
-            archivos_generados={},
-            codigo_error=error_interno.codigo_error,
         )
         logger.error("Error inesperado en Primer Comprando. ID=%s", id_proceso, exc_info=True)
         raise error_interno from error

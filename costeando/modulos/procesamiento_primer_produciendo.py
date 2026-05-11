@@ -2,7 +2,6 @@ import pandas as pd
 import os
 from datetime import datetime
 import logging
-from costeando.utilidades.auditoria import guardar_manifiesto_ejecucion
 from costeando.utilidades.errores_aplicacion import (
     ErrorAplicacion,
     ErrorEsquemaArchivo,
@@ -268,55 +267,20 @@ def procesar_primer_produciendo(
         df_produciendo.to_excel(path_produciendo, index=False, engine="openpyxl")
         df_descuentos_especiales.to_excel(path_base_descuentos, index=False, engine="openpyxl")
         df_cambios.to_excel(path_cambios, index=False, engine="openpyxl")
-        logger.info(f"Primer Produciendo finalizado. Archivos en: {ruta_salida}")
-        path_manifiesto = guardar_manifiesto_ejecucion(
-            carpeta_guardado=ruta_salida,
-            id_ejecucion=id_proceso,
-            proceso="primer_produciendo",
-            estado="OK",
-            entradas={
-                "ruta_produciendo_anterior": ruta_produciendo_anterior,
-                "ruta_maestro_produciendo": ruta_maestro_produciendo,
-                "ruta_stock": ruta_stock,
-                "ruta_descuentos_especiales": ruta_descuentos_especiales,
-                "ruta_rotacion": ruta_rotacion,
-                "ruta_estructuras": ruta_estructuras,
-            },
-            parametros={"campania_actual": campania_actual, "anio_actual": anio_actual},
-            metricas={"filas_salida": len(df_produciendo)},
-            archivos_generados={
-                "produciendo": path_produciendo,
-                "base_descuentos": path_base_descuentos,
-                "cambios": path_cambios,
-            },
+        logger.info(
+            "Primer Produciendo finalizado. ID=%s Filas salida=%s Carpeta=%s",
+            id_proceso,
+            len(df_produciendo),
+            ruta_salida,
         )
         return {
             "produciendo": path_produciendo,
             "base_descuentos": path_base_descuentos,
             "cambios": path_cambios,
-            "manifiesto": path_manifiesto,
             "id_ejecucion": id_proceso,
         }
     except ErrorAplicacion as error:
         error.con_id_ejecucion(id_proceso)
-        guardar_manifiesto_ejecucion(
-            carpeta_guardado=ruta_salida or ".",
-            id_ejecucion=id_proceso,
-            proceso="primer_produciendo",
-            estado="ERROR",
-            entradas={
-                "ruta_produciendo_anterior": ruta_produciendo_anterior,
-                "ruta_maestro_produciendo": ruta_maestro_produciendo,
-                "ruta_stock": ruta_stock,
-                "ruta_descuentos_especiales": ruta_descuentos_especiales,
-                "ruta_rotacion": ruta_rotacion,
-                "ruta_estructuras": ruta_estructuras,
-            },
-            parametros={"campania_actual": campania_actual, "anio_actual": anio_actual},
-            metricas={},
-            archivos_generados={},
-            codigo_error=error.codigo_error,
-        )
         logger.error("Error controlado en Primer Produciendo. ID=%s Codigo=%s", id_proceso, error.codigo_error, exc_info=True)
         raise
     except Exception as error:
@@ -327,24 +291,6 @@ def procesar_primer_produciendo(
             mensaje_usuario="Ocurrio un error inesperado en Primer Produciendo.",
             accion_sugerida="Reintente y si persiste contacte soporte con codigo e ID.",
             id_ejecucion=id_proceso,
-        )
-        guardar_manifiesto_ejecucion(
-            carpeta_guardado=ruta_salida or ".",
-            id_ejecucion=id_proceso,
-            proceso="primer_produciendo",
-            estado="ERROR",
-            entradas={
-                "ruta_produciendo_anterior": ruta_produciendo_anterior,
-                "ruta_maestro_produciendo": ruta_maestro_produciendo,
-                "ruta_stock": ruta_stock,
-                "ruta_descuentos_especiales": ruta_descuentos_especiales,
-                "ruta_rotacion": ruta_rotacion,
-                "ruta_estructuras": ruta_estructuras,
-            },
-            parametros={"campania_actual": campania_actual, "anio_actual": anio_actual},
-            metricas={},
-            archivos_generados={},
-            codigo_error=error_interno.codigo_error,
         )
         logger.error("Error inesperado en Primer Produciendo. ID=%s", id_proceso, exc_info=True)
         raise error_interno from error
