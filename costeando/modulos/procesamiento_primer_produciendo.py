@@ -18,52 +18,24 @@ from costeando.utilidades.validaciones import (
     validar_columna_fecha_parseable,
     validar_columnas,
 )
+from costeando.utilidades.vencimiento_descuentos import (
+    actualizar_vencimiento_descuentos,
+    campania_a_absoluta as _campania_a_absoluta,
+)
 
 logger = logging.getLogger(__name__)
 
 def campania_a_absoluta(campania, anio):
-    return (anio - 2021) * 18 + campania
+    return _campania_a_absoluta(campania, anio)
 
 def actualizar_estado_vencido(df_base_dtos, campania_actual, anio_actual, campania_stock):
     logger.info("Actualizando estado vencido")
-    df_base_dtos["anio/campania abs"] = df_base_dtos.apply(
-        lambda row: campania_a_absoluta(row["Campania_Otorgamiento"], row["Anio_Otorgamiento"]), axis=1)
-    absoluta_actual = campania_a_absoluta(campania_actual, anio_actual)
-    if campania_stock is not None:
-        try:
-            campania_limite = int(campania_stock)
-            if campania_limite < 1:
-                campania_limite += 18
-                anio_limite = anio_actual - 1
-            else:
-                anio_limite = anio_actual
-            absoluta_limite = campania_a_absoluta(campania_limite, anio_limite)
-            mascara_terminados = (
-                (df_base_dtos["TIPO-DESCUENTO"] == "AGOTAMIENTO-PRODUCTO TERMINADO") &
-                (df_base_dtos["Stock Actual"] < 500) &
-                (df_base_dtos["anio/campania abs"] < absoluta_limite))
-            df_base_dtos.loc[mascara_terminados, "VENCIDO"] = "Si"
-            df_base_dtos.loc[mascara_terminados, "NOTAS"] = "Pierde el descuento por no tener stock"
-        except ValueError:
-            logger.info("Error: campania_stock no es un numero valido.")
-    mascara_general = df_base_dtos.apply(
-        lambda row: (absoluta_actual - campania_a_absoluta(row["Campania_Otorgamiento"], row["Anio_Otorgamiento"])) > 27, axis=1)
-    df_base_dtos.loc[mascara_general, "VENCIDO"] = "Si"
-    df_base_dtos.loc[mascara_general, "NOTAS"] = "Pierde descuento por sobrepasar de 27 campaAas(aAo y medio)"
-    mascara_componentes = (
-        (df_base_dtos["TIPO-DESCUENTO"] == "AGOTAMIENTO-COMPONENTES") &
-        df_base_dtos.apply(
-            lambda row: (absoluta_actual - campania_a_absoluta(row["Campania_Otorgamiento"], row["Anio_Otorgamiento"])) > 18, axis=1))
-    df_base_dtos.loc[mascara_componentes, "VENCIDO"] = "Si"
-    df_base_dtos.loc[mascara_componentes, "NOTAS"] = "Pierde descuento por sobrepasar de 18 campaAas"
-    df_base_dtos.drop(columns=["Anio_Otorgamiento", "Campania_Otorgamiento", "Stock Actual", "anio/campania abs"], inplace=True, errors="ignore")
-    df_no_vencidos = df_base_dtos.loc[df_base_dtos["VENCIDO"] == "No"].copy()
-    cambios = (
-        (df_base_dtos["NOTAS"] == "Pierde el descuento por no tener stock") |
-        (df_base_dtos["NOTAS"] == "Pierde descuento por sobrepasar de 27 campaAas(aAo y medio)") |
-        (df_base_dtos["NOTAS"] == "Pierde descuento por sobrepasar de 18 campaAas"))
-    df_cambios = df_base_dtos.loc[cambios]
-    return df_base_dtos, df_no_vencidos, df_cambios
+    return actualizar_vencimiento_descuentos(
+        df_base_dtos,
+        campania_actual,
+        anio_actual,
+        campania_stock,
+    )
 
 def calcular_obsolescencia(fecha, row):
     if pd.isna(row["Ult. Compra"]):

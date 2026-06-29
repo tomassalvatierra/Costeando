@@ -61,7 +61,7 @@ def clasificacion_compras(row):
             return "Excedente - Dolar"
         try:
             resultado = round(precio_unitario / notas,1)
-            if np.isclose(resultado, [0.4, 0.5, 0.6]).any():
+            if resultado< 0.6 :
                 return "Subfacturacion - Dolar"
             return "Excedente - Dolar"
         except ZeroDivisionError:

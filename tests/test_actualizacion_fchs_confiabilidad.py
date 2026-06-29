@@ -14,7 +14,7 @@ from costeando.utilidades.errores_aplicacion import (
 def _crear_estructuras_excel(path_estructuras: Path):
     columnas = [
         "COD_NIVEL0",
-        "CODIGO_PLANO",
+        "COL2",
         "COL3",
         "COL4",
         "COL5",
@@ -28,12 +28,12 @@ def _crear_estructuras_excel(path_estructuras: Path):
         "COL13",
         "COL14",
         "COL15",
-        "COL16",
+        "CODIGO_PLANO",
     ]
     df = pd.DataFrame(
-        [["A001", "1610001", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]],
+        [["100013", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "5101050"]],
         columns=columnas,
-    )
+        )
     with pd.ExcelWriter(path_estructuras, engine="openpyxl") as writer:
         df.to_excel(writer, index=False, startrow=4)
 

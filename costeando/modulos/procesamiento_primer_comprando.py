@@ -18,6 +18,10 @@ from costeando.utilidades.validaciones import (
     validar_columna_fecha_parseable,
     validar_columnas,
 )
+from costeando.utilidades.vencimiento_descuentos import (
+    actualizar_vencimiento_descuentos,
+    campania_a_absoluta as _campania_a_absoluta,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -48,7 +52,7 @@ def procesar_rotacion(df_ficha):
     return df_ficha
 
 def campania_a_absoluta(campania, anio):
-    return (anio - 2021) * 18 + campania
+    return _campania_a_absoluta(campania, anio)
 
 def asignacion_campanias(campania, anio):
     if campania == '01':
@@ -107,65 +111,46 @@ def calcular_variacion(df, numerador, denominador, nueva_columna, reemplazo_inf=
     return df
 
 def actualizar_estado_vencido(df_base_dtos, campania_actual, anio_actual, campania_stock):
-    df_resultado = df_base_dtos.copy()
-    df_resultado['anio/campania abs'] = df_resultado.apply(
-        lambda row: campania_a_absoluta(row['Campania_Otorgamiento'], row['Anio_Otorgamiento']), axis=1)
-    absoluta_actual = campania_a_absoluta(campania_actual, anio_actual)
-    mascara_general = df_resultado.apply(
-        lambda row: (absoluta_actual - campania_a_absoluta(row['Campania_Otorgamiento'], row['Anio_Otorgamiento'])) > 27, axis=1)
-    df_resultado.loc[mascara_general, 'VENCIDO'] = 'Si'
-    df_resultado.loc[mascara_general, 'NOTAS'] = 'Pierde descuento por sobrepasar de 27 campanias(anio y medio)'
-    df_vencidos = df_resultado[df_resultado['VENCIDO'] == 'Si']
-    df_no_vencidos = df_resultado[df_resultado['VENCIDO'] == 'No']
-    campania_limite = int(campania_stock)
-    if campania_limite < 1:
-        campania_limite += 18
-        anio_limite = anio_actual - 1
-    else:
-        anio_limite = anio_actual
-    absoluta_limite = campania_a_absoluta(campania_limite, anio_limite)
-    mascara_terminados = (
-        (df_no_vencidos['TIPO-DESCUENTO'] == 'AGOTAMIENTO-PRODUCTO TERMINADO') &
-        (df_no_vencidos['Stock Actual'] < 500) &
-        (df_no_vencidos['anio/campania abs'] < absoluta_limite))
-    df_vencidos_terminados = df_no_vencidos[mascara_terminados].copy()
-    df_vencidos_terminados['VENCIDO'] = 'Si'
-    df_vencidos_terminados['NOTAS'] = 'Pierde el descuento por no tener stock'
-    df_no_vencidos = df_no_vencidos[~mascara_terminados]
-    mascara_componentes = (
-        (df_no_vencidos['TIPO-DESCUENTO'] == 'AGOTAMIENTO-COMPONENTES') &
-        df_no_vencidos.apply(
-            lambda row: (absoluta_actual - campania_a_absoluta(row['Campania_Otorgamiento'], row['Anio_Otorgamiento'])) > 18, axis=1))
-    df_vencidos_componentes = df_no_vencidos[mascara_componentes].copy()
-    df_vencidos_componentes['VENCIDO'] = 'Si'
-    df_vencidos_componentes['NOTAS'] = 'Pierde descuento por sobrepasar de 18 campanias'
-    df_no_vencidos = df_no_vencidos[~mascara_componentes]
-    df_final = pd.concat([df_vencidos, df_vencidos_terminados, df_vencidos_componentes, df_no_vencidos], ignore_index=True)
-    df_final = df_final.sort_index()
-    df_final.drop(columns=['Anio_Otorgamiento', 'Campania_Otorgamiento', 'Stock Actual', 'anio/campania abs'], inplace=True, errors='ignore')
-    df_no_vencidos = df_final[df_final['VENCIDO'] == 'No'].copy()
-    df_cambios = df_final[df_final['VENCIDO'] == 'Si'].copy()
+    df_final, _, df_cambios = actualizar_vencimiento_descuentos(
+        df_base_dtos,
+        campania_actual,
+        anio_actual,
+        campania_stock,
+    )
     return df_final, df_cambios
 
 def procesar_descuento(df_calculo_comprando, df_costos_especiales, campania, anio, df_compras):
+    columnas_auxiliares = ['Anio_Otorgamiento', 'Campania_Otorgamiento', 'Stock Actual', 'anio/campania abs', '__orden_base_descuentos']
+    df_costos_especiales = df_costos_especiales.copy()
+    df_costos_especiales['__orden_base_descuentos'] = range(len(df_costos_especiales))
+    df_vencidos_previos = df_costos_especiales.loc[df_costos_especiales['VENCIDO'] == 'Si'].copy()
     df_sin_vencidos01 = df_costos_especiales.loc[df_costos_especiales['VENCIDO'] == 'No'].copy()
-    df_costos_especiales = df_costos_especiales.loc[df_costos_especiales['VENCIDO'] == 'Si']
+    if df_sin_vencidos01.empty:
+        df_final = df_vencidos_previos.sort_values('__orden_base_descuentos').copy()
+        df_final.drop(columns=columnas_auxiliares, inplace=True, errors='ignore')
+        df_no_vencidos = df_final.loc[df_final['VENCIDO'] == 'No'].copy()
+        df_cambios = df_final.iloc[0:0].copy()
+        return df_calculo_comprando, df_final, df_no_vencidos, df_cambios
     df_sin_vencidos01[['Anio_Otorgamiento', 'Campania_Otorgamiento']] = df_sin_vencidos01['APLICA DDE CA:'].str.split('/', expand=True)
     df_sin_vencidos01['Anio_Otorgamiento'] = df_sin_vencidos01['Anio_Otorgamiento'].fillna(0).astype(int)
     df_sin_vencidos01['Campania_Otorgamiento'] = df_sin_vencidos01['Campania_Otorgamiento'].fillna(0).astype(int)
-    df_base_descuentos, df_cambios = actualizar_estado_vencido(df_sin_vencidos01, int(campania), int(anio), int(campania) - 5)
+    df_base_descuentos, df_cambios_reglas = actualizar_estado_vencido(df_sin_vencidos01, int(campania), int(anio), int(campania) - 5)
     df_no_vencidos = df_base_descuentos.loc[df_base_descuentos['VENCIDO'] == 'No'].copy()
-    df_vencidos = df_base_descuentos.loc[df_base_descuentos['VENCIDO'] == 'Si']
+    df_vencidos = df_base_descuentos.loc[df_base_descuentos['VENCIDO'] == 'Si'].copy()
     fechas_validas = pd.to_datetime(df_compras['Fch Emision'], errors='coerce').notna()
     codigos_con_compras = df_compras.loc[fechas_validas, 'Codigo'].unique()
     mascara = df_no_vencidos['Codigo'].isin(codigos_con_compras)
     df_no_vencidos.loc[mascara, 'VENCIDO'] = "Si"
     df_no_vencidos.loc[mascara, 'NOTAS'] = "X OC en campania C"+campania+"-"+anio
+    df_cambios_compras = df_no_vencidos.loc[mascara].copy()
     mascara_calculo = df_calculo_comprando['Codigo'].isin(codigos_con_compras)
     df_calculo_comprando.loc[mascara_calculo, '% de obsolescencia'] = 0
-    df_final = pd.concat([df_vencidos, df_no_vencidos], ignore_index=True)
+    df_final = pd.concat([df_vencidos_previos, df_vencidos, df_no_vencidos], ignore_index=True)
+    df_final.sort_values('__orden_base_descuentos', inplace=True)
+    df_final.drop(columns=columnas_auxiliares, inplace=True, errors='ignore')
     df_no_vencidos = df_final.loc[df_final['VENCIDO'] == 'No'].copy()
-    df_cambios = df_final.loc[df_final['VENCIDO'] == 'Si'].copy()
+    df_cambios = pd.concat([df_cambios_reglas, df_cambios_compras], ignore_index=True)
+    df_cambios.drop(columns=columnas_auxiliares, inplace=True, errors='ignore')
     return df_calculo_comprando, df_final, df_no_vencidos, df_cambios
 
 def _obtener_columna_atiende(df_maestro: pd.DataFrame) -> str:
