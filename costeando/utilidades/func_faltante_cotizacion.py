@@ -2,7 +2,7 @@ import pandas as pd
 
 def asignar_faltantes_cotizacion(df_produciendo, df_maestro,ruta_estructuras):
     """
-    Esta función procesa dos archivos de Excel para identificar componentes sin cotización
+    Esta funciAn procesa dos archivos de Excel para identificar componentes sin cotizaciAn
     y genera un archivo de salida con los registros de prodcutos terminados que no deben ser bloqueados.
     """
     df_estructuras = pd.read_excel(ruta_estructuras, usecols= "A:O",engine='openpyxl', skiprows=4)

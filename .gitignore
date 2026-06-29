@@ -42,3 +42,7 @@ htmlcov/
 *.bak
 *.swp
 
+# Manifiestos de tests
+
+*_manifiesto_*.json
+_artifacts/manifiestos/
